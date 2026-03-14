@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Star, SlidersHorizontal, X } from "lucide-react";
 import { products, categories } from "@/lib/data";
 import { formatPrice, discountPercent } from "@/lib/utils";
@@ -34,15 +35,24 @@ export function ProductsClient({
 }: {
   initialCategorySlug?: string;
 }) {
-  const initialCat = initialCategorySlug
-    ? categories.find((c) => c.slug === initialCategorySlug)
-    : undefined;
+  const router = useRouter();
+  const initialCat = useMemo(() => 
+    initialCategorySlug ? categories.find((c) => c.slug === initialCategorySlug) : undefined
+  , [initialCategorySlug]);
 
   const [filters, setFilters] = useState<ProductFilters>({
     ...DEFAULT_FILTERS,
     categoryId: initialCat?.id ?? "",
   });
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  // Sync with initialCategorySlug when it changes (navigation)
+  useEffect(() => {
+    setFilters(f => ({
+      ...f,
+      categoryId: initialCat?.id ?? ""
+    }));
+  }, [initialCat]);
 
   const filtered = useMemo(() => {
     let list = [...products];
@@ -85,8 +95,15 @@ export function ProductsClient({
     return list;
   }, [filters]);
 
+  const handleCategoryChange = (catSlug?: string) => {
+    if (!catSlug) {
+      router.push("/products");
+    } else {
+      router.push(`/products/category/${catSlug}`);
+    }
+  };
+
   const activeFilterCount = [
-    filters.categoryId,
     filters.search,
     filters.inStock,
     filters.minPrice > 0,
@@ -144,7 +161,7 @@ export function ProductsClient({
 
         {activeFilterCount > 0 && (
           <button
-            onClick={() => setFilters(DEFAULT_FILTERS)}
+            onClick={() => setFilters({ ...DEFAULT_FILTERS, categoryId: filters.categoryId })}
             className="flex items-center gap-1.5 text-sm text-[var(--gray-500)] hover:text-[var(--spice)] transition-colors"
           >
             <X size={14} /> Clear all
@@ -161,7 +178,7 @@ export function ProductsClient({
               <h3 className="font-semibold text-[var(--bark)] mb-3">Category</h3>
               <div className="space-y-1">
                 <button
-                  onClick={() => setFilters((f) => ({ ...f, categoryId: "" }))}
+                  onClick={() => handleCategoryChange()}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!filters.categoryId ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
                 >
                   All Categories
@@ -169,12 +186,7 @@ export function ProductsClient({
                 {categories.map((cat) => (
                   <button
                     key={cat.id}
-                    onClick={() =>
-                      setFilters((f) => ({
-                        ...f,
-                        categoryId: f.categoryId === cat.id ? "" : cat.id,
-                      }))
-                    }
+                    onClick={() => handleCategoryChange(cat.slug)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center justify-between ${filters.categoryId === cat.id ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
                   >
                     {cat.name}
@@ -300,3 +312,4 @@ export function ProductsClient({
     </div>
   );
 }
+

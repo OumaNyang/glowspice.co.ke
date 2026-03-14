@@ -3,12 +3,14 @@ import { Leaf, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-
 
 const links = {
   shop: [
-    { href: "/products?category=whole-spices", label: "Whole Spices" },
-    { href: "/products?category=ground-spices", label: "Ground Spices" },
-    { href: "/products?category=fresh-herbs", label: "Fresh Herbs" },
-    { href: "/products?category=spice-blends", label: "Spice Blends" },
-    { href: "/products?category=additives", label: "Additives" },
-    { href: "/products?category=specialty-salts", label: "Specialty Salts" },
+    { href: "/products/category/whole-spices", label: "Whole Spices" },
+    { href: "/products/category/ground-spices", label: "Ground Spices" },
+    { href: "/products/category/fresh-herbs", label: "Fresh Herbs" },
+    { href: "/products/category/spice-blends", label: "Spice Blends" },
+    { href: "/products/category/additives", label: "Additives" },
+    { href: "/products/category/specialty-salts", label: "Specialty Salts" },
+    { href: "/products/category/natures-sweeteners", label: "Nature's Sweeteners" },
+    { href: "/products/category/beverages-brews", label: "Beverages & Brews" },
   ],
   account: [
     { href: "/account", label: "My Account" },
@@ -18,18 +20,18 @@ const links = {
     { href: "/register", label: "Create Account" },
   ],
   help: [
-    { href: "/", label: "Shipping Policy" },
-    { href: "#", label: "Returns & Refunds" },
-    { href: "#", label: "Track Order" },
-    { href: "#", label: "Contact Us" },
-    { href: "#", label: "FAQ" },
+    { href: "/shipping-policy", label: "Shipping Policy" },
+    { href: "/returns-refunds", label: "Returns & Refunds" },
+    { href: "/track-order", label: "Track Order" },
+    { href: "/contact", label: "Contact Us" },
+    { href: "/faq", label: "FAQ" },
   ],
 };
 
 export function Footer() {
   return (
     <footer className="bg-[var(--bark)] text-[var(--sand)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-6">
           {/* Brand */}
           <div className="lg:col-span-2">

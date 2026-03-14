@@ -55,7 +55,7 @@ export default async function ProductDetailPage({
             </Link>
             <ChevronRight size={14} />
             <Link
-              href={`/products?category=${product.category.slug}`}
+              href={`/products/category/${product.category.slug}`}
               className="hover:text-[var(--spice)] transition-colors"
             >
               {product.category.name}
@@ -88,7 +88,7 @@ export default async function ProductDetailPage({
 
             {/* Category */}
             <Link
-              href={`/products?category=${product.category.slug}`}
+              href={`/products/category/${product.category.slug}`}
               className="text-sm font-semibold text-[var(--spice)] uppercase tracking-widest hover:underline"
             >
               {product.category.name}

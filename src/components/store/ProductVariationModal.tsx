@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { X, Check } from "lucide-react";
 import type { Product } from "@/lib/types";
@@ -16,11 +17,16 @@ interface ProductVariationModalProps {
 
 export function ProductVariationModal({ product, isOpen, onClose }: ProductVariationModalProps) {
   const addItem = useCartStore((s) => s.addItem);
+  const [mounted, setMounted] = useState(false);
   
   // Track quantities for each variation ID
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
-  if (!isOpen || !product.variations || product.variations.length === 0) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !isOpen || !product.variations || product.variations.length === 0) return null;
 
   const handleUpdateQty = (variationId: string, delta: number) => {
     setQuantities((prev) => {
@@ -52,16 +58,22 @@ export function ProductVariationModal({ product, isOpen, onClose }: ProductVaria
 
   const totalSelected = Object.values(quantities).reduce((a, b) => a + b, 0);
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" 
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
       />
       
       {/* Modal */}
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div 
+        className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-[var(--border)]">
           <div>
@@ -153,6 +165,7 @@ export function ProductVariationModal({ product, isOpen, onClose }: ProductVaria
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

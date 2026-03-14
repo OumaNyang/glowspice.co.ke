@@ -10,10 +10,12 @@ import { CartDrawer } from "@/components/layout/CartDrawer";
 
 const navLinks = [
   { href: "/products", label: "All Products" },
-  { href: "/products?category=whole-spices", label: "Whole Spices" },
-  { href: "/products?category=ground-spices", label: "Ground Spices" },
-  { href: "/products?category=fresh-herbs", label: "Herbs" },
-  { href: "/products?category=spice-blends", label: "Blends" },
+  { href: "/products/category/whole-spices", label: "Whole Spices" },
+  { href: "/products/category/ground-spices", label: "Ground Spices" },
+  { href: "/products/category/fresh-herbs", label: "Herbs" },
+  { href: "/products/category/spice-blends", label: "Blends" },
+  { href: "/products/category/beverages-brews", label: "Brews" },
+  { href: "/products/category/natures-sweeteners", label: "Sweeteners" },
 ];
 
 export function ClientNav() {
@@ -21,9 +23,11 @@ export function ClientNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const totalItems = useCartStore((s) => s.totalItems());
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -43,7 +47,7 @@ export function ClientNav() {
             href={link.href}
             className={cn(
               "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors duration-200",
-              pathname === link.href || pathname.startsWith(link.href.split("?")[0] + "/")
+              pathname === link.href || (link.href !== "/products" && pathname.startsWith(link.href))
                 ? "text-[var(--spice)] bg-[var(--spice)]/10"
                 : "text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5"
             )}
@@ -83,7 +87,7 @@ export function ClientNav() {
           aria-label="Cart"
         >
           <ShoppingBag size={20} />
-          {totalItems > 0 && (
+          {mounted && totalItems > 0 && (
             <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[var(--spice)] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
               {totalItems > 9 ? "9+" : totalItems}
             </span>

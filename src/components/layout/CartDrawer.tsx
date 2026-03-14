@@ -93,7 +93,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
           ) : (
             items.map((item) => (
               <div
-                key={item.product.id}
+                key={item.id}
                 className="flex gap-3 bg-white rounded-2xl p-3 shadow-sm border border-[var(--border)]"
               >
                 <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-[var(--cream-dark)] shrink-0">
@@ -107,15 +107,15 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold text-[var(--bark)] truncate">
-                    {item.product.name}
+                    {item.product.name} {item.variation && <span className="text-[var(--spice)]">({item.variation.name})</span>}
                   </h4>
                   <p className="text-xs text-[var(--gray-500)] mb-2">
-                    {item.product.unit}
+                    {item.variation ? item.variation.name : item.product.unit}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 bg-[var(--cream-dark)] rounded-lg">
                       <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--bark)] hover:bg-[var(--spice)]/10 hover:text-[var(--spice)] transition-colors font-bold"
                       >
                         −
@@ -124,7 +124,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--bark)] hover:bg-[var(--spice)]/10 hover:text-[var(--spice)] transition-colors font-bold"
                       >
                         +
@@ -132,10 +132,10 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-bold text-[var(--spice)]">
-                        {formatPrice(item.product.price * item.quantity)}
+                        {formatPrice((item.variation ? item.variation.price : item.product.price) * item.quantity)}
                       </span>
                       <button
-                        onClick={() => removeItem(item.product.id)}
+                        onClick={() => removeItem(item.id)}
                         className="p-1 rounded text-[var(--gray-400)] hover:text-red-500 transition-colors"
                         aria-label="Remove item"
                       >
