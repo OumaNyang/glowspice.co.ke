@@ -2,13 +2,13 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { CartItem, Product } from "@/lib/types";
+import type { CartItem, Product, ProductVariation } from "@/lib/types";
 
 interface CartStore {
   items: CartItem[];
-  addItem: (product: Product, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addItem: (product: Product, quantity?: number, variation?: ProductVariation) => void;
+  removeItem: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
@@ -19,38 +19,38 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
 
-      addItem: (product, quantity = 1) => {
+      addItem: (product, quantity = 1, variation) => {
         set((state) => {
-          const existing = state.items.find(
-            (i) => i.product.id === product.id
-          );
+          const itemId = variation ? `${product.id}-${variation.id}` : product.id;
+          const existing = state.items.find((i) => i.id === itemId);
+          
           if (existing) {
             return {
               items: state.items.map((i) =>
-                i.product.id === product.id
+                i.id === itemId
                   ? { ...i, quantity: i.quantity + quantity }
                   : i
               ),
             };
           }
-          return { items: [...state.items, { product, quantity }] };
+          return { items: [...state.items, { id: itemId, product, variation, quantity }] };
         });
       },
 
-      removeItem: (productId) => {
+      removeItem: (itemId) => {
         set((state) => ({
-          items: state.items.filter((i) => i.product.id !== productId),
+          items: state.items.filter((i) => i.id !== itemId),
         }));
       },
 
-      updateQuantity: (productId, quantity) => {
+      updateQuantity: (itemId, quantity) => {
         if (quantity <= 0) {
-          get().removeItem(productId);
+          get().removeItem(itemId);
           return;
         }
         set((state) => ({
           items: state.items.map((i) =>
-            i.product.id === productId ? { ...i, quantity } : i
+            i.id === itemId ? { ...i, quantity } : i
           ),
         }));
       },
@@ -61,10 +61,10 @@ export const useCartStore = create<CartStore>()(
         get().items.reduce((sum, i) => sum + i.quantity, 0),
 
       totalPrice: () =>
-        get().items.reduce(
-          (sum, i) => sum + i.product.price * i.quantity,
-          0
-        ),
+        get().items.reduce((sum, i) => {
+          const price = i.variation ? i.variation.price : i.product.price;
+          return sum + price * i.quantity;
+        }, 0),
     }),
     { name: "glowspice-cart" }
   )

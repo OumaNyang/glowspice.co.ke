@@ -23,7 +23,7 @@ export function WishlistButton({
       }}
       aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
       className={cn(
-        "flex items-center justify-center rounded-xl bg-white/90 backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm",
+        "flex items-center justify-center rounded-md bg-white/90 backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm",
         size === "sm" ? "w-7 h-7" : "w-9 h-9"
       )}
     >

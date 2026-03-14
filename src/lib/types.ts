@@ -1,5 +1,12 @@
 // ─── Product ────────────────────────────────────────────────────────────────
 
+export interface ProductVariation {
+  id: string;
+  name: string; // e.g. "50g", "100g", "200g"
+  price: number;
+  stock: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -13,7 +20,8 @@ export interface Product {
   tags: string[];
   images: ProductImage[];
   stock: number;
-  unit: string; // e.g. "100g", "250g", "1kg"
+  unit: string; // fallback if no variations (e.g. "100g", "250g", "1kg")
+  variations?: ProductVariation[];
   origin?: string;
   rating: number;
   reviewCount: number;
@@ -44,7 +52,9 @@ export interface Category {
 // ─── Cart ───────────────────────────────────────────────────────────────────
 
 export interface CartItem {
+  id: string; // A unique identifier, typically `${product.id}` or `${product.id}-${variation.id}`
   product: Product;
+  variation?: ProductVariation;
   quantity: number;
 }
 

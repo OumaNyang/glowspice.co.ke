@@ -35,7 +35,7 @@ export function ProductImageGallery({
               key={img.id}
               onClick={() => setSelected(i)}
               className={cn(
-                "relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 shrink-0",
+                "relative w-20 h-20 rounded-md overflow-hidden border-2 transition-all duration-200 shrink-0",
                 i === selected
                   ? "border-[var(--spice)] shadow-md"
                   : "border-transparent hover:border-[var(--gray-300)]"

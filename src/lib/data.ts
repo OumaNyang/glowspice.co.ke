@@ -140,6 +140,11 @@ export const products: Product[] = [
     ],
     stock: 80,
     unit: "50g",
+    variations: [
+      { id: "var_3a", name: "50g", price: 890, stock: 50 },
+      { id: "var_3b", name: "100g", price: 1650, stock: 20 },
+      { id: "var_3c", name: "200g", price: 3100, stock: 10 },
+    ],
     origin: "India",
     rating: 4.7,
     reviewCount: 89,
@@ -262,6 +267,10 @@ export const products: Product[] = [
     ],
     stock: 160,
     unit: "100g",
+    variations: [
+      { id: "var_8a", name: "50g", price: 190, stock: 100 },
+      { id: "var_8b", name: "100g", price: 350, stock: 60 },
+    ],
     origin: "Spain",
     rating: 4.7,
     reviewCount: 102,

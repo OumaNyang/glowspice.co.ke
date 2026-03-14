@@ -228,7 +228,7 @@ export default function CheckoutPage() {
               <h3 className="font-display font-bold text-[var(--bark)] mb-4">Your Order</h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {items.map((item) => (
-                  <div key={item.product.id} className="flex gap-3 items-center">
+                  <div key={item.id} className="flex gap-3 items-center">
                     <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
                       <Image
                         src={item.product.images[0]?.url}
@@ -242,11 +242,15 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-[var(--bark)] truncate">{item.product.name}</p>
-                      <p className="text-xs text-[var(--gray-400)]">{item.product.unit}</p>
+                      <p className="text-xs font-medium text-[var(--bark)] truncate">
+                        {item.product.name} {item.variation && <span className="text-[var(--spice)]">({item.variation.name})</span>}
+                      </p>
+                      <p className="text-xs text-[var(--gray-400)]">
+                        {item.variation ? item.variation.name : item.product.unit}
+                      </p>
                     </div>
                     <span className="text-sm font-bold text-[var(--spice)]">
-                      {formatPrice(item.product.price * item.quantity)}
+                      {formatPrice((item.variation ? item.variation.price : item.product.price) * item.quantity)}
                     </span>
                   </div>
                 ))}

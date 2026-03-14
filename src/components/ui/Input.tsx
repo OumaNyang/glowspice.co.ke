@@ -35,7 +35,7 @@ export function Input({
         <input
           id={id}
           className={cn(
-            "w-full bg-white border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm text-[var(--bark)] placeholder:text-[var(--gray-400)] transition-all duration-200",
+            "w-full bg-white border border-[var(--border)] rounded-md px-4 py-2.5 text-sm text-[var(--bark)] placeholder:text-[var(--gray-400)] transition-all duration-200",
             "focus:outline-none focus:border-[var(--spice)] focus:ring-2 focus:ring-[var(--spice)]/20",
             "hover:border-[var(--gray-300)]",
             error && "border-red-400 focus:border-red-400 focus:ring-red-400/20",
@@ -74,7 +74,7 @@ export function Textarea({ label, error, className, id, ...props }: TextareaProp
       <textarea
         id={id}
         className={cn(
-          "w-full bg-white border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm text-[var(--bark)] placeholder:text-[var(--gray-400)] transition-all duration-200 resize-none",
+          "w-full bg-white border border-[var(--border)] rounded-md px-4 py-2.5 text-sm text-[var(--bark)] placeholder:text-[var(--gray-400)] transition-all duration-200 resize-none",
           "focus:outline-none focus:border-[var(--spice)] focus:ring-2 focus:ring-[var(--spice)]/20",
           error && "border-red-400 focus:border-red-400 focus:ring-red-400/20",
           className
@@ -103,7 +103,7 @@ export function Select({ label, error, options, className, id, ...props }: Selec
       <select
         id={id}
         className={cn(
-          "w-full bg-white border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm text-[var(--bark)] transition-all duration-200 appearance-none cursor-pointer",
+          "w-full bg-white border border-[var(--border)] rounded-md px-4 py-2.5 text-sm text-[var(--bark)] transition-all duration-200 appearance-none cursor-pointer",
           "focus:outline-none focus:border-[var(--spice)] focus:ring-2 focus:ring-[var(--spice)]/20",
           error && "border-red-400",
           className

@@ -51,7 +51,7 @@ export default function CartPage() {
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => (
               <div
-                key={item.product.id}
+                key={item.id}
                 className="bg-white rounded-md p-5 border border-[var(--border)] flex gap-4 items-center group"
               >
                 <Link href={`/products/${item.product.slug}`} className="relative w-24 h-24 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
@@ -67,18 +67,18 @@ export default function CartPage() {
                 <div className="flex-1 min-w-0">
                   <Link href={`/products/${item.product.slug}`}>
                     <h3 className="font-semibold text-[var(--bark)] hover:text-[var(--spice)] transition-colors leading-snug mb-0.5">
-                      {item.product.name}
+                      {item.product.name} {item.variation && <span className="text-[var(--spice)]">({item.variation.name})</span>}
                     </h3>
                   </Link>
                   <p className="text-xs text-[var(--gray-400)] mb-3">
-                    {item.product.category.name} · {item.product.unit}
+                    {item.product.category.name} · {item.variation ? item.variation.name : item.product.unit}
                     {item.product.origin && ` · ${item.product.origin}`}
                   </p>
                   <div className="flex items-center gap-4">
                     {/* Qty */}
                     <div className="flex items-center bg-[var(--cream-dark)] rounded-lg">
                       <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         className="w-8 h-8 flex items-center justify-center text-[var(--bark)] hover:text-[var(--spice)] transition-colors font-bold text-lg rounded-l-lg"
                       >
                         −
@@ -87,14 +87,14 @@ export default function CartPage() {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         className="w-8 h-8 flex items-center justify-center text-[var(--bark)] hover:text-[var(--spice)] transition-colors font-bold text-lg rounded-r-lg"
                       >
                         +
                       </button>
                     </div>
                     <button
-                      onClick={() => removeItem(item.product.id)}
+                      onClick={() => removeItem(item.id)}
                       className="flex items-center gap-1 text-xs text-[var(--gray-400)] hover:text-red-500 transition-colors"
                     >
                       <Trash2 size={13} />
@@ -105,10 +105,10 @@ export default function CartPage() {
 
                 <div className="text-right shrink-0">
                   <p className="font-display font-bold text-xl text-[var(--spice)]">
-                    {formatPrice(item.product.price * item.quantity)}
+                    {formatPrice((item.variation ? item.variation.price : item.product.price) * item.quantity)}
                   </p>
                   <p className="text-xs text-[var(--gray-400)]">
-                    {formatPrice(item.product.price)} each
+                    {formatPrice(item.variation ? item.variation.price : item.product.price)} each
                   </p>
                 </div>
               </div>
