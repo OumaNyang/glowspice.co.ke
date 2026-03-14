@@ -7,9 +7,11 @@ import { cn } from "@/lib/utils";
 export function WishlistButton({
   productId,
   size = "md",
+  className,
 }: {
   productId: string;
   size?: "sm" | "md";
+  className?: string;
 }) {
   const isWishlisted = useWishlistStore((s) => s.isWishlisted(productId));
   const toggle = useWishlistStore((s) => s.toggle);
@@ -24,7 +26,8 @@ export function WishlistButton({
       aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
       className={cn(
         "flex items-center justify-center rounded-md bg-white/90 backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm",
-        size === "sm" ? "w-7 h-7" : "w-9 h-9"
+        size === "sm" ? "w-7 h-7" : "w-9 h-9",
+        className
       )}
     >
       <Heart

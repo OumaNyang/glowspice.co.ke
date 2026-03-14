@@ -222,7 +222,7 @@ export default function HomePage() {
                 className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
                 <Link href={`/products/${product.slug}`}>
-                  <div className="relative h-52 overflow-hidden bg-[var(--cream-dark)]">
+                  <div className="relative aspect-[3/2] overflow-hidden bg-[var(--cream-dark)]">
                     <Image
                       src={product.images[0]?.url}
                       alt={product.name}
@@ -423,7 +423,7 @@ export default function HomePage() {
                   className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <Link href={`/products/${product.slug}`}>
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative aspect-[3/2] overflow-hidden">
                       <Image
                         src={product.images[0]?.url}
                         alt={product.name}

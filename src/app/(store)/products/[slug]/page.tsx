@@ -11,6 +11,8 @@ import { WishlistButton } from "@/components/store/WishlistButton";
 import { ProductImageGallery } from "@/components/store/ProductImageGallery";
 import { QuantityAddToCart } from "@/components/store/QuantityAddToCart";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+
 export async function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
@@ -23,9 +25,30 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) return {};
+  
   return {
     title: product.name,
     description: product.shortDescription,
+    openGraph: {
+      title: `${product.name} | GlowSpice`,
+      description: product.shortDescription,
+      url: `https://glowspice.co.ke/products/${product.slug}`,
+      images: [
+        {
+          url: product.images[0]?.url,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.shortDescription,
+      images: [product.images[0]?.url],
+    },
   };
 }
 
@@ -40,8 +63,40 @@ export default async function ProductDetailPage({
 
   const reviews = getProductReviews(product.id);
 
+  // JSON-LD for Search Engines
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.images.map(img => img.url),
+    description: product.description,
+    sku: product.id,
+    brand: {
+      "@type": "Brand",
+      name: "GlowSpice",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://glowspice.co.ke/products/${product.slug}`,
+      priceCurrency: "KES",
+      price: product.price,
+      itemCondition: "https://schema.org/NewCondition",
+      availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "GlowSpice",
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating,
+      reviewCount: product.reviewCount,
+    },
+  };
+
   return (
     <div className="bg-[var(--cream)] min-h-screen">
+      <JsonLd data={jsonLd} />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">

@@ -36,7 +36,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-md bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] flex items-center justify-center">
                 <Leaf size={18} className="text-white" />
               </div>
               <span className="font-display font-bold text-xl text-white">
@@ -126,7 +126,7 @@ export function Footer() {
               <a
                 key={i}
                 href="#"
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[var(--spice)] flex items-center justify-center text-[var(--sand)]/60 hover:text-white transition-all duration-200"
+                className="w-8 h-8 rounded-md bg-white/10 hover:bg-[var(--spice)] flex items-center justify-center text-[var(--sand)]/60 hover:text-white transition-all duration-200"
                 aria-label="Social media"
               >
                 <Icon size={14} />

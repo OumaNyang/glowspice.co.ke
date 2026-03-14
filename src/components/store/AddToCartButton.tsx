@@ -11,9 +11,15 @@ interface AddToCartButtonProps {
   product: Product;
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
+  className?: string;
 }
 
-export function AddToCartButton({ product, size = "md", fullWidth = false }: AddToCartButtonProps) {
+export function AddToCartButton({ 
+  product, 
+  size = "md", 
+  fullWidth = false,
+  className,
+}: AddToCartButtonProps) {
   const addItem = useCartStore((s) => s.addItem);
   const [added, setAdded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -49,7 +55,8 @@ export function AddToCartButton({ product, size = "md", fullWidth = false }: Add
           fullWidth && "w-full",
           added
             ? "bg-[var(--herb)] pointer-events-none"
-            : "bg-[var(--spice)] hover:bg-[var(--spice-dark)] active:scale-95 disabled:bg-[var(--gray-300)] disabled:pointer-events-none"
+            : "bg-[var(--spice)] hover:bg-[var(--spice-dark)] active:scale-95 disabled:bg-[var(--gray-300)] disabled:pointer-events-none",
+          className
         )}
       >
         {added ? (

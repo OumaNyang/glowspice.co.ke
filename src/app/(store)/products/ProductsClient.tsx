@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { AddToCartButton } from "@/components/store/AddToCartButton";
 import { WishlistButton } from "@/components/store/WishlistButton";
 import { Input } from "@/components/ui/Input";
+import { Pagination } from "@/components/ui/Pagination";
 import type { ProductFilters } from "@/lib/types";
 
 const SORT_OPTIONS = [
@@ -30,6 +31,8 @@ const DEFAULT_FILTERS: ProductFilters = {
   inStock: false,
 };
 
+const ITEMS_PER_PAGE = 16; // 4 rows of 4
+
 export function ProductsClient({
   initialCategorySlug,
 }: {
@@ -44,6 +47,7 @@ export function ProductsClient({
     ...DEFAULT_FILTERS,
     categoryId: initialCat?.id ?? "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Sync with initialCategorySlug when it changes (navigation)
@@ -52,7 +56,13 @@ export function ProductsClient({
       ...f,
       categoryId: initialCat?.id ?? ""
     }));
+    setCurrentPage(1);
   }, [initialCat]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.search, filters.categoryId, filters.minPrice, filters.maxPrice, filters.sortBy, filters.inStock]);
 
   const filtered = useMemo(() => {
     let list = [...products];
@@ -95,6 +105,12 @@ export function ProductsClient({
     return list;
   }, [filters]);
 
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filtered.slice(start, start + ITEMS_PER_PAGE);
+  }, [filtered, currentPage]);
+
   const handleCategoryChange = (catSlug?: string) => {
     if (!catSlug) {
       router.push("/products");
@@ -114,21 +130,22 @@ export function ProductsClient({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="font-display font-bold text-4xl text-[var(--bark)] mb-2">
+        <h1 className="font-display font-bold text-4xl text-[var(--bark)] mb-1">
           {initialCat ? initialCat.name : "All Products"}
         </h1>
-        <p className="text-[var(--gray-500)]">
-          {filtered.length} {filtered.length === 1 ? "product" : "products"} found
+        <p className="text-sm text-[var(--gray-500)]">
+          Showing {Math.min(filtered.length, (currentPage - 1) * ITEMS_PER_PAGE + 1)}-{Math.min(filtered.length, currentPage * ITEMS_PER_PAGE)} of {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </p>
       </div>
 
       {/* Top bar: search + sort + filter toggle */}
-      <div className="flex flex-wrap gap-3 mb-6 items-center">
+      <div className="flex flex-wrap gap-3 mb-8 items-center">
         <div className="flex-1 min-w-48">
           <Input
             placeholder="Search spices..."
             value={filters.search}
             onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
+            className="bg-white"
           />
         </div>
 
@@ -148,7 +165,7 @@ export function ProductsClient({
 
         <button
           onClick={() => setFiltersOpen(!filtersOpen)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border)] rounded-md text-sm font-medium text-[var(--bark)] hover:border-[var(--spice)] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border)] rounded-md text-sm font-medium text-[var(--bark)] hover:border-[var(--spice)] transition-all"
         >
           <SlidersHorizontal size={16} />
           Filters
@@ -169,17 +186,17 @@ export function ProductsClient({
         )}
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar filters */}
         {filtersOpen && (
-          <aside className="w-64 shrink-0 space-y-6">
+          <aside className="w-full lg:w-64 shrink-0 space-y-6">
             {/* Categories */}
-            <div className="bg-white rounded-md border border-[var(--border)] p-5">
-              <h3 className="font-semibold text-[var(--bark)] mb-3">Category</h3>
-              <div className="space-y-1">
+            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+              <h3 className="font-semibold text-sm text-[var(--bark)] mb-3">Category</h3>
+              <div className="space-y-0.5">
                 <button
                   onClick={() => handleCategoryChange()}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!filters.categoryId ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
+                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors ${!filters.categoryId ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
                 >
                   All Categories
                 </button>
@@ -187,18 +204,18 @@ export function ProductsClient({
                   <button
                     key={cat.id}
                     onClick={() => handleCategoryChange(cat.slug)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center justify-between ${filters.categoryId === cat.id ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
+                    className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${filters.categoryId === cat.id ? "bg-[var(--spice)]/10 text-[var(--spice)] font-semibold" : "text-[var(--bark-light)] hover:bg-[var(--cream-dark)]"}`}
                   >
                     {cat.name}
-                    <span className="text-xs text-[var(--gray-400)]">{cat.productCount}</span>
+                    <span className="text-[10px] opacity-50">{cat.productCount}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Price */}
-            <div className="bg-white rounded-md border border-[var(--border)] p-5">
-              <h3 className="font-semibold text-[var(--bark)] mb-3">Price Range</h3>
+            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+              <h3 className="font-semibold text-sm text-[var(--bark)] mb-3">Price Range</h3>
               <div className="space-y-3">
                 <input
                   type="range"
@@ -209,9 +226,9 @@ export function ProductsClient({
                   onChange={(e) =>
                     setFilters((f) => ({ ...f, maxPrice: Number(e.target.value) }))
                   }
-                  className="w-full accent-[var(--spice)]"
+                  className="w-full accent-[var(--spice)] cursor-pointer"
                 />
-                <div className="flex justify-between text-xs text-[var(--gray-500)]">
+                <div className="flex justify-between text-[10px] text-[var(--gray-500)] font-medium">
                   <span>KES 0</span>
                   <span>KES {filters.maxPrice.toLocaleString()}</span>
                 </div>
@@ -219,17 +236,17 @@ export function ProductsClient({
             </div>
 
             {/* In Stock */}
-            <div className="bg-white rounded-md border border-[var(--border)] p-5">
-              <label className="flex items-center gap-3 cursor-pointer">
+            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+              <label className="flex items-center gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={filters.inStock}
                   onChange={(e) =>
                     setFilters((f) => ({ ...f, inStock: e.target.checked }))
                   }
-                  className="w-4 h-4 accent-[var(--spice)] rounded"
+                  className="w-4 h-4 accent-[var(--spice)] rounded cursor-pointer"
                 />
-                <span className="text-sm font-medium text-[var(--bark)]">In Stock Only</span>
+                <span className="text-xs font-medium text-[var(--bark)] group-hover:text-[var(--spice)] transition-colors">In Stock Only</span>
               </label>
             </div>
           </aside>
@@ -244,68 +261,74 @@ export function ProductsClient({
               <p className="text-sm">Try adjusting your search or filters</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filtered.map((product) => (
-                <div
-                  key={product.id}
-                  className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                >
-                  <Link href={`/products/${product.slug}`}>
-                    <div className="relative h-48 overflow-hidden bg-[var(--cream-dark)]">
-                      <Image
-                        src={product.images[0]?.url}
-                        alt={product.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 50vw, 25vw"
-                      />
-                      <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                        {product.isBestSeller && <Badge variant="spice">Best Seller</Badge>}
-                        {product.isNew && <Badge variant="herb">New</Badge>}
-                        {product.compareAtPrice && (
-                          <Badge variant="warning">
-                            -{discountPercent(product.price, product.compareAtPrice)}%
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="absolute top-3 right-3">
-                        <WishlistButton productId={product.id} />
-                      </div>
-                    </div>
-                  </Link>
-                  <div className="p-4">
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                {paginatedItems.map((product) => (
+                  <div
+                    key={product.id}
+                    className="group bg-white rounded-xl overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
+                  >
                     <Link href={`/products/${product.slug}`}>
-                      <p className="text-xs text-[var(--gray-400)] mb-1 uppercase tracking-wide">
-                        {product.category.name}
-                      </p>
-                      <h3 className="font-semibold text-[var(--bark)] text-sm leading-snug mb-2 group-hover:text-[var(--spice)] transition-colors line-clamp-2">
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center gap-1.5 mb-3">
-                        <div className="flex">
-                          {[1, 2, 3, 4, 5].map((s) => (
-                            <Star key={s} size={11} className={s <= Math.round(product.rating) ? "text-amber-400 fill-amber-400" : "text-gray-200 fill-gray-200"} />
-                          ))}
+                      <div className="relative aspect-[3/2] overflow-hidden bg-[var(--cream-dark)]">
+                        <Image
+                          src={product.images[0]?.url}
+                          alt={product.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                        <div className="absolute top-2 left-2 flex flex-col gap-1">
+                          {product.isBestSeller && <Badge variant="spice" className="px-1.5 py-0 text-[9px] uppercase tracking-tighter">Best Seller</Badge>}
+                          {product.isNew && <Badge variant="herb" className="px-1.5 py-0 text-[9px] uppercase tracking-tighter">New</Badge>}
                         </div>
-                        <span className="text-xs text-[var(--gray-400)]">({product.reviewCount})</span>
-                      </div>
-                      <div className="flex items-baseline gap-2 mb-3">
-                        <span className="font-display font-bold text-[var(--spice)] text-lg">
-                          {formatPrice(product.price)}
-                        </span>
-                        {product.compareAtPrice && (
-                          <span className="text-xs text-[var(--gray-400)] line-through">
-                            {formatPrice(product.compareAtPrice)}
-                          </span>
-                        )}
-                        <span className="text-xs text-[var(--gray-400)]">/ {product.unit}</span>
+                        <div className="absolute top-2 right-2">
+                          <WishlistButton productId={product.id} className="scale-75 shadow-sm" />
+                        </div>
                       </div>
                     </Link>
-                    <AddToCartButton product={product} />
+                    <div className="p-3">
+                      <Link href={`/products/${product.slug}`}>
+                        <p className="text-[10px] text-[var(--gray-400)] mb-1 uppercase tracking-widest font-medium">
+                          {product.category.name}
+                        </p>
+                        <h3 className="font-semibold text-[var(--bark)] text-xs leading-tight mb-1.5 group-hover:text-[var(--spice)] transition-colors line-clamp-2 min-h-[2rem]">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center gap-1 mb-2">
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                              <Star key={s} size={10} className={s <= Math.round(product.rating) ? "text-amber-400 fill-amber-400" : "text-gray-200 fill-gray-200"} />
+                            ))}
+                          </div>
+                          <span className="text-[10px] text-[var(--gray-400)]">({product.reviewCount})</span>
+                        </div>
+                        <div className="flex items-baseline gap-1.5 mb-3">
+                          <span className="font-display font-bold text-[var(--spice)] text-sm">
+                            {formatPrice(product.price)}
+                          </span>
+                          {product.compareAtPrice && (
+                            <span className="text-[10px] text-[var(--gray-400)] line-through">
+                              {formatPrice(product.compareAtPrice)}
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                      <AddToCartButton product={product} className="w-full text-[11px] py-2 h-auto" />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(p) => {
+                  setCurrentPage(p);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            </>
           )}
         </div>
       </div>

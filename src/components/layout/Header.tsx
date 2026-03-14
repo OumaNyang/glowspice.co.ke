@@ -13,7 +13,7 @@ export function Header() {
             className="flex items-center gap-2 group"
             aria-label="GlowSpice Home"
           >
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-md bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
               <Leaf size={16} className="text-white" />
             </div>
             <div>

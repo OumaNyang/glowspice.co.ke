@@ -15,9 +15,23 @@ export async function generateMetadata({
   const { slug } = await params;
   const category = categories.find((c) => c.slug === slug);
   if (!category) return {};
+  
   return {
-    title: `${category.name} | GlowSpice`,
-    description: `Shop our premium selection of ${category.name.toLowerCase()}.`,
+    title: category.name,
+    description: `Browse our premium selection of ${category.name.toLowerCase()}. Hand-sourced, authentic flavours delivered in Kenya.`,
+    openGraph: {
+      title: `${category.name} | GlowSpice Kenya`,
+      description: `Explore the finest ${category.name.toLowerCase()} at GlowSpice.`,
+      url: `https://glowspice.co.ke/products/category/${slug}`,
+      images: [
+        {
+          url: category.image,
+          width: 800,
+          height: 600,
+          alt: category.name,
+        },
+      ],
+    },
   };
 }
 

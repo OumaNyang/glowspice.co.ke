@@ -46,7 +46,7 @@ export function ClientNav() {
             key={link.href}
             href={link.href}
             className={cn(
-              "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors duration-200",
+              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-200",
               pathname === link.href || (link.href !== "/products" && pathname.startsWith(link.href))
                 ? "text-[var(--spice)] bg-[var(--spice)]/10"
                 : "text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5"
@@ -61,21 +61,21 @@ export function ClientNav() {
       <div className="flex items-center gap-1">
         <Link
           href="/products"
-          className="p-2 rounded-xl text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
+          className="p-2 rounded-md text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
           aria-label="Search"
         >
           <Search size={20} />
         </Link>
         <Link
           href="/account/wishlist"
-          className="p-2 rounded-xl text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
+          className="p-2 rounded-md text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
           aria-label="Wishlist"
         >
           <Heart size={20} />
         </Link>
         <Link
           href="/account"
-          className="p-2 rounded-xl text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
+          className="p-2 rounded-md text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
           aria-label="Account"
         >
           <User size={20} />
@@ -83,7 +83,7 @@ export function ClientNav() {
         <button
           id="cart-toggle-btn"
           onClick={() => setCartOpen(true)}
-          className="relative p-2 rounded-xl text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
+          className="relative p-2 rounded-md text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
           aria-label="Cart"
         >
           <ShoppingBag size={20} />
@@ -97,7 +97,7 @@ export function ClientNav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 rounded-xl text-[var(--bark-light)] hover:bg-[var(--cream-dark)] transition-colors duration-200 ml-1"
+          className="md:hidden p-2 rounded-md text-[var(--bark-light)] hover:bg-[var(--cream-dark)] transition-colors duration-200 ml-1"
           aria-label="Toggle mobile menu"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -117,7 +117,7 @@ export function ClientNav() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "block px-4 py-3 rounded-xl text-sm font-medium transition-colors",
+                  "block px-4 py-3 rounded-md text-sm font-medium transition-colors",
                   pathname === link.href
                     ? "bg-[var(--spice)]/10 text-[var(--spice)]"
                     : "text-[var(--bark)] hover:bg-[var(--cream-dark)]"
@@ -129,13 +129,13 @@ export function ClientNav() {
             <hr className="border-[var(--border)] my-2" />
             <Link
               href="/account"
-              className="block px-4 py-3 rounded-xl text-sm font-medium text-[var(--bark)] hover:bg-[var(--cream-dark)]"
+              className="block px-4 py-3 rounded-md text-sm font-medium text-[var(--bark)] hover:bg-[var(--cream-dark)]"
             >
               My Account
             </Link>
             <Link
               href="/account/wishlist"
-              className="block px-4 py-3 rounded-xl text-sm font-medium text-[var(--bark)] hover:bg-[var(--cream-dark)]"
+              className="block px-4 py-3 rounded-md text-sm font-medium text-[var(--bark)] hover:bg-[var(--cream-dark)]"
             >
               Wishlist
             </Link>
