@@ -157,7 +157,7 @@ export function ProductsClient({
         {filtersOpen && (
           <aside className="w-64 shrink-0 space-y-6">
             {/* Categories */}
-            <div className="bg-white rounded-2xl border border-[var(--border)] p-5">
+            <div className="bg-white rounded-md border border-[var(--border)] p-5">
               <h3 className="font-semibold text-[var(--bark)] mb-3">Category</h3>
               <div className="space-y-1">
                 <button
@@ -185,7 +185,7 @@ export function ProductsClient({
             </div>
 
             {/* Price */}
-            <div className="bg-white rounded-2xl border border-[var(--border)] p-5">
+            <div className="bg-white rounded-md border border-[var(--border)] p-5">
               <h3 className="font-semibold text-[var(--bark)] mb-3">Price Range</h3>
               <div className="space-y-3">
                 <input
@@ -207,7 +207,7 @@ export function ProductsClient({
             </div>
 
             {/* In Stock */}
-            <div className="bg-white rounded-2xl border border-[var(--border)] p-5">
+            <div className="bg-white rounded-md border border-[var(--border)] p-5">
               <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
@@ -236,7 +236,7 @@ export function ProductsClient({
               {filtered.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-[var(--cream)] rounded-2xl overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <Link href={`/products/${product.slug}`}>
                     <div className="relative h-48 overflow-hidden bg-[var(--cream-dark)]">

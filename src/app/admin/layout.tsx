@@ -28,7 +28,7 @@ function AdminSidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 bg-[var(--spice)] rounded-xl flex items-center justify-center">
+          <div className="w-9 h-9 bg-[var(--spice)] rounded-md flex items-center justify-center">
             <Leaf size={18} />
           </div>
           <div>
@@ -51,7 +51,7 @@ function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group",
+                "flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium transition-all duration-200 group",
                 active
                   ? "bg-[var(--spice)] text-white"
                   : "text-white/60 hover:text-white hover:bg-white/10"
@@ -78,7 +78,7 @@ function AdminSidebar() {
         </div>
         <Link
           href="/"
-          className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+          className="flex items-center gap-3 px-4 py-2.5 rounded-md text-sm text-white/50 hover:text-white hover:bg-white/10 transition-colors"
         >
           <LogOut size={16} />
           Back to Store

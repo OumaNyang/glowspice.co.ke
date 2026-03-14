@@ -60,7 +60,7 @@ export default function AdminDashboardPage() {
           <div key={label} className="bg-white rounded-2xl p-5 border border-[var(--border)] shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center"
+                className="w-11 h-11 rounded-md flex items-center justify-center"
                 style={{ background: `${color}20` }}
               >
                 <Icon size={22} style={{ color }} />

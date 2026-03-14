@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Rubik, Google_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const rubik = Rubik({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-rubik",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const google_sans = Google_Sans({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-google-sans",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} font-body antialiased`}>
+      <body className={`${rubik.variable} ${google_sans.variable} font-body antialiased`}>
         {children}
       </body>
     </html>

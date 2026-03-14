@@ -76,7 +76,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-3 space-y-6">
             {step === 1 ? (
               <>
-                <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+                <div className="bg-white rounded-md p-6 border border-[var(--border)]">
                   <h2 className="font-display font-bold text-xl text-[var(--bark)] mb-5 flex items-center gap-2">
                     Shipping Details
                   </h2>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
             ) : (
               <>
                 {/* Payment Step */}
-                <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+                <div className="bg-white rounded-md p-6 border border-[var(--border)]">
                   <h2 className="font-display font-bold text-xl text-[var(--bark)] mb-5 flex items-center gap-2">
                     <Lock size={18} className="text-[var(--spice)]" />
                     Payment Method
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
 
           {/* Right — Summary */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-white rounded-md p-5 border border-[var(--border)]">
               <h3 className="font-display font-bold text-[var(--bark)] mb-4">Your Order</h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {items.map((item) => (

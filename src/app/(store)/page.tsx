@@ -109,7 +109,7 @@ export default function HomePage() {
               return (
                 <div
                   key={product.id}
-                  className="absolute w-52 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 shadow-xl"
+                  className="absolute w-52 bg-white/10 backdrop-blur-md border border-white/20 rounded-md p-3 shadow-xl"
                   style={{ top: o.top, right: o.right, transform: `rotate(${o.rotate})`, animation: `float ${3 + i}s ease-in-out infinite alternate` }}
                 >
                   <div className="relative h-32 rounded-md overflow-hidden mb-2">
@@ -168,7 +168,7 @@ export default function HomePage() {
                 href={`/products?category=${cat.slug}`}
                 className="group block"
               >
-                <div className="relative h-36 rounded-2xl overflow-hidden mb-3 shadow-md group-hover:shadow-lg transition-all duration-300">
+                <div className="relative h-36 rounded-md overflow-hidden mb-3 shadow-md group-hover:shadow-lg transition-all duration-300">
                   <Image
                     src={cat.image}
                     alt={cat.name}
@@ -219,7 +219,7 @@ export default function HomePage() {
             {featured.map((product) => (
               <div
                 key={product.id}
-                className="group bg-[var(--cream)] rounded-2xl overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
                 <Link href={`/products/${product.slug}`}>
                   <div className="relative h-52 overflow-hidden bg-[var(--cream-dark)]">
@@ -333,7 +333,7 @@ export default function HomePage() {
               <Link
                 key={product.id}
                 href={`/products/${product.slug}`}
-                className="group flex gap-4 bg-[var(--cream)] hover:bg-white border border-[var(--border)] hover:border-[var(--spice)]/30 rounded-2xl p-4 transition-all duration-300 hover:shadow-lg"
+                className="group flex gap-4 bg-[var(--cream)] hover:bg-white border border-[var(--border)] hover:border-[var(--spice)]/30 rounded-md p-4 transition-all duration-300 hover:shadow-lg"
               >
                 <div className="relative w-20 h-20 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
                   <Image
@@ -383,7 +383,7 @@ export default function HomePage() {
               { name: "James Kariuki", text: "The Garam Masala tastes genuinely freshly ground. You can really tell the difference from supermarket blends. Totally hooked!", rating: 5, location: "Westlands" },
               { name: "Fatuma Hassan", text: "Ordered the Saffron for my biryani. The colour and fragrance were absolutely stunning! Will never use cheap saffron again.", rating: 5, location: "Mombasa Road" },
             ].map((r) => (
-              <div key={r.name} className="bg-white rounded-2xl p-6 border border-[var(--border)] shadow-sm">
+              <div key={r.name} className="bg-white rounded-md p-6 border border-[var(--border)] shadow-sm">
                 <div className="flex mb-4">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} size={16} className="text-amber-400 fill-amber-400" />
@@ -420,7 +420,7 @@ export default function HomePage() {
               {newArrivals.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-[var(--cream)] rounded-2xl overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="group bg-[var(--cream)] rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <Link href={`/products/${product.slug}`}>
                     <div className="relative h-48 overflow-hidden">

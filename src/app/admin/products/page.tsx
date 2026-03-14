@@ -15,14 +15,14 @@ export default function AdminProductsPage() {
         </div>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 px-5 py-2.5 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-semibold rounded-xl text-sm transition-colors shadow-sm"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-semibold rounded-md text-sm transition-colors shadow-sm"
         >
           <Plus size={16} />
           Add Product
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
+      <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
@@ -39,7 +39,7 @@ export default function AdminProductsPage() {
                 <tr key={product.id} className="hover:bg-[var(--gray-50)] transition-colors">
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-[var(--cream-dark)] shrink-0">
+                      <div className="relative w-10 h-10 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
                         <Image
                           src={product.images[0]?.url}
                           alt={product.name}

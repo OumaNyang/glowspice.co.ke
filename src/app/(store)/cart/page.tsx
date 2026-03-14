@@ -52,9 +52,9 @@ export default function CartPage() {
             {items.map((item) => (
               <div
                 key={item.product.id}
-                className="bg-white rounded-2xl p-5 border border-[var(--border)] flex gap-4 items-center group"
+                className="bg-white rounded-md p-5 border border-[var(--border)] flex gap-4 items-center group"
               >
-                <Link href={`/products/${item.product.slug}`} className="relative w-24 h-24 rounded-xl overflow-hidden bg-[var(--cream-dark)] shrink-0">
+                <Link href={`/products/${item.product.slug}`} className="relative w-24 h-24 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
                   <Image
                     src={item.product.images[0]?.url}
                     alt={item.product.name}
@@ -125,7 +125,7 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="space-y-4">
-            <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+            <div className="bg-white rounded-md p-6 border border-[var(--border)]">
               <h2 className="font-display font-bold text-xl text-[var(--bark)] mb-5">
                 Order Summary
               </h2>
@@ -176,13 +176,13 @@ export default function CartPage() {
             </div>
 
             {/* Promo code */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-white rounded-md p-5 border border-[var(--border)]">
               <h3 className="font-semibold text-sm text-[var(--bark)] mb-3">Promo Code</h3>
               <div className="flex gap-2">
                 <input
                   type="text"
                   placeholder="Enter code..."
-                  className="flex-1 bg-[var(--cream)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[var(--spice)]"
+                  className="flex-1 bg-[var(--cream)] border border-[var(--border)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[var(--spice)]"
                 />
                 <Button variant="outline" size="sm">Apply</Button>
               </div>

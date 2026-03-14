@@ -35,21 +35,21 @@ export default function ProfilePage() {
 
       <form onSubmit={handleSave} className="space-y-5">
         {/* Avatar section */}
-        <div className="bg-white rounded-2xl border border-[var(--border)] p-6 flex items-center gap-5">
+        <div className="bg-white rounded-md border border-[var(--border)] p-6 flex items-center gap-5">
           <div className="w-20 h-20 bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] rounded-full flex items-center justify-center text-white text-3xl font-display font-bold shrink-0">
             {form.name.charAt(0)}
           </div>
           <div>
             <p className="font-semibold text-[var(--bark)]">Profile Photo</p>
             <p className="text-sm text-[var(--gray-400)] mb-3">JPG or PNG, max 2MB</p>
-            <button type="button" className="text-sm px-4 py-2 border border-[var(--border)] rounded-xl hover:bg-[var(--cream-dark)] transition-colors text-[var(--bark-light)] font-medium">
+            <button type="button" className="text-sm px-4 py-2 border border-[var(--border)] rounded-md hover:bg-[var(--cream-dark)] transition-colors text-[var(--bark-light)] font-medium">
               Change Photo
             </button>
           </div>
         </div>
 
         {/* Personal info */}
-        <div className="bg-white rounded-2xl border border-[var(--border)] p-6 space-y-4">
+        <div className="bg-white rounded-md border border-[var(--border)] p-6 space-y-4">
           <h2 className="font-semibold text-[var(--bark)]">Personal Information</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <Input
@@ -103,7 +103,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Password */}
-        <div className="bg-white rounded-2xl border border-[var(--border)] p-6 space-y-4">
+        <div className="bg-white rounded-md border border-[var(--border)] p-6 space-y-4">
           <h2 className="font-semibold text-[var(--bark)]">Change Password</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <Input id="currentPw" label="Current Password" type="password" placeholder="••••••••" />

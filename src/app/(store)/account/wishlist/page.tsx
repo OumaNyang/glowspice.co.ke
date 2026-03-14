@@ -25,7 +25,7 @@ export default function WishlistPage() {
       </h1>
 
       {wishlistProducts.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-[var(--border)] p-16 text-center">
+        <div className="bg-white rounded-md border border-[var(--border)] p-16 text-center">
           <Heart size={48} className="text-[var(--gray-200)] mx-auto mb-4" />
           <p className="font-display text-xl text-[var(--bark)] mb-2">No saved items yet</p>
           <p className="text-[var(--gray-400)] text-sm mb-6">
@@ -33,7 +33,7 @@ export default function WishlistPage() {
           </p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--spice)] text-white font-semibold rounded-xl text-sm hover:bg-[var(--spice-dark)] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--spice)] text-white font-semibold rounded-md text-sm hover:bg-[var(--spice-dark)] transition-colors"
           >
             Browse Products
           </Link>
@@ -43,9 +43,9 @@ export default function WishlistPage() {
           {wishlistProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-2xl border border-[var(--border)] p-4 flex gap-4"
+              className="bg-white rounded-md border border-[var(--border)] p-4 flex gap-4"
             >
-              <Link href={`/products/${product.slug}`} className="relative w-20 h-20 rounded-xl overflow-hidden bg-[var(--cream-dark)] shrink-0">
+              <Link href={`/products/${product.slug}`} className="relative w-20 h-20 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
                 <Image
                   src={product.images[0]?.url}
                   alt={product.name}

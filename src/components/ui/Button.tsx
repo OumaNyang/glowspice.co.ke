@@ -25,10 +25,10 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm rounded-lg gap-1.5",
-  md: "px-5 py-2.5 text-sm rounded-xl gap-2",
-  lg: "px-7 py-3.5 text-base rounded-xl gap-2.5",
-  icon: "p-2.5 rounded-xl",
+  sm: "px-3 py-1.5 text-sm rounded-mdgap-1.5",
+  md: "px-5 py-2.5 text-sm rounded-md gap-2",
+  lg: "px-7 py-3.5 text-base rounded-md gap-2.5",
+  icon: "p-2.5 rounded-md",
 };
 
 export function Button({

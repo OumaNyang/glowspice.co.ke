@@ -16,7 +16,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
           {/* Sidebar */}
           <aside className="lg:col-span-1">
             {/* Profile card */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)] mb-4 text-center">
+            <div className="bg-white rounded-md p-5 border border-[var(--border)] mb-4 text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] rounded-full flex items-center justify-center text-white text-2xl font-display font-bold mx-auto mb-3">
                 A
               </div>
@@ -24,7 +24,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
               <p className="text-sm text-[var(--gray-400)]">amina@example.com</p>
             </div>
 
-            <nav className="bg-white rounded-2xl border border-[var(--border)] overflow-hidden">
+            <nav className="bg-white rounded-md border border-[var(--border)] overflow-hidden">
               {navItems.map((item) => (
                 <Link
                   key={item.href}

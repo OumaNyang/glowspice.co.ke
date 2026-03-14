@@ -28,8 +28,8 @@ export default function AccountDashboardPage() {
           { icon: TrendingUp, label: "Total Spent", value: formatPrice(totalSpent), color: "var(--herb)" },
           { icon: Heart, label: "Wishlist", value: "5 items", color: "var(--spice)" },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: `${color}20` }}>
+          <div key={label} className="bg-white rounded-md p-5 border border-[var(--border)]">
+            <div className="w-10 h-10 rounded-md flex items-center justify-center mb-3" style={{ background: `${color}20` }}>
               <Icon size={20} style={{ color }} />
             </div>
             <p className="text-xs text-[var(--gray-400)] mb-1">{label}</p>
@@ -39,7 +39,7 @@ export default function AccountDashboardPage() {
       </div>
 
       {/* Recent orders */}
-      <div className="bg-white rounded-2xl border border-[var(--border)] overflow-hidden">
+      <div className="bg-white rounded-md border border-[var(--border)] overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
           <h2 className="font-semibold text-[var(--bark)]">Recent Orders</h2>
           <Link href="/account/orders" className="text-sm text-[var(--spice)] font-semibold hover:underline">

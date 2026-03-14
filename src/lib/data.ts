@@ -24,7 +24,7 @@ export const categories: Category[] = [
     name: "Ground Spices",
     slug: "ground-spices",
     description: "Finely milled spice powders ready for instant use in cooking.",
-    image: "https://images.unsplash.com/photo-1532336414038-cf190504f475?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1533015582595-3ca446d3066e?w=600&q=80",
     color: "#8B4513",
     productCount: 10,
   },
@@ -42,7 +42,7 @@ export const categories: Category[] = [
     name: "Spice Blends",
     slug: "spice-blends",
     description: "Expertly crafted spice mixes from traditional and modern recipes.",
-    image: "https://images.unsplash.com/photo-1583394293214-5c3b93e673ac?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1615478503039-9625244391f7?w=600&q=80",
     color: "#7B3F00",
     productCount: 7,
   },
@@ -108,6 +108,10 @@ export const products: Product[] = [
     tags: ["pepper", "spicy", "savory", "essential"],
     images: [
       { id: "img_2a", url: "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&q=80", alt: "Tellicherry Black Pepper" },
+      { id: "img_2b", url: "https://cdn2.stylecraze.com/wp-content/uploads/2013/06/17-Amazing-Benefits-Of-Black-Pepper-For-Skin-Hair-And-Health.jpg.webp", alt: "Black Pepper" },
+      { id: "img_2c", url: "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&q=80", alt: "Tellicherry Black Pepper" },
+
+
     ],
     stock: 200,
     unit: "100g",
@@ -180,7 +184,7 @@ export const products: Product[] = [
     categoryId: "cat_1",
     tags: ["coriander", "seeds", "curry", "mild"],
     images: [
-      { id: "img_5a", url: "https://images.unsplash.com/photo-1532336414038-cf190504f475?w=800&q=80", alt: "Coriander Seeds" },
+      { id: "img_5a", url: "https://images.unsplash.com/photo-1533015582595-3ca446d3066e?w=800&q=80", alt: "Coriander Seeds" },
     ],
     stock: 300,
     unit: "200g",
@@ -278,7 +282,7 @@ export const products: Product[] = [
     categoryId: "cat_2",
     tags: ["cayenne", "hot", "chili", "heat"],
     images: [
-      { id: "img_9a", url: "https://images.unsplash.com/photo-1583394293214-5c3b93e673ac?w=800&q=80", alt: "Cayenne Pepper" },
+      { id: "img_9a", url: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=800&q=80", alt: "Cayenne Pepper" },
     ],
     stock: 200,
     unit: "100g",
@@ -302,7 +306,7 @@ export const products: Product[] = [
     categoryId: "cat_2",
     tags: ["cumin", "earthy", "indian", "mexican"],
     images: [
-      { id: "img_10a", url: "https://images.unsplash.com/photo-1532336414038-cf190504f475?w=800&q=80", alt: "Ground Cumin" },
+      { id: "img_10a", url: "https://images.unsplash.com/photo-1533015582595-3ca446d3066e?w=800&q=80", alt: "Ground Cumin" },
     ],
     stock: 180,
     unit: "150g",
@@ -401,7 +405,7 @@ export const products: Product[] = [
     categoryId: "cat_4",
     tags: ["berbere", "ethiopian", "blend", "spicy"],
     images: [
-      { id: "img_14a", url: "https://images.unsplash.com/photo-1583394293214-5c3b93e673ac?w=800&q=80", alt: "Berbere Spice Blend" },
+      { id: "img_14a", url: "https://images.unsplash.com/photo-1615478503039-9625244391f7?w=800&q=80", alt: "Berbere Spice Blend" },
     ],
     stock: 75,
     unit: "100g",

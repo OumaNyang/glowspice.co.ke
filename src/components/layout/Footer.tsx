@@ -18,7 +18,7 @@ const links = {
     { href: "/register", label: "Create Account" },
   ],
   help: [
-    { href: "#", label: "Shipping Policy" },
+    { href: "/", label: "Shipping Policy" },
     { href: "#", label: "Returns & Refunds" },
     { href: "#", label: "Track Order" },
     { href: "#", label: "Contact Us" },
@@ -113,30 +113,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter */}
-        <div className="bg-white/5 rounded-2xl p-6 mb-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <h4 className="font-display font-semibold text-white text-lg mb-1">
-                Join the Spice Journey
-              </h4>
-              <p className="text-sm text-[var(--sand)]/60">
-                New arrivals, recipes, and exclusive offers — delivered to your inbox.
-              </p>
-            </div>
-            <div className="flex gap-2 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 md:w-64 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[var(--spice-light)] transition-colors"
-              />
-              <button className="px-5 py-2.5 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white text-sm font-semibold rounded-xl transition-colors shrink-0">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
+       
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
           <p className="text-xs text-[var(--sand)]/50">

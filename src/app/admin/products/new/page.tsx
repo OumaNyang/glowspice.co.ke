@@ -39,7 +39,7 @@ export default function NewProductPage() {
   return (
     <div className="p-8 max-w-4xl">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/products" className="p-2 rounded-xl hover:bg-[var(--gray-100)] transition-colors">
+        <Link href="/admin/products" className="p-2 rounded-md hover:bg-[var(--gray-100)] transition-colors">
           <ArrowLeft size={20} className="text-[var(--bark-light)]" />
         </Link>
         <div>
@@ -50,9 +50,9 @@ export default function NewProductPage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Image Upload */}
-        <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+        <div className="bg-white rounded-md p-6 border border-[var(--border)]">
           <h2 className="font-semibold text-[var(--bark)] mb-4">Product Images</h2>
-          <div className="border-2 border-dashed border-[var(--border)] rounded-xl p-10 text-center cursor-pointer hover:border-[var(--spice)] transition-colors group">
+          <div className="border-2 border-dashed border-[var(--border)] rounded-md p-10 text-center cursor-pointer hover:border-[var(--spice)] transition-colors group">
             <Upload size={32} className="text-[var(--gray-300)] group-hover:text-[var(--spice)] mx-auto mb-3 transition-colors" />
             <p className="text-sm text-[var(--gray-400)]">Click to upload or drag & drop images</p>
             <p className="text-xs text-[var(--gray-300)] mt-1">PNG, JPG up to 10MB</p>
@@ -60,7 +60,7 @@ export default function NewProductPage() {
         </div>
 
         {/* Basic details */}
-        <div className="bg-white rounded-2xl p-6 border border-[var(--border)] space-y-4">
+        <div className="bg-white rounded-md p-6 border border-[var(--border)] space-y-4">
           <h2 className="font-semibold text-[var(--bark)] mb-2">Product Details</h2>
           <Input
             id="name"
@@ -89,7 +89,7 @@ export default function NewProductPage() {
         </div>
 
         {/* Pricing & Inventory */}
-        <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+        <div className="bg-white rounded-md p-6 border border-[var(--border)]">
           <h2 className="font-semibold text-[var(--bark)] mb-4">Pricing & Inventory</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <Select
@@ -147,7 +147,7 @@ export default function NewProductPage() {
         </div>
 
         {/* Labels */}
-        <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+        <div className="bg-white rounded-md p-6 border border-[var(--border)]">
           <h2 className="font-semibold text-[var(--bark)] mb-4">Labels</h2>
           <div className="flex flex-wrap gap-4">
             {(["isFeatured", "isBestSeller", "isNew"] as const).map((field) => (

@@ -20,7 +20,7 @@ export default function OrderSuccessPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-[var(--border)] text-left space-y-3">
+        <div className="bg-white rounded-md p-6 border border-[var(--border)] text-left space-y-3">
           <div className="flex items-center gap-3 text-sm">
             <Package size={16} className="text-[var(--spice)] shrink-0" />
             <div>

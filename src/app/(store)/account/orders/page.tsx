@@ -20,7 +20,7 @@ export default function OrdersPage() {
       <h1 className="font-display font-bold text-3xl text-[var(--bark)]">My Orders</h1>
       <div className="space-y-4">
         {orders.map((order) => (
-          <div key={order.id} className="bg-white rounded-2xl border border-[var(--border)] overflow-hidden">
+          <div key={order.id} className="bg-white rounded-md border border-[var(--border)] overflow-hidden">
             {/* Header */}
             <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-[var(--border)] bg-[var(--cream)]">
               <div>
@@ -40,7 +40,7 @@ export default function OrdersPage() {
             <div className="px-5 py-4 space-y-3">
               {order.items.map((item) => (
                 <div key={item.product.id} className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-[var(--cream-dark)] shrink-0">
+                  <div className="relative w-12 h-12 rounded-md overflow-hidden bg-[var(--cream-dark)] shrink-0">
                     <Image
                       src={item.product.images[0]?.url}
                       alt={item.product.name}

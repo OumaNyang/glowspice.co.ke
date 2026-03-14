@@ -143,7 +143,7 @@ export default async function ProductDetailPage({
             {/* Details */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {product.origin && (
-                <div className="flex items-center gap-2 bg-white rounded-xl p-3 border border-[var(--border)]">
+                <div className="flex items-center gap-2 bg-white rounded-md p-3 border border-[var(--border)]">
                   <MapPin size={16} className="text-[var(--spice)] shrink-0" />
                   <div>
                     <p className="text-xs text-[var(--gray-400)]">Origin</p>
@@ -151,14 +151,14 @@ export default async function ProductDetailPage({
                   </div>
                 </div>
               )}
-              <div className="flex items-center gap-2 bg-white rounded-xl p-3 border border-[var(--border)]">
+              <div className="flex items-center gap-2 bg-white rounded-md p-3 border border-[var(--border)]">
                 <Package size={16} className="text-[var(--spice)] shrink-0" />
                 <div>
                   <p className="text-xs text-[var(--gray-400)]">Pack Size</p>
                   <p className="text-sm font-semibold text-[var(--bark)]">{product.unit}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 bg-white rounded-xl p-3 border border-[var(--border)]">
+              <div className="flex items-center gap-2 bg-white rounded-md p-3 border border-[var(--border)]">
                 <Shield size={16} className="text-[var(--herb)] shrink-0" />
                 <div>
                   <p className="text-xs text-[var(--gray-400)]">Stock</p>
@@ -191,7 +191,7 @@ export default async function ProductDetailPage({
                 { icon: "🚚", label: "Fast Delivery" },
                 { icon: "↩️", label: "Easy Returns" },
               ].map((g) => (
-                <div key={g.label} className="text-center bg-white rounded-xl p-3 border border-[var(--border)]">
+                <div key={g.label} className="text-center bg-white rounded-md p-3 border border-[var(--border)]">
                   <div className="text-xl mb-1">{g.icon}</div>
                   <p className="text-xs font-semibold text-[var(--bark)]">{g.label}</p>
                 </div>
@@ -206,20 +206,20 @@ export default async function ProductDetailPage({
             <h2 className="font-display font-bold text-2xl text-[var(--bark)] mb-4">
               Product Description
             </h2>
-            <div className="bg-white rounded-2xl p-6 border border-[var(--border)]">
+            <div className="bg-white rounded-md p-6 border border-[var(--border)]">
               <p className="text-[var(--bark-light)] leading-relaxed">{product.description}</p>
             </div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-4">
-            <div className="bg-[var(--herb)]/5 border border-[var(--herb)]/20 rounded-2xl p-5">
+            <div className="bg-[var(--herb)]/5 border border-[var(--herb)]/20 rounded-md p-5">
               <h3 className="font-semibold text-[var(--herb)] mb-2">Storage Instructions</h3>
               <p className="text-sm text-[var(--bark-light)] leading-relaxed">
                 Store in a cool, dry place away from direct sunlight. Keep in an airtight container to preserve freshness, aroma, and potency.
               </p>
             </div>
-            <div className="bg-[var(--spice)]/5 border border-[var(--spice)]/20 rounded-2xl p-5">
+            <div className="bg-[var(--spice)]/5 border border-[var(--spice)]/20 rounded-md p-5">
               <h3 className="font-semibold text-[var(--spice)] mb-2">Quality Promise</h3>
               <p className="text-sm text-[var(--bark-light)] leading-relaxed">
                 Every product is batch-tested for purity, freshness, and flavour before dispatch. No additives, fillers, or preservatives — ever.
@@ -238,7 +238,7 @@ export default async function ProductDetailPage({
               {reviews.map((review) => (
                 <div
                   key={review.id}
-                  className="bg-white rounded-2xl p-5 border border-[var(--border)]"
+                  className="bg-white rounded-md p-5 border border-[var(--border)]"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex">

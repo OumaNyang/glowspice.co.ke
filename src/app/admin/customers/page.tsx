@@ -19,8 +19,8 @@ export default function AdminCustomersPage() {
           { icon: ShoppingBag, label: "Total Orders", value: customers.reduce((s, c) => s + (c.orderCount ?? 0), 0), color: "var(--spice)" },
           { icon: TrendingUp, label: "Total Revenue", value: formatPrice(customers.reduce((s, c) => s + (c.totalSpent ?? 0), 0)), color: "var(--herb)" },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-[var(--border)] shadow-sm">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: `${color}20` }}>
+          <div key={label} className="bg-white rounded-md p-5 border border-[var(--border)] shadow-sm">
+            <div className="w-10 h-10 rounded-md flex items-center justify-center mb-3" style={{ background: `${color}20` }}>
               <Icon size={20} style={{ color }} />
             </div>
             <p className="font-display font-bold text-2xl text-[var(--bark)]">{value}</p>
@@ -29,7 +29,7 @@ export default function AdminCustomersPage() {
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
+      <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
             <tr>
