@@ -55,10 +55,13 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/images/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/images/favicon/apple-touch-icon.png",
   },
+  manifest: "/images/favicon/site.webmanifest",
 };
 
 import { Toaster } from "sonner";
@@ -68,6 +71,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+
       <body className={`${rubik.variable} ${outfit.variable} font-body antialiased`}>
         {children}
         <Toaster position="top-right" richColors closeButton />

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Leaf, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
 
 const links = {
   shop: [
@@ -31,40 +32,28 @@ const links = {
 export function Footer() {
   return (
     <footer className="bg-[var(--bark)] text-[var(--sand)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-6">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-6 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-4">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-md bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] flex items-center justify-center">
-                <Leaf size={18} className="text-white" />
-              </div>
-              <span className="font-display font-bold text-xl text-white">
-                Glow<span className="text-[var(--spice-light)]">Spice</span>
-              </span>
+            <Link href="/" className="inline-flex items-center mb-6 hover:opacity-90 transition-opacity">
+              <Image 
+                src="/images/glowspice-logo.png" 
+                alt="GlowSpice Logo" 
+                width={300} 
+                height={40} 
+                className="h-45 w-auto brightness-0 invert"
+              />
             </Link>
             <p className="text-sm leading-relaxed text-[var(--sand)]/70 mb-6 max-w-xs">
               Sourcing the world&apos;s finest spices, herbs, and botanicals and delivering 
               them fresh to your kitchen — from Nairobi to your door.
             </p>
-            <div className="space-y-2 text-sm text-[var(--sand)]/70">
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-[var(--spice-light)] shrink-0" />
-                <span>Westlands, Nairobi, Kenya</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone size={14} className="text-[var(--spice-light)] shrink-0" />
-                <span>+254 700 123 456</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail size={14} className="text-[var(--spice-light)] shrink-0" />
-                <span>hello@glowspice.co.ke</span>
-              </div>
-            </div>
+         
           </div>
 
           {/* Shop */}
-          <div>
+          {/* <div>
             <h4 className="font-display font-semibold text-white mb-4">Shop</h4>
             <ul className="space-y-2">
               {links.shop.map((l) => (
@@ -78,7 +67,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Account */}
           <div>
@@ -99,6 +88,20 @@ export function Footer() {
 
           {/* Help */}
           <div>
+               <div className="space-y-2 text-sm text-[var(--sand)]/70">
+              <div className="flex items-center gap-2">
+                <MapPin size={14} className="text-[var(--spice-light)] shrink-0" />
+                <span>Westlands, Nairobi, Kenya</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone size={14} className="text-[var(--spice-light)] shrink-0" />
+                <span>+254 700 123 456</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail size={14} className="text-[var(--spice-light)] shrink-0" />
+                <span>hello@glowspice.co.ke</span>
+              </div>
+            </div>
             <h4 className="font-display font-semibold text-white mb-4">Help</h4>
             <ul className="space-y-2">
               {links.help.map((l) => (
