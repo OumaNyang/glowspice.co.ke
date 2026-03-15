@@ -20,129 +20,67 @@ const features = [
   { icon: Award, title: "Premium Quality", desc: "Every batch is tested for purity and freshness" },
 ];
 
+import { HeroCarousel } from "@/components/store/HeroCarousel";
+
 export default function HomePage() {
   const featured = getFeaturedProducts().slice(0, 8);
   const bestSellers = getBestSellers().slice(0, 4);
   const newArrivals = getNewArrivals();
 
   return (
-    <div>
+    <div className="bg-[var(--cream)]">
       {/* ─── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
-        {/* Background */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            background: "linear-gradient(135deg, var(--bark) 0%, #5c3524 50%, var(--herb-dark) 100%)",
-          }}
-        />
-        {/* Grain overlay */}
-        <div
-          className="absolute inset-0 z-0 opacity-20"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
-          }}
-        />
-        {/* Decorative spice blobs */}
-        <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-[var(--spice)]/20 blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-64 h-64 rounded-full bg-[var(--herb)]/20 blur-3xl" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center py-24">
-          {/* left — copy */}
-          <div className="text-white">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm text-[var(--sand)] mb-6">
-              <Leaf size={14} className="text-[var(--spice-light)]" />
-              Sourced from 30+ Countries
+      <section className="relative overflow-hidden">
+        <HeroCarousel>
+          <div className="max-w-4xl">
+            {/* Trusted Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 text-sm font-bold text-[var(--sand)] mb-8 shadow-sm">
+              <Shield size={16} className="text-[var(--spice-light)]" />
+              GlowSpice: Your Trusted Source for Natural Spices & Herbs
             </div>
-            <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-6">
-              The World&apos;s<br />
-              <span className="text-gradient" style={{ background: "linear-gradient(135deg, var(--spice-light), #f0a868)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                Finest Spices
-              </span><br />
-              Delivered Fresh
+
+            <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-[1.1] text-white mb-6 tracking-tight">
+              Pure. Natural.<br />
+              <span className="text-[var(--spice-light)]">Authentic.</span>
             </h1>
-            <p className="text-lg text-white/70 leading-relaxed mb-8 max-w-lg">
-              Hand-sourced premium spices, herbs, and botanicals from the world&apos;s 
-              great spice growing regions — arriving at your kitchen in Nairobi, 
-              fresh from the source.
+            
+            <p className="text-xl sm:text-2xl text-[var(--sand)]/80 leading-relaxed mb-10 max-w-2xl">
+              Sourcing the world&apos;s finest premium natural spices, herbs, and 
+              seasoning products directly from the best growers. Pure quality 
+              delivered fresh to your table.
             </p>
-            <div className="flex flex-wrap gap-4">
+
+            <div className="flex flex-wrap items-center gap-6">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-semibold rounded-md transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-xl hover:shadow-[0_20px_40px_-15px_rgba(196,89,45,0.4)] hover:-translate-y-1 group"
               >
-                Shop All Spices
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Explore Collection
+                <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" />
               </Link>
               <Link
-                href="/products?filter=bestsellers"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-md transition-all duration-200"
+                href="/about"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border-2 border-white/20 text-white text-lg font-bold rounded-xl transition-all duration-300"
               >
-                Best Sellers
+                Our Quality Story
               </Link>
             </div>
-            {/* Stats */}
-            <div className="flex gap-8 mt-12 pt-8 border-t border-white/10">
-              {[
-                { value: "200+", label: "Premium Products" },
-                { value: "30+", label: "Source Countries" },
-                { value: "5,000+", label: "Happy Customers" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="font-display font-bold text-2xl text-white">{stat.value}</div>
-                  <div className="text-xs text-white/50 mt-0.5">{stat.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
-
-          {/* right — floating product cards */}
-          <div className="hidden lg:block relative h-[500px]">
-            {featured.slice(0, 3).map((product, i) => {
-              const offsets = [
-                { top: "0px", right: "0px", rotate: "2deg" },
-                { top: "120px", right: "200px", rotate: "-3deg" },
-                { top: "260px", right: "60px", rotate: "1.5deg" },
-              ];
-              const o = offsets[i];
-              return (
-                <div
-                  key={product.id}
-                  className="absolute w-52 bg-white/10 backdrop-blur-md border border-white/20 rounded-md p-3 shadow-xl"
-                  style={{ top: o.top, right: o.right, transform: `rotate(${o.rotate})`, animation: `float ${3 + i}s ease-in-out infinite alternate` }}
-                >
-                  <div className="relative h-32 rounded-md overflow-hidden mb-2">
-                    <Image
-                      src={product.images[0]?.url}
-                      alt={product.name}
-                      fill
-                      className="object-cover"
-                      sizes="200px"
-                    />
-                  </div>
-                  <p className="text-white text-xs font-semibold truncate">{product.name}</p>
-                  <p className="text-[var(--spice-light)] text-xs font-bold">{formatPrice(product.price)}</p>
-                </div>
-              );
-            })}
-            <style>{`@keyframes float { from { transform: translateY(0); } to { transform: translateY(-12px); } }`}</style>
-          </div>
-        </div>
+        </HeroCarousel>
       </section>
 
       {/* ─── FEATURES STRIP ─────────────────────────────────────── */}
-      <section className="bg-white border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="bg-white border-y border-[var(--border)] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-[var(--spice)]/10 flex items-center justify-center shrink-0">
-                  <Icon size={20} className="text-[var(--spice)]" />
+              <div key={title} className="flex flex-col items-center text-center lg:items-start lg:text-left gap-4 group">
+                <div className="w-12 h-12 rounded-xl bg-[var(--spice)]/5 flex items-center justify-center shrink-0 transition-colors group-hover:bg-[var(--spice)]/10">
+                  <Icon size={22} className="text-[var(--spice)]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm text-[var(--bark)]">{title}</h3>
-                  <p className="text-xs text-[var(--gray-500)] mt-0.5">{desc}</p>
+                  <h3 className="font-display font-bold text-[var(--bark)] mb-1">{title}</h3>
+                  <p className="text-sm text-[var(--gray-400)] leading-relaxed">{desc}</p>
                 </div>
               </div>
             ))}

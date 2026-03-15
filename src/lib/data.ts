@@ -5,7 +5,28 @@ import type {
   Order,
   User,
   DashboardStats,
+  Banner,
 } from "./types";
+
+// ─── Banners ───────────────────────────────────────────────────────────────
+
+export const initialBanners: Banner[] = [
+  {
+    id: "banner_1",
+    image: "/images/hero-spices.png",
+    isActive: true,
+  },
+  {
+    id: "banner_2",
+    image: "/images/banner1.png",
+    isActive: true,
+  },
+  {
+    id: "banner_3",
+    image: "/images/banner2.png",
+    isActive: true,
+  },
+];
 
 // ─── Categories ──────────────────────────────────────────────────────────────
 

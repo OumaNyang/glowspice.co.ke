@@ -154,7 +154,17 @@ export interface ProductFilters {
   search: string;
   categoryId: string;
   minPrice: number;
-  maxPrice: number;
-  sortBy: "newest" | "price_asc" | "price_desc" | "popular" | "rating";
   inStock: boolean;
+  sortBy: "newest" | "price_asc" | "price_desc" | "popular" | "rating";
+}
+
+// ─── Banner ──────────────────────────────────────────────────────────────────
+
+export interface Banner {
+  id: string;
+  image: string;
+  title?: string;
+  subtitle?: string;
+  link?: string;
+  isActive: boolean;
 }

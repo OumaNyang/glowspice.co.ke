@@ -123,7 +123,7 @@ export default async function ProductDetailPage({
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Left — Images */}
           <ProductImageGallery images={product.images} productName={product.name} />
@@ -150,7 +150,7 @@ export default async function ProductDetailPage({
             </Link>
 
             {/* Name */}
-            <h1 className="font-display font-bold text-2xl sm:text-3xl text-[var(--bark)] mt-2 mb-4 leading-tight">
+            <h1 className="font-display font-bold text-2xl sm:text-2xl text-[var(--bark)] mt-2 mb-4 leading-tight">
               {product.name}
             </h1>
 
@@ -178,7 +178,7 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Price */}
-            <div className="flex items-baseline gap-3 mb-6">
+            <div className="flex items-baseline gap-3 mb-4">
               <span className="font-display font-bold text-3xl text-[var(--spice)]">
                 {formatPrice(product.price)}
               </span>
@@ -191,12 +191,12 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Short description */}
-            <p className="text-[var(--bark-light)] leading-relaxed mb-6">
+            <p className="text-[var(--bark-light)] leading-relaxed mb-4">
               {product.shortDescription}
             </p>
 
             {/* Details */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-4">
               {product.origin && (
                 <div className="flex items-center gap-2 bg-white rounded-md p-3 border border-[var(--border)]">
                   <MapPin size={16} className="text-[var(--spice)] shrink-0" />
@@ -225,7 +225,7 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-2 mb-4">
               {product.tags.map((tag) => (
                 <Badge key={tag} variant="outline">
                   {tag}
@@ -234,7 +234,7 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Add to cart */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <QuantityAddToCart product={product} />
               <WishlistButton productId={product.id} productName={product.name} />
             </div>
@@ -256,7 +256,7 @@ export default async function ProductDetailPage({
         </div>
 
         {/* Description */}
-        <div className="mt-16 grid lg:grid-cols-3 gap-8">
+        <div className="mt-10 grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <h2 className="font-display font-bold text-xl text-[var(--bark)] mb-2">
               Product Description
