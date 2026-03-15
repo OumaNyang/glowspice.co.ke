@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { products } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
@@ -71,8 +72,11 @@ export default function WishlistPage() {
                     <ShoppingCart size={12} />
                     Add to Cart
                   </Link>
-                  <button
-                    onClick={() => toggle(product.id)}
+                   <button
+                    onClick={() => {
+                      toggle(product.id);
+                      toast.success(`${product.name} removed from wishlist`);
+                    }}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-lg hover:bg-red-100 transition-colors"
                   >
                     <Heart size={12} className="fill-red-400" />

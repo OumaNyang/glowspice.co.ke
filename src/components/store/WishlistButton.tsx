@@ -1,15 +1,18 @@
 "use client";
 
 import { Heart } from "lucide-react";
+import { toast } from "sonner";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { cn } from "@/lib/utils";
 
 export function WishlistButton({
   productId,
+  productName,
   size = "md",
   className,
 }: {
   productId: string;
+  productName?: string;
   size?: "sm" | "md";
   className?: string;
 }) {
@@ -22,6 +25,12 @@ export function WishlistButton({
         e.preventDefault();
         e.stopPropagation();
         toggle(productId);
+        
+        if (isWishlisted) {
+          toast.success(productName ? `${productName} removed from wishlist` : "Removed from wishlist");
+        } else {
+          toast.success(productName ? `${productName} added to wishlist` : "Added to wishlist");
+        }
       }}
       aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
       className={cn(

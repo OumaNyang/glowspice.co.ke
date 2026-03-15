@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
+import { toast } from "sonner";
 import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
@@ -129,7 +130,10 @@ export function CartDrawer() {
                               {item.product.name}
                             </Link>
                             <button
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => {
+                                removeItem(item.id);
+                                toast.success(`${item.product.name} removed from cart`);
+                              }}
                               className="text-[var(--gray-300)] hover:text-red-500 transition-colors shrink-0"
                             >
                               <Trash2 size={16} />

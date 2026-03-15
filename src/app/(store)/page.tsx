@@ -242,7 +242,7 @@ export default function HomePage() {
                     </div>
                     {/* Wishlist */}
                     <div className="absolute top-3 right-3">
-                      <WishlistButton productId={product.id} />
+                      <WishlistButton productId={product.id} productName={product.name} />
                     </div>
                   </div>
                 </Link>

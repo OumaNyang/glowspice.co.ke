@@ -282,7 +282,7 @@ export function ProductsClient({
                           {product.isNew && <Badge variant="herb" className="px-1.5 py-0 text-[9px] uppercase tracking-tighter">New</Badge>}
                         </div>
                         <div className="absolute top-2 right-2">
-                          <WishlistButton productId={product.id} className="scale-75 shadow-sm" />
+                          <WishlistButton productId={product.id} productName={product.name} className="scale-75 shadow-sm" />
                         </div>
                       </div>
                     </Link>
