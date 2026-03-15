@@ -157,7 +157,7 @@ export default function HomePage() {
             <p className="text-sm font-semibold text-[var(--spice)] tracking-widest uppercase mb-2">
               Explore by Category
             </p>
-            <h2 className="font-display font-bold text-4xl text-[var(--bark)]">
+            <h2 className="font-display font-bold text-3xl text-[var(--bark)]">
               Find Your Perfect Spice
             </h2>
           </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
               <p className="text-sm font-semibold text-[var(--spice)] tracking-widest uppercase mb-2">
                 Handpicked For You
               </p>
-              <h2 className="font-display font-bold text-4xl text-[var(--bark)]">
+              <h2 className="font-display font-bold text-3xl text-[var(--bark)]">
                 Featured Products
               </h2>
             </div>
@@ -295,7 +295,7 @@ export default function HomePage() {
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 70% 50%, var(--spice) 0%, transparent 60%)" }} />
             <div className="relative z-10 max-w-xl">
               <Badge variant="spice" className="mb-4">Limited Stock</Badge>
-              <h2 className="font-display font-bold text-4xl text-white mb-4">
+              <h2 className="font-display font-bold text-3xl text-white mb-4">
                 Grade 1 Khorasan<br />
                 <span style={{ color: "var(--sand)" }}>Saffron Threads</span>
               </h2>
@@ -323,7 +323,7 @@ export default function HomePage() {
               <p className="text-sm font-semibold text-[var(--herb)] tracking-widest uppercase mb-2">
                 Customer Favourites
               </p>
-              <h2 className="font-display font-bold text-4xl text-[var(--bark)]">
+              <h2 className="font-display font-bold text-3xl text-[var(--bark)]">
                 Best Sellers
               </h2>
             </div>
@@ -373,7 +373,7 @@ export default function HomePage() {
             <p className="text-sm font-semibold text-[var(--spice)] tracking-widest uppercase mb-2">
               What Customers Say
             </p>
-            <h2 className="font-display font-bold text-4xl text-[var(--bark)]">
+            <h2 className="font-display font-bold text-3xl text-[var(--bark)]">
               Real Reviews
             </h2>
           </div>
@@ -411,7 +411,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold text-[var(--herb)] tracking-widest uppercase mb-2">
                   Just Arrived
                 </p>
-                <h2 className="font-display font-bold text-4xl text-[var(--bark)]">
+                <h2 className="font-display font-bold text-3xl text-[var(--bark)]">
                   New Arrivals
                 </h2>
               </div>

@@ -2,18 +2,23 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
-  /* Brand colours */
-  --spice: #c15b2a;
-  --spice-light: #e07a49;
-  --spice-dark: #8e3d15;
+  /* New Design System Tokens */
+  --primary: #4A2C2A;    /* Deep Brown */
+  --secondary: #D97706;  /* Spiced Orange */
+  --accent: #FACC15;     /* Turmeric Yellow */
+
+  /* Brand colours - Mapped to tokens for backward compatibility */
+  --spice: var(--secondary);
+  --spice-light: #F59E0B;
+  --spice-dark: #B45309;
   --herb: #2d5016;
   --herb-light: #4a7a27;
   --herb-dark: #1a3009;
   --cream: #faf7f0;
   --cream-dark: #f0ebe0;
-  --bark: #3d2b1f;
-  --bark-light: #6b4c3b;
-  --sand: #e8d5b7;
+  --bark: var(--primary);
+  --bark-light: #6b403d;
+  --sand: var(--accent);
 
   /* Neutrals */
   --gray-50: #fafafa;
@@ -31,13 +36,13 @@
   --background: var(--cream);
   --foreground: var(--bark);
   --border: #e0d5c7;
-  --ring: var(--spice);
+  --ring: var(--secondary);
 
   /* Typography */
   --font-display: var(--font-rubik), sans-serif;
   --font-heading: var(--font-rubik), sans-serif;
-  --font-default: var(--font-google-sans), sans-serif;
-  --font-body: var(--font-google-sans), sans-serif;
+  --font-default: var(--font-outfit), sans-serif;
+  --font-body: var(--font-outfit), sans-serif;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(61, 43, 31, 0.06);
@@ -65,7 +70,8 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body);
+  /* font-family: var(--font-body); */
+  font-family: var(--font-heading);
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;

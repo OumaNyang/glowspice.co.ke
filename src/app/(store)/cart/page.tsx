@@ -39,7 +39,7 @@ export default function CartPage() {
   return (
     <div className="bg-[var(--cream)] min-h-screen py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-display font-bold text-4xl text-[var(--bark)] mb-8">
+        <h1 className="font-display font-bold text-3xl text-[var(--bark)] mb-8">
           Shopping Cart
           <span className="text-lg font-normal text-[var(--gray-400)] ml-3">
             ({items.reduce((s, i) => s + i.quantity, 0)} items)

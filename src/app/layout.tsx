@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
-import { Rubik ,Google_Sans} from "next/font/google";
+import { Rubik, Outfit } from "next/font/google";
 import "./globals.css";
 
 const rubik = Rubik({
   subsets: ["latin"],
   variable: "--font-rubik",
   display: "swap",
+  adjustFontFallback: false,
 });
 
-// const plus_jakarta_sans = Plus_Jakarta_Sans({
-//   subsets: ["latin"],
-//   variable: "--font-jakarta", // keeping the CSS variable name identical to avoid globals.css changes
-//   display: "swap",
-//   adjustFontFallback: false,
-// });
-
-const google_sans = Google_Sans({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-google-sans", // keeping the CSS variable name identical to avoid globals.css changes
+  variable: "--font-outfit",
   display: "swap",
   adjustFontFallback: false,
 });
@@ -72,7 +66,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${rubik.variable}   ${google_sans.variable} font-body antialiased`}>
+      <body className={`${rubik.variable} ${outfit.variable} font-body antialiased`}>
         {children}
       </body>
     </html>

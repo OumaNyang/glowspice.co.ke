@@ -21,10 +21,10 @@ const navLinks = [
 export function ClientNav() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const totalItems = useCartStore((s) => s.totalItems());
+  const openDrawer = useCartStore((s) => s.openDrawer);
 
   useEffect(() => {
     setMounted(true);
@@ -82,7 +82,7 @@ export function ClientNav() {
         </Link>
         <button
           id="cart-toggle-btn"
-          onClick={() => setCartOpen(true)}
+          onClick={openDrawer}
           className="relative p-2 rounded-md text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5 transition-colors duration-200"
           aria-label="Cart"
         >
@@ -143,8 +143,7 @@ export function ClientNav() {
         </div>
       )}
 
-      {/* Cart Drawer */}
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      {/* Cart Drawer has been moved to global layout */}
     </>
   );
 }

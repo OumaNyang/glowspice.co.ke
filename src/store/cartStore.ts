@@ -12,12 +12,19 @@ interface CartStore {
   clearCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
+  isDrawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      isDrawerOpen: false,
+
+      openDrawer: () => set({ isDrawerOpen: true }),
+      closeDrawer: () => set({ isDrawerOpen: false }),
 
       addItem: (product, quantity = 1, variation) => {
         set((state) => {
@@ -31,9 +38,13 @@ export const useCartStore = create<CartStore>()(
                   ? { ...i, quantity: i.quantity + quantity }
                   : i
               ),
+              isDrawerOpen: true, // Automatically open drawer when adding item
             };
           }
-          return { items: [...state.items, { id: itemId, product, variation, quantity }] };
+          return { 
+            items: [...state.items, { id: itemId, product, variation, quantity }],
+            isDrawerOpen: true, // Automatically open drawer when adding item
+          };
         });
       },
 

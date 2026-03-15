@@ -130,7 +130,7 @@ export function ProductsClient({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="font-display font-bold text-4xl text-[var(--bark)] mb-1">
+        <h1 className="font-display font-bold text-3xl text-[var(--bark)] mb-1">
           {initialCat ? initialCat.name : "All Products"}
         </h1>
         <p className="text-sm text-[var(--gray-500)]">
@@ -186,12 +186,12 @@ export function ProductsClient({
         )}
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar filters */}
         {filtersOpen && (
           <aside className="w-full lg:w-64 shrink-0 space-y-6">
             {/* Categories */}
-            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+            <div className="bg-white rounded-md border border-[var(--border)] p-4 shadow-sm">
               <h3 className="font-semibold text-sm text-[var(--bark)] mb-3">Category</h3>
               <div className="space-y-0.5">
                 <button
@@ -214,7 +214,7 @@ export function ProductsClient({
             </div>
 
             {/* Price */}
-            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+            <div className="bg-white rounded-md border border-[var(--border)] p-4 shadow-sm">
               <h3 className="font-semibold text-sm text-[var(--bark)] mb-3">Price Range</h3>
               <div className="space-y-3">
                 <input
@@ -236,7 +236,7 @@ export function ProductsClient({
             </div>
 
             {/* In Stock */}
-            <div className="bg-white rounded-xl border border-[var(--border)] p-4 shadow-sm">
+            <div className="bg-white rounded-md border border-[var(--border)] p-4 shadow-sm">
               <label className="flex items-center gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
@@ -266,7 +266,7 @@ export function ProductsClient({
                 {paginatedItems.map((product) => (
                   <div
                     key={product.id}
-                    className="group bg-white rounded-xl overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
+                    className="group bg-white rounded-md overflow-hidden border border-[var(--border)] hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
                   >
                     <Link href={`/products/${product.slug}`}>
                       <div className="relative aspect-[3/2] overflow-hidden bg-[var(--cream-dark)]">
@@ -294,7 +294,7 @@ export function ProductsClient({
                         <h3 className="font-semibold text-[var(--bark)] text-xs leading-tight mb-1.5 group-hover:text-[var(--spice)] transition-colors line-clamp-2 min-h-[2rem]">
                           {product.name}
                         </h3>
-                        <div className="flex items-center gap-1 mb-2">
+                        <div className="flex items-center gap-1 mb-1">
                           <div className="flex">
                             {[1, 2, 3, 4, 5].map((s) => (
                               <Star key={s} size={10} className={s <= Math.round(product.rating) ? "text-amber-400 fill-amber-400" : "text-gray-200 fill-gray-200"} />

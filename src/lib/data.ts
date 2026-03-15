@@ -24,7 +24,7 @@ export const categories: Category[] = [
     name: "Ground Spices",
     slug: "ground-spices",
     description: "Finely milled spice powders ready for instant use in cooking.",
-    image: "https://images.unsplash.com/photo-1533015582595-3ca446d3066e?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80",
     color: "#8B4513",
     productCount: 10,
   },
@@ -42,7 +42,7 @@ export const categories: Category[] = [
     name: "Spice Blends",
     slug: "spice-blends",
     description: "Expertly crafted spice mixes from traditional and modern recipes.",
-    image: "https://images.unsplash.com/photo-1615478503039-9625244391f7?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1588619491790-25e98586eaad?w=600&q=80",
     color: "#7B3F00",
     productCount: 7,
   },
@@ -125,11 +125,9 @@ export const products: Product[] = [
     categoryId: "cat_1",
     tags: ["pepper", "spicy", "savory", "essential"],
     images: [
-      { id: "img_2a", url: "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&q=80", alt: "Tellicherry Black Pepper" },
-      { id: "img_2b", url: "https://cdn2.stylecraze.com/wp-content/uploads/2013/06/17-Amazing-Benefits-Of-Black-Pepper-For-Skin-Hair-And-Health.jpg.webp", alt: "Black Pepper" },
-      { id: "img_2c", url: "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&q=80", alt: "Tellicherry Black Pepper" },
-
-
+      { id: "img_2a", url: "https://images.unsplash.com/photo-1626202422002-39327f311f93?w=800&q=80", alt: "Tellicherry Black Pepper" },
+      { id: "img_2b", url: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&q=80", alt: "Black Pepper" },
+      { id: "img_2c", url: "https://images.unsplash.com/photo-1626202422002-39327f311f93?w=800&q=80", alt: "Tellicherry Black Pepper" },
     ],
     stock: 200,
     unit: "100g",
@@ -207,7 +205,7 @@ export const products: Product[] = [
     categoryId: "cat_1",
     tags: ["coriander", "seeds", "curry", "mild"],
     images: [
-      { id: "img_5a", url: "https://images.unsplash.com/photo-1533015582595-3ca446d3066e?w=800&q=80", alt: "Coriander Seeds" },
+      { id: "img_5a", url: "https://images.unsplash.com/photo-1599307734115-4422e5782025?w=800&q=80", alt: "Coriander Seeds" },
     ],
     stock: 300,
     unit: "200g",
@@ -257,7 +255,7 @@ export const products: Product[] = [
     categoryId: "cat_2",
     tags: ["turmeric", "health", "curry", "anti-inflammatory"],
     images: [
-      { id: "img_7a", url: "https://images.unsplash.com/photo-1615485247094-15b4e104e8cb?w=800&q=80", alt: "Turmeric Powder" },
+      { id: "img_7a", url: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=800&q=80", alt: "Turmeric Powder" },
     ],
     stock: 250,
     unit: "200g",
@@ -432,7 +430,7 @@ export const products: Product[] = [
     categoryId: "cat_4",
     tags: ["berbere", "ethiopian", "blend", "spicy"],
     images: [
-      { id: "img_14a", url: "https://images.unsplash.com/photo-1615478503039-9625244391f7?w=800&q=80", alt: "Berbere Spice Blend" },
+      { id: "img_14a", url: "https://images.unsplash.com/photo-1599307734115-4422e5782025?w=800&q=80", alt: "Berbere Spice Blend" },
     ],
     stock: 75,
     unit: "100g",
@@ -457,7 +455,7 @@ export const products: Product[] = [
     categoryId: "cat_4",
     tags: ["ras el hanout", "moroccan", "luxury", "blend"],
     images: [
-      { id: "img_15a", url: "https://images.unsplash.com/photo-1638429347878-1fb51e1dbb43?w=800&q=80", alt: "Ras El Hanout" },
+      { id: "img_15a", url: "https://images.unsplash.com/photo-1638332128919-0941198595a8?w=800&q=80", alt: "Ras El Hanout" },
     ],
     stock: 60,
     unit: "75g",
@@ -651,7 +649,7 @@ export const products: Product[] = [
     categoryId: "cat_7",
     tags: ["jam", "spread", "fruit", "zesta"],
     images: [
-      { id: "img_23a", url: "https://images.unsplash.com/photo-1502741126161-b84175510006?w=800&q=80", alt: "Mixed Fruit Jam" },
+      { id: "img_23a", url: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800&q=80", alt: "Mixed Fruit Jam" },
     ],
     stock: 200,
     unit: "500g",
@@ -703,7 +701,7 @@ export const products: Product[] = [
     categoryId: "cat_8",
     tags: ["hibiscus", "tea", "herbal", "infusion"],
     images: [
-      { id: "img_25a", url: "https://images.unsplash.com/photo-1594631252845-29fc458681b3?w=800&q=80", alt: "Hibiscus Flowers" },
+      { id: "img_25a", url: "https://images.unsplash.com/photo-1511200057088-25fc5016e3ec?w=800&q=80", alt: "Hibiscus Flowers" },
     ],
     stock: 200,
     unit: "100g",
@@ -726,7 +724,7 @@ export const products: Product[] = [
     categoryId: "cat_8",
     tags: ["lemongrass", "tea", "herbal", "detox"],
     images: [
-      { id: "img_26a", url: "https://images.unsplash.com/photo-1515696431916-d98c2509fbcf?w=800&q=80", alt: "Lemongrass Tea" },
+      { id: "img_26a", url: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800&q=80", alt: "Lemongrass Tea" },
     ],
     stock: 180,
     unit: "50g",

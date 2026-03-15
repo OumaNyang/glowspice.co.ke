@@ -150,12 +150,12 @@ export default async function ProductDetailPage({
             </Link>
 
             {/* Name */}
-            <h1 className="font-display font-bold text-3xl sm:text-4xl text-[var(--bark)] mt-2 mb-4 leading-tight">
+            <h1 className="font-display font-bold text-2xl sm:text-3xl text-[var(--bark)] mt-2 mb-4 leading-tight">
               {product.name}
             </h1>
 
             {/* Rating */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star
@@ -179,7 +179,7 @@ export default async function ProductDetailPage({
 
             {/* Price */}
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="font-display font-bold text-4xl text-[var(--spice)]">
+              <span className="font-display font-bold text-3xl text-[var(--spice)]">
                 {formatPrice(product.price)}
               </span>
               {product.compareAtPrice && (
@@ -258,7 +258,7 @@ export default async function ProductDetailPage({
         {/* Description */}
         <div className="mt-16 grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <h2 className="font-display font-bold text-2xl text-[var(--bark)] mb-4">
+            <h2 className="font-display font-bold text-xl text-[var(--bark)] mb-2">
               Product Description
             </h2>
             <div className="bg-white rounded-md p-6 border border-[var(--border)]">

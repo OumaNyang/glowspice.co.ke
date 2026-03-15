@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "cdn2.stylecraze.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+        pathname: "/**",
+      },
     ],
   },
 };
