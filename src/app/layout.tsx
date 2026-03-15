@@ -61,6 +61,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { Toaster } from "sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -68,6 +70,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${rubik.variable} ${outfit.variable} font-body antialiased`}>
         {children}
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );

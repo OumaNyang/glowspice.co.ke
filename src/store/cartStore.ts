@@ -38,12 +38,10 @@ export const useCartStore = create<CartStore>()(
                   ? { ...i, quantity: i.quantity + quantity }
                   : i
               ),
-              isDrawerOpen: true, // Automatically open drawer when adding item
             };
           }
           return { 
             items: [...state.items, { id: itemId, product, variation, quantity }],
-            isDrawerOpen: true, // Automatically open drawer when adding item
           };
         });
       },

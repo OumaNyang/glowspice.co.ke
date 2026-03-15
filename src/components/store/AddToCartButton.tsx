@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ShoppingCart, Check } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
 import type { Product } from "@/lib/types";
@@ -33,6 +34,9 @@ export function AddToCartButton({
     }
     
     addItem(product, 1);
+    toast.success(`${product.name} added to cart`, {
+      description: "1 item added",
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };

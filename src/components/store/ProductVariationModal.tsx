@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { X, Check } from "lucide-react";
+import { toast } from "sonner";
 import type { Product } from "@/lib/types";
 import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/lib/utils";
@@ -51,6 +52,10 @@ export function ProductVariationModal({ product, isOpen, onClose }: ProductVaria
       }
     });
     
+    toast.success(`${product.name} added to cart`, {
+      description: `${totalSelected} items added in selected variations`,
+    });
+
     // Reset and close
     setQuantities({});
     onClose();

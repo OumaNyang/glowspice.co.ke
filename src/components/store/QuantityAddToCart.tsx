@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Minus, Plus, ShoppingCart, Check } from "lucide-react";
+import { toast } from "sonner";
 import { useCartStore } from "@/store/cartStore";
 import type { Product } from "@/lib/types";
 import { ProductVariationModal } from "./ProductVariationModal";
@@ -21,6 +22,9 @@ export function QuantityAddToCart({ product }: { product: Product }) {
     }
     
     addItem(product, qty);
+    toast.success(`${product.name} added to cart`, {
+      description: `${qty} ${qty === 1 ? 'item' : 'items'} added`,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
