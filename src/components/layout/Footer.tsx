@@ -12,7 +12,9 @@ const links = {
     { href: "/products/category/specialty-salts", label: "Specialty Salts" },
     { href: "/products/category/natures-sweeteners", label: "Nature's Sweeteners" },
     { href: "/products/category/beverages-brews", label: "Beverages & Brews" },
-  ],
+    { href: "/products/category/nuts-dried-fruits", label: "Nuts & Dried Fruits" },
+    { href: "/products/category/cooking-oils", label: "Cooking Oils" },
+   ],
   account: [
     { href: "/account", label: "My Account" },
     { href: "/account/orders", label: "My Orders" },

@@ -16,6 +16,8 @@ const navLinks = [
   { href: "/products/category/spice-blends", label: "Blends" },
   { href: "/products/category/beverages-brews", label: "Brews" },
   { href: "/products/category/natures-sweeteners", label: "Sweeteners" },
+  { href: "/products/category/nuts-dried-fruits", label: "Nuts & Fruits" },
+  { href: "/products/category/cooking-oils", label: "Oils" },
 ];
 
 export function ClientNav() {

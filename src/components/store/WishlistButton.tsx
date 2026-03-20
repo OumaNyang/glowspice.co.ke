@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { useWishlistStore } from "@/store/wishlistStore";
@@ -16,8 +17,16 @@ export function WishlistButton({
   size?: "sm" | "md";
   className?: string;
 }) {
-  const isWishlisted = useWishlistStore((s) => s.isWishlisted(productId));
+  const _isWishlisted = useWishlistStore((s) => s.isWishlisted(productId));
   const toggle = useWishlistStore((s) => s.toggle);
+  
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isWishlisted = mounted ? _isWishlisted : false;
 
   return (
     <button
