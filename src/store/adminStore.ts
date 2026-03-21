@@ -32,7 +32,9 @@ export const useAdminStore = create<AdminStore>()(
         })),
     }),
     {
+
       name: "admin-storage",
+      
     }
   )
 );
