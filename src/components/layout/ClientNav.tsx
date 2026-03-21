@@ -5,8 +5,9 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Heart, User, Menu, X, Search, ChevronDown } from "lucide-react";
+import { ShoppingBag, Heart, User, Menu, X, Search, ChevronDown, LogOut } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+import { useAuthStore } from "@/store/authStore";
 import { cn } from "@/lib/utils";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 
@@ -66,6 +67,7 @@ export function ClientNav() {
   const [mounted, setMounted] = useState(false);
   const totalItems = useCartStore((s) => s.totalItems());
   const openDrawer = useCartStore((s) => s.openDrawer);
+  const { isAuthenticated, logout } = useAuthStore();
 
   useEffect(() => {
     setMounted(true);
@@ -152,7 +154,7 @@ export function ClientNav() {
           <Heart size={22} />
         </Link>
         <Link
-          href="/account"
+          href={isAuthenticated ? "/account" : "/account/login"}
           className="p-1.5 text-[var(--bark-light)] hover:text-[var(--spice)] hover:scale-110 transition-transform duration-200"
           aria-label="Account"
         >
@@ -277,13 +279,36 @@ export function ClientNav() {
               </div>
             ))}
             
-            <Link
-              href="/account"
-              className="flex items-center gap-3 py-4 border-b border-[var(--border)] text-lg font-bold text-[var(--bark)] hover:text-[var(--spice)] transition-colors"
-            >
-              <User size={20} />
-              My Account
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/account"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 border-b border-[var(--border)] text-lg font-bold text-[var(--bark)] hover:text-[var(--spice)] transition-colors"
+                >
+                  <User size={20} />
+                  My Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileOpen(false);
+                  }}
+                  className="w-full flex items-center justify-start gap-3 py-4 border-b border-[var(--border)] text-lg font-bold text-red-600 hover:text-red-700 transition-colors"
+                >
+                  <LogOut size={20} />
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/account/login"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center gap-2 py-4 bg-[var(--bark)] text-white hover:bg-black rounded-xl text-lg font-bold transition-colors mt-6"
+              >
+                Sign In / Register
+              </Link>
+            )}
             <Link
               href="/account/wishlist"
               className="flex items-center gap-3 py-4 border-b border-[var(--border)] text-lg font-bold text-[var(--bark)] hover:text-[var(--spice)] transition-colors"

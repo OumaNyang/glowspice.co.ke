@@ -2,7 +2,17 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Recipes | GlowSpice",
-  description: "Browse our collection of mouth-watering recipes using GlowSpice premium ingredients.",
+  description: "Browse our collection of mouth-watering recipes using GlowSpice premium ingredients in Uganda.",
+  openGraph: {
+    title: "Recipes | GlowSpice",
+    description: "Browse our collection of mouth-watering recipes using GlowSpice premium ingredients in Uganda.",
+    url: "https://glowspice.shop/recipes",
+    siteName: "GlowSpice",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://glowspice.shop/recipes",
+  },
 };
 
 export default function RecipesPage() {

@@ -17,12 +17,12 @@ const avenir = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://glowspice.shop"),
   title: {
-    default: "GlowSpice — Premium Spices & Herbs, Nairobi Kenya",
+    default: "GlowSpice — Premium Spices & Herbs, Kampala Uganda",
     template: "%s | GlowSpice",
   },
-  description:"Shop the world's finest spices, herbs, spice blends, and natural additives. Fresh from source, delivered across Kenya. Premium quality, authentic flavours.",
-  keywords: ["spices", "herbs", "Kenya", "Nairobi", "cooking", "garam masala", "turmeric", "saffron", "glowspice"],
-  authors: [{ name: "GlowSpice Kenya" }],
+  description:"Shop the world's finest spices, herbs, spice blends, and natural additives. Fresh from source, delivered across Uganda. Premium quality, authentic flavours.",
+  keywords: ["spices", "herbs", "Uganda", "Kampala", "cooking", "garam masala", "turmeric", "saffron", "glowspice"],
+  authors: [{ name: "GlowSpice Uganda" }],
   creator: "GlowSpice",
   publisher: "GlowSpice",
   robots: {
@@ -31,14 +31,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_KE",
+    locale: "en_UG",
     url: "https://glowspice.shop",
     siteName: "GlowSpice",
     title: "GlowSpice - Premium Spices & Herbs",
-    description: "The world's finest spices, herbs & blends, delivered across Kenya.",
+    description: "The world's finest spices, herbs & blends, delivered across Uganda.",
     images: [
       {
-        url: "/og-image.jpg", // Placeholder - user should add this to public/
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "GlowSpice",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "GlowSpice — Premium Spices & Herbs",
-    description: "The world's finest spices, herbs & blends, delivered across Kenya.",
+    description: "The world's finest spices, herbs & blends, delivered across Uganda.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -66,8 +66,35 @@ import { Toaster } from "sonner";
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "GlowSpice",
+    url: "https://glowspice.shop",
+    logo: "https://glowspice.shop/images/glowspice-logo.png",
+    description: "Premium spices, herbs, and blends delivered across Kampala, Uganda.",
+    sameAs: [
+      "https://facebook.com/glowspice",
+      "https://twitter.com/glowspice",
+      "https://instagram.com/glowspice"
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+256-700-000000",
+      contactType: "Customer Service",
+      areaServed: "UG",
+      availableLanguage: "English"
+    }
+  };
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${avenir.variable} antialiased`}>
         {children}
         <Toaster position="top-right" richColors closeButton />

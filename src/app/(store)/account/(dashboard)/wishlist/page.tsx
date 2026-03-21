@@ -67,7 +67,7 @@ export default function WishlistPage() {
                 <div className="flex gap-2">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--spice)] text-white text-xs font-semibold rounded-lg hover:bg-[var(--spice-dark)] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--spice)] text-white text-xs font-semibold rounded-md hover:bg-[var(--spice-dark)] transition-colors"
                   >
                     <ShoppingCart size={12} />
                     Add to Cart
@@ -77,7 +77,7 @@ export default function WishlistPage() {
                       toggle(product.id);
                       toast.success(`${product.name} removed from wishlist`);
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-lg hover:bg-red-100 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-md hover:bg-red-100 transition-colors"
                   >
                     <Heart size={12} className="fill-red-400" />
                     Remove

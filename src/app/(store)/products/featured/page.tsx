@@ -3,6 +3,16 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Staff Picks & Featured | GlowSpice",
   description: "Shop the absolute favorites hand-picked by the GlowSpice team.",
+  openGraph: {
+    title: "Staff Picks & Featured | GlowSpice",
+    description: "Shop the absolute favorites hand-picked by the GlowSpice team.",
+    url: "https://glowspice.shop/products/featured",
+    siteName: "GlowSpice",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://glowspice.shop/products/featured",
+  },
 };
 
 export default function FeaturedPage() {
