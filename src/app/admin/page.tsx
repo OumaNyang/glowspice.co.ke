@@ -48,7 +48,7 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="p-8">
+    <div className="px-6 py-0">
       <div className="mb-8">
         <h1 className="font-display font-bold text-3xl text-[var(--bark)]">Dashboard</h1>
         <p className="text-[var(--gray-500)] mt-1">Welcome back, Admin. Here&apos;s what&apos;s happening today.</p>
@@ -57,7 +57,7 @@ export default function AdminDashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
         {statCards.map(({ label, value, change, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-[var(--border)] shadow-sm">
+          <div key={label} className="bg-white rounded-md p-5 border border-[var(--border)] shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <div
                 className="w-11 h-11 rounded-md flex items-center justify-center"
@@ -76,7 +76,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Recent Orders Table */}
-      <div className="bg-white rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
+      <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
           <h2 className="font-semibold text-[var(--bark)]">Recent Orders</h2>
           <Link

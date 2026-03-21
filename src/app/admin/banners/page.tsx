@@ -34,7 +34,7 @@ export default function BannerManagementPage() {
       </div>
 
       {/* Add New Banner */}
-      <div className="bg-white p-6 rounded-xl border border-[var(--border)] mb-8 shadow-sm">
+      <div className="bg-white p-6 rounded-md border border-[var(--border)] mb-8 shadow-sm">
         <h2 className="font-semibold mb-4 text-[var(--bark)] flex items-center gap-2">
           <Plus size={18} className="text-[var(--spice)]" />
           Add New Banner
@@ -60,7 +60,7 @@ export default function BannerManagementPage() {
       {/* Banner Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {banners.map((banner) => (
-          <div key={banner.id} className="bg-white rounded-xl border border-[var(--border)] overflow-hidden shadow-sm group">
+          <div key={banner.id} className="bg-white rounded-md border border-[var(--border)] overflow-hidden shadow-sm group">
             <div className="aspect-[21/9] relative bg-[var(--cream)]">
               <Image src={banner.image} alt="Banner Preview" fill className="object-cover" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">

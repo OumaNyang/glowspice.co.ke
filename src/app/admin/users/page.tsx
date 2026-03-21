@@ -1,54 +1,76 @@
+"use client";
+
 import { ShieldCheck, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { AdminDataTable, ColumnDef } from "@/components/admin/AdminDataTable";
+
+type AdminUser = { id: number; name: string; email: string; role: string; status: string; };
+
+const admins: AdminUser[] = [
+  { id: 1, name: "System Admin", email: "admin@glowspice.co.ke", role: "Super Admin", status: "Active" },
+  { id: 2, name: "Support Agent", email: "support@glowspice.co.ke", role: "Moderator", status: "Active" },
+];
+
+const columns: ColumnDef<AdminUser>[] = [
+  {
+    header: "User",
+    accessorKey: "name",
+    sortable: true,
+    cell: (u) => (
+      <span className="flex items-center gap-2 font-bold text-[var(--bark)]">
+        <ShieldCheck size={16} className={u.role === "Super Admin" ? "text-amber-500" : "text-[var(--spice)]"} />
+        {u.name}
+      </span>
+    ),
+  },
+  {
+    header: "Email",
+    accessorKey: "email",
+    sortable: true,
+    cell: (u) => <span className="text-sm font-medium text-[var(--gray-500)]">{u.email}</span>,
+  },
+  {
+    header: "Role",
+    accessorKey: "role",
+    sortable: true,
+    cell: (u) => <Badge variant={u.role === "Super Admin" ? "spice" : "default"}>{u.role}</Badge>,
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    sortable: true,
+    cell: (u) => <Badge variant="success" className="uppercase tracking-wider font-bold text-[10px] shadow-sm">{u.status}</Badge>,
+  },
+  {
+    header: "Action",
+    cell: () => (
+      <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-red-50 border border-red-200 text-xs font-bold text-red-600 hover:bg-red-100 hover:shadow-sm transition-all">
+        Revoke Access
+      </button>
+    ),
+  },
+];
 
 export default function AdminUsersPage() {
-  const admins = [
-    { id: 1, name: "System Admin", email: "admin@glowspice.co.ke", role: "Super Admin", status: "Active" },
-    { id: 2, name: "Support Agent", email: "support@glowspice.co.ke", role: "Moderator", status: "Active" },
-  ];
-
   return (
-    <div className="p-4 sm:p-8">
+    <div className="p-4 sm:p-8 max-w-[1600px] mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="font-display font-bold text-3xl text-[var(--bark)]">Admin Users</h1>
-          <p className="text-[var(--gray-500)] mt-1">Manage platform access and roles.</p>
+          <h1 className="font-display font-bold text-3xl text-[var(--bark)] leading-tight">Admin Users</h1>
+          <p className="text-sm font-medium text-[var(--gray-500)] mt-1">Manage platform access and roles.</p>
         </div>
-        <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--bark)] hover:bg-[var(--bark-dark)] text-white font-semibold rounded-md text-sm transition-colors shadow-sm">
-          <Plus size={16} /> Invite User
+        <button className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--bark)] hover:bg-[var(--bark-dark)] text-white font-bold rounded-md shadow-[0_4px_14px_0_rgba(0,0,0,0.2)] hover:-translate-y-0.5 transition-all text-sm">
+          <Plus size={18} /> Invite User
         </button>
       </div>
 
-      <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
-              <tr>
-                {["User", "Email", "Role", "Status", ""].map((h) => (
-                  <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-[var(--gray-400)] uppercase tracking-wide">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--border)]">
-              {admins.map((admin) => (
-                <tr key={admin.id} className="hover:bg-[var(--gray-50)]">
-                  <td className="px-5 py-4 font-medium text-[var(--bark)] flex items-center gap-2">
-                    <ShieldCheck size={16} className="text-[var(--spice)]"/> {admin.name}
-                  </td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{admin.email}</td>
-                  <td className="px-5 py-4"><Badge variant="default">{admin.role}</Badge></td>
-                  <td className="px-5 py-4"><Badge variant="success">{admin.status}</Badge></td>
-                  <td className="px-5 py-4">
-                    <button className="text-[var(--spice)] font-semibold text-xs hover:underline">Revoke Access</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <AdminDataTable 
+        data={admins} 
+        columns={columns} 
+        searchAccessor="name" 
+        searchPlaceholder="Search admins by name..." 
+        itemsPerPage={10}
+      />
     </div>
   );
 }

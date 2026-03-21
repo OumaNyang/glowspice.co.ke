@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { Eye } from "lucide-react";
 import { orders } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
-import { Eye } from "lucide-react";
+import { AdminDataTable, ColumnDef } from "@/components/admin/AdminDataTable";
+import { Order } from "@/lib/types";
 
 const statusVariant: Record<string, "success" | "warning" | "herb" | "error" | "default"> = {
   delivered: "success",
@@ -13,70 +17,86 @@ const statusVariant: Record<string, "success" | "warning" | "herb" | "error" | "
   cancelled: "error",
 };
 
+const columns: ColumnDef<Order>[] = [
+  {
+    header: "Order #",
+    accessorKey: "orderNumber",
+    sortable: true,
+    cell: (order) => <span className="font-bold text-[var(--bark)] tracking-tight">{order.orderNumber}</span>,
+  },
+  {
+    header: "Customer",
+    accessorKey: "customerId", // Using ID for sorting, Name for display
+    sortable: true,
+    cell: (order) => (
+      <div>
+        <p className="font-bold text-[var(--spice)]">{order.customer.name}</p>
+        <p className="text-xs font-medium text-[var(--gray-400)]">{order.customer.email}</p>
+      </div>
+    ),
+  },
+  {
+    header: "Date",
+    accessorKey: "createdAt",
+    sortable: true,
+    cell: (order) => <span className="text-sm font-medium text-[var(--gray-500)]">{order.createdAt}</span>,
+  },
+  {
+    header: "Items",
+    sortable: false,
+    cell: (order) => <span className="text-sm font-bold text-[var(--bark)]">{order.items.length} items</span>,
+  },
+  {
+    header: "Total",
+    accessorKey: "total",
+    sortable: true,
+    cell: (order) => <span className="font-black text-[var(--bark)]">{formatPrice(order.total)}</span>,
+  },
+  {
+    header: "Payment",
+    accessorKey: "paymentMethod",
+    sortable: true,
+    cell: (order) => <span className="text-xs font-bold text-[var(--gray-500)] uppercase tracking-wider">{order.paymentMethod}</span>,
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    sortable: true,
+    cell: (order) => (
+      <Badge variant={statusVariant[order.status] ?? "default"} className="capitalize font-bold shadow-sm">
+        {order.status}
+      </Badge>
+    ),
+  },
+  {
+    header: "Action",
+    cell: (order) => (
+      <Link
+        href={`/admin/orders/${order.id}`}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-[var(--border)] text-xs font-bold text-[var(--bark)] hover:bg-[var(--cream-dark)] hover:border-[var(--bark-light)] hover:shadow-sm transition-all"
+      >
+        <Eye size={14} className="text-[var(--spice)]" />
+        View
+      </Link>
+    ),
+  },
+];
+
 export default function AdminOrdersPage() {
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8 max-w-[1600px] mx-auto">
       <div className="mb-8">
-        <h1 className="font-display font-bold text-3xl text-[var(--bark)]">Orders</h1>
-        <p className="text-[var(--gray-500)] mt-1">{orders.length} total orders</p>
+        <h1 className="font-display font-bold text-3xl text-[var(--bark)] leading-tight">Orders Hub</h1>
+        <p className="text-sm font-medium text-[var(--gray-500)] mt-1">Manage and track {orders.length} active orders</p>
       </div>
 
-      {/* Filter row */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {["All", "Pending", "Processing", "Shipped", "Delivered", "Cancelled"].map((f) => (
-          <button
-            key={f}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${f === "All" ? "bg-[var(--spice)] text-white" : "bg-white border border-[var(--border)] text-[var(--bark-light)] hover:border-[var(--spice)] hover:text-[var(--spice)]"}`}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
-
-      <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
-              <tr>
-                {["Order #", "Customer", "Date", "Items", "Total", "Payment", "Status", ""].map((h) => (
-                  <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-[var(--gray-400)] uppercase tracking-wide">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--border)]">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-[var(--gray-50)] transition-colors">
-                  <td className="px-5 py-4 font-medium text-[var(--bark)]">{order.orderNumber}</td>
-                  <td className="px-5 py-4">
-                    <p className="text-[var(--bark)] font-medium">{order.customer.name}</p>
-                    <p className="text-xs text-[var(--gray-400)]">{order.customer.email}</p>
-                  </td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{order.createdAt}</td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{order.items.length}</td>
-                  <td className="px-5 py-4 font-bold text-[var(--bark)]">{formatPrice(order.total)}</td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{order.paymentMethod}</td>
-                  <td className="px-5 py-4">
-                    <Badge variant={statusVariant[order.status] ?? "default"} className="capitalize">
-                      {order.status}
-                    </Badge>
-                  </td>
-                  <td className="px-5 py-4">
-                    <Link
-                      href={`/admin/orders/${order.id}`}
-                      className="flex items-center gap-1.5 text-xs font-semibold text-[var(--spice)] hover:underline"
-                    >
-                      <Eye size={12} />
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <AdminDataTable 
+        data={orders} 
+        columns={columns} 
+        searchAccessor="orderNumber" 
+        searchPlaceholder="Search orders by Order Number (e.g. ORD-100)..." 
+        itemsPerPage={10}
+      />
     </div>
   );
 }

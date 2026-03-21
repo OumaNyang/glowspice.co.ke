@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          <button className="w-full bg-[var(--bark)] hover:bg-black text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg hover:shadow-[var(--spice)]/20">
+          <button className="w-full bg-[var(--bark)] hover:bg-black text-white font-black py-4 rounded-md flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg hover:shadow-[var(--spice)]/20">
             Enter Dashboard <ArrowRight size={20} />
           </button>
 
