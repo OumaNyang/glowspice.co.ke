@@ -13,7 +13,7 @@ export default function AdminCustomersPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { icon: Users, label: "Total Customers", value: customers.length, color: "#6366f1" },
           { icon: ShoppingBag, label: "Total Orders", value: customers.reduce((s, c) => s + (c.orderCount ?? 0), 0), color: "var(--spice)" },
@@ -30,38 +30,40 @@ export default function AdminCustomersPage() {
       </div>
 
       <div className="bg-white rounded-md border border-[var(--border)] shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
-            <tr>
-              {["Customer", "Email", "Phone", "Orders", "Total Spent", "Joined"].map((h) => (
-                <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-[var(--gray-400)] uppercase tracking-wide">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[var(--border)]">
-            {customers.map((customer) => (
-              <tr key={customer.id} className="hover:bg-[var(--gray-50)] transition-colors">
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0">
-                      {customer.name.charAt(0)}
-                    </div>
-                    <p className="font-medium text-[var(--bark)]">{customer.name}</p>
-                  </div>
-                </td>
-                <td className="px-5 py-4 text-[var(--gray-500)]">{customer.email}</td>
-                <td className="px-5 py-4 text-[var(--gray-500)]">{customer.phone ?? "—"}</td>
-                <td className="px-5 py-4 font-semibold text-[var(--bark)]">{customer.orderCount ?? 0}</td>
-                <td className="px-5 py-4 font-bold text-[var(--spice)]">
-                  {formatPrice(customer.totalSpent ?? 0)}
-                </td>
-                <td className="px-5 py-4 text-[var(--gray-400)]">{customer.createdAt}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
+              <tr>
+                {["Customer", "Email", "Phone", "Orders", "Total Spent", "Joined"].map((h) => (
+                  <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-[var(--gray-400)] uppercase tracking-wide">
+                    {h}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-[var(--border)]">
+              {customers.map((customer) => (
+                <tr key={customer.id} className="hover:bg-[var(--gray-50)] transition-colors">
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 bg-gradient-to-br from-[var(--spice)] to-[var(--spice-dark)] rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0">
+                        {customer.name.charAt(0)}
+                      </div>
+                      <p className="font-medium text-[var(--bark)]">{customer.name}</p>
+                    </div>
+                  </td>
+                  <td className="px-5 py-4 text-[var(--gray-500)]">{customer.email}</td>
+                  <td className="px-5 py-4 text-[var(--gray-500)]">{customer.phone ?? "—"}</td>
+                  <td className="px-5 py-4 font-semibold text-[var(--bark)]">{customer.orderCount ?? 0}</td>
+                  <td className="px-5 py-4 font-bold text-[var(--spice)]">
+                    {formatPrice(customer.totalSpent ?? 0)}
+                  </td>
+                  <td className="px-5 py-4 text-[var(--gray-400)]">{customer.createdAt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

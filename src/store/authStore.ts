@@ -4,12 +4,13 @@ import { persist } from 'zustand/middleware';
 type User = {
   name: string;
   email: string;
+  role?: string;
 };
 
 type AuthState = {
   isAuthenticated: boolean;
   user: User | null;
-  login: (email: string, name: string) => void;
+  login: (email: string, name: string, role?: string) => void;
   logout: () => void;
 };
 
