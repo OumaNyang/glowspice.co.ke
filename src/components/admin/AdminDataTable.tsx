@@ -28,6 +28,7 @@ export function AdminDataTable<T>({
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: "asc" | "desc" } | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   // 1. Search Filtering
   const filteredData = useMemo(() => {
@@ -75,11 +76,13 @@ export function AdminDataTable<T>({
       return { key, direction: "asc" };
     });
     setCurrentPage(1); // reset to page 1 on sort
+    setExpandedRows(new Set()); // reset expanded rows
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1); // reset to page 1 on search
+    setExpandedRows(new Set()); // reset expanded rows
   };
 
   return (
@@ -103,8 +106,8 @@ export function AdminDataTable<T>({
         </div>
       )}
 
-      {/* Responsive Table Container */}
-      <div className="overflow-x-auto">
+      {/* Desktop Table Container */}
+      <div className="overflow-x-auto hidden md:block">
         <table className="w-full text-sm text-left">
           <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
             <tr>
@@ -149,6 +152,72 @@ export function AdminDataTable<T>({
         </table>
       </div>
 
+      {/* Mobile Card Layout */}
+      <div className="block md:hidden border-t border-[var(--border)] divide-y divide-[var(--border)]">
+        {paginatedData.length === 0 ? (
+          <div className="p-8 text-center text-[var(--gray-500)] text-sm">
+            No records found.
+          </div>
+        ) : (
+          paginatedData.map((item, rowIndex) => {
+            const isExpanded = expandedRows.has(rowIndex);
+            const visibleCols = columns.slice(0, 3);
+            const hiddenCols = columns.slice(3);
+
+            const toggleRow = () => {
+              setExpandedRows(prev => {
+                const next = new Set(prev);
+                if (next.has(rowIndex)) next.delete(rowIndex);
+                else next.add(rowIndex);
+                return next;
+              });
+            };
+
+            return (
+              <div key={rowIndex} className="p-4 bg-white hover:bg-[var(--gray-50)] transition-colors">
+                <div className="space-y-3">
+                  {visibleCols.map(col => (
+                    <div key={col.header} className="flex justify-between items-center gap-4">
+                      <span className="text-xs text-[var(--gray-500)] font-semibold uppercase tracking-wider">{col.header}</span>
+                      <div className="text-sm text-right">
+                        {col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {hiddenCols.length > 0 && (
+                  <>
+                    {isExpanded && (
+                      <div className="mt-4 pt-4 border-t border-[var(--border)] space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+                        {hiddenCols.map(col => (
+                          <div key={col.header} className="flex justify-between items-center gap-4">
+                            <span className="text-xs text-[var(--gray-500)] font-semibold uppercase tracking-wider">{col.header}</span>
+                            <div className="text-sm text-right">
+                              {col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <button 
+                      onClick={toggleRow}
+                      className="mt-4 w-full flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-[var(--spice)] bg-[var(--cream)] hover:bg-[var(--cream-dark)] rounded-md border border-[var(--border)] transition-colors"
+                    >
+                      {isExpanded ? (
+                        <>Show Less <ChevronUp size={14}/></>
+                      ) : (
+                        <>Show More <ChevronDown size={14}/></>
+                      )}
+                    </button>
+                  </>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+
       {/* Pagination Footer */}
       <div className="p-4 border-t border-[var(--border)] flex items-center justify-between bg-[var(--gray-50)]">
         <div className="text-xs text-[var(--gray-500)]">
@@ -156,7 +225,10 @@ export function AdminDataTable<T>({
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            onClick={() => {
+              setCurrentPage((p) => Math.max(1, p - 1));
+              setExpandedRows(new Set());
+            }}
             disabled={currentPage === 1}
             className="w-8 h-8 flex items-center justify-center rounded-md border border-[var(--border)] bg-white text-[var(--gray-500)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--cream-dark)] transition-colors"
           >
@@ -168,7 +240,10 @@ export function AdminDataTable<T>({
           </span>
 
           <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            onClick={() => {
+              setCurrentPage((p) => Math.min(totalPages, p + 1));
+              setExpandedRows(new Set());
+            }}
             disabled={currentPage === totalPages}
             className="w-8 h-8 flex items-center justify-center rounded-md border border-[var(--border)] bg-white text-[var(--gray-500)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--cream-dark)] transition-colors"
           >
