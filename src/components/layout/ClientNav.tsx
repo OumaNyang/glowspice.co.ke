@@ -48,7 +48,7 @@ export function ClientNav() {
             key={link.href}
             href={link.href}
             className={cn(
-              "px-3 py-1.5 text-md font-medium rounded-md transition-colors duration-200",
+              "px-3 py-1.5 text-md font-semibold rounded-md transition-colors duration-200",
               pathname === link.href || (link.href !== "/products" && pathname.startsWith(link.href))
                 ? "text-[var(--spice)] bg-[var(--spice)]/10"
                 : "text-[var(--bark-light)] hover:text-[var(--spice)] hover:bg-[var(--spice)]/5"

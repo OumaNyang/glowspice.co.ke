@@ -1,29 +1,26 @@
 import type { Metadata } from "next";
-import { Rubik, Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const rubik = Rubik({
-  subsets: ["latin"],
-  variable: "--font-rubik",
+const avenir = localFont({
+  src: [
+    { path: "../../public/fonts/Avenir/AvenirLTStd-Light.otf", weight: "300", style: "normal" },
+    { path: "../../public/fonts/Avenir/AvenirLTStd-Book.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Avenir/AvenirLTStd-Medium.otf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/Avenir/AvenirLTStd-Heavy.otf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Avenir/AvenirLTStd-Black.otf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-avenir",
   display: "swap",
-  adjustFontFallback: false,
-});
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://glowspice.co.ke"),
+  metadataBase: new URL("https://glowspice.shop"),
   title: {
     default: "GlowSpice — Premium Spices & Herbs, Nairobi Kenya",
     template: "%s | GlowSpice",
   },
-  description:
-    "Shop the world's finest spices, herbs, spice blends, and natural additives. Fresh from source, delivered across Kenya. Premium quality, authentic flavours.",
+  description:"Shop the world's finest spices, herbs, spice blends, and natural additives. Fresh from source, delivered across Kenya. Premium quality, authentic flavours.",
   keywords: ["spices", "herbs", "Kenya", "Nairobi", "cooking", "garam masala", "turmeric", "saffron", "glowspice"],
   authors: [{ name: "GlowSpice Kenya" }],
   creator: "GlowSpice",
@@ -35,16 +32,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://glowspice.co.ke",
+    url: "https://glowspice.shop",
     siteName: "GlowSpice",
-    title: "GlowSpice — Premium Spices & Herbs",
+    title: "GlowSpice - Premium Spices & Herbs",
     description: "The world's finest spices, herbs & blends, delivered across Kenya.",
     images: [
       {
         url: "/og-image.jpg", // Placeholder - user should add this to public/
         width: 1200,
         height: 630,
-        alt: "GlowSpice Kenya",
+        alt: "GlowSpice",
       },
     ],
   },
@@ -71,8 +68,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-
-      <body className={`${rubik.variable} ${outfit.variable} font-body antialiased`}>
+      <body className={`${avenir.variable} antialiased`}>
         {children}
         <Toaster position="top-right" richColors closeButton />
       </body>
