@@ -7,14 +7,16 @@ import {
   ImagePlus, X, Plus, Trash2, Save, 
   ArrowLeft, Eye, Star, Tag, Layers 
 } from "lucide-react";
-import { Product } from "@/lib/types";
+import { Product, Category } from "@/lib/types";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { categories } from "@/lib/data";
 
 // Defining a default empty product shell for creation
 const DEFAULT_PRODUCT: Partial<Product> = {
   name: "",
   description: "",
-  categoryId: "categories-1",
+  mainCategoryId: "root_1",
+  subCategoryId: "cat_1",
   origin: "Nairobi, Kenya",
   unit: "g",
   price: 0,
@@ -173,14 +175,23 @@ export function ProductForm({ initialData }: ProductFormProps) {
                 <RichTextEditor value={formData.description || ""} onChange={val => setFormData(p => ({...p, description: val}))} placeholder="Write a compelling description outlining origin, aroma, and best culinary uses..." />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Category</label>
-                  <select name="categoryId" value={formData.categoryId} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white appearance-none">
-                    <option value="categories-1">Spices</option>
-                    <option value="categories-2">Herbs</option>
-                    <option value="categories-3">Blends</option>
-                    <option value="categories-4">Extracts</option>
+                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Main Category</label>
+                  <select name="mainCategoryId" value={formData.mainCategoryId || ""} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white">
+                    <option value="" disabled>Select Root...</option>
+                    {categories.filter(c => c.level === "main").map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Sub Category</label>
+                  <select name="subCategoryId" value={formData.subCategoryId || ""} onChange={handleChange} disabled={!formData.mainCategoryId} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white disabled:opacity-50">
+                    <option value="" disabled>Select Sub...</option>
+                    {categories.filter(c => c.parentId === formData.mainCategoryId).map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div>

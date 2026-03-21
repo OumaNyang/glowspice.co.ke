@@ -3,10 +3,10 @@
 export interface ProductVariation {
   id: string;
   name: string; // e.g. "Size", "Color"
-  value: string; // e.g. "50g", "100g", "200g"
+  value?: string; // e.g. "50g", "100g", "200g"
   price: number;
   stock: number;
-  sku: string;
+  sku?: string;
 }
 
 export interface Product {
@@ -17,13 +17,15 @@ export interface Product {
   shortDescription: string;
   price: number;
   compareAtPrice?: number;
-  category: Category;
-  categoryId: string;
+  category?: Category;
+  categoryId?: string; // Legacy tie
+  mainCategoryId?: string; // New 2-tier tracking
+  subCategoryId?: string;  // New 2-tier tracking
   tags: string[];
   images: ProductImage[];
   stock: number;
   unit: string; // fallback if no variations (e.g. "100g", "250g", "1kg")
-  sku: string;
+  sku?: string;
   barcode?: string;
   variations?: ProductVariation[];
   origin?: string;
@@ -32,7 +34,7 @@ export interface Product {
   isFeatured: boolean;
   isNew: boolean;
   isBestSeller: boolean;
-  isPublished: boolean;
+  isPublished?: boolean;
   createdAt: string;
 }
 
@@ -52,6 +54,10 @@ export interface Category {
   image: string;
   color: string;
   productCount?: number;
+  parentId?: string | null;
+  level?: "main" | "sub";
+  tags?: string[];
+  isPublished?: boolean;
 }
 
 // ─── Cart ───────────────────────────────────────────────────────────────────

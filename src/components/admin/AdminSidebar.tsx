@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Package,
@@ -9,23 +9,23 @@ import {
   Users,
   Leaf,
   Settings,
-  Star,
-  BookOpen,
   Heart,
   CreditCard,
   ShieldCheck,
   X,
+  FolderTree,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/authStore";
 
 const navItems = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/products", label: "Catalogue", icon: Package },
+  { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { href: "/admin/payments", label: "Payments", icon: CreditCard },
   { href: "/admin/customers", label: "Customers", icon: Users },
-  { href: "/admin/reviews", label: "Reviews", icon: Star },
-  { href: "/admin/recipes", label: "Recipes", icon: BookOpen },
   { href: "/admin/wishlists", label: "Wishlists", icon: Heart },
   { href: "/admin/users", label: "Admin Users", icon: ShieldCheck },
   { href: "/admin/settings", label: "Settings", icon: Settings },
@@ -38,6 +38,13 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/admin/login");
+  };
 
   return (
     <>
@@ -86,7 +93,7 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
                 href={item.href}
                 onClick={() => onClose()}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                  "flex items-center gap-3 px-4 py-3 rounded-md text-md font-bold transition-all duration-200 group relative overflow-hidden",
                   active
                     ? "text-white bg-[var(--spice)] shadow-sm"
                     : "text-white/60 hover:text-white hover:bg-white/10"
@@ -101,6 +108,17 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
             );
           })}
         </nav>
+
+        {/* Bottom Logout Action */}
+        <div className="p-4 border-t border-white/10 shrink-0">
+          <button 
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-white/60 hover:text-white hover:bg-red-500/20 transition-colors group"
+          >
+            <LogOut size={18} className="shrink-0 group-hover:text-red-400 transition-colors" />
+            Sign Out
+          </button>
+        </div>
       </aside>
     </>
   );

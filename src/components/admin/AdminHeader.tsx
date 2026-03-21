@@ -49,8 +49,8 @@ export function AdminHeader({ onOpenSidebar, title = "Dashboard" }: AdminHeaderP
 
             {/* Dropdown placeholder (simulated on hover for now) */}
             <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-[var(--border)] rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top-right z-50 overflow-hidden text-left">
-              <Link href="/admin/settings" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-[var(--bark-light)] hover:bg-[var(--cream)] hover:text-[var(--spice)] border-b border-[var(--border)] transition-colors">
-                <UserIcon size={16} /> My Account
+              <Link href="/admin/my-profile" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-[var(--bark-light)] hover:bg-[var(--cream)] hover:text-[var(--spice)] border-b border-[var(--border)] transition-colors">
+                <UserIcon size={16} /> My Profile
               </Link>
               <button onClick={logout} className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors text-left">
                 <LogOut size={16} className="text-red-400" /> Sign Out

@@ -13,10 +13,18 @@ export function AuthGuard({ children, isAdmin }: { children: React.ReactNode; is
 
   useEffect(() => {
     setMounted(true);
-    if (!isAuthenticated && pathname.startsWith("/account") && !pathname.includes("/account/login") && !pathname.includes("/account/register") && !pathname.includes("/account/forgot-password")) {
-      router.push(`/account/login?redirect=${encodeURIComponent(pathname)}`);
+    
+    if (!isAuthenticated) {
+      if (isAdmin && !pathname.includes("/admin/login")) {
+        router.push(`/admin/login?redirect=${encodeURIComponent(pathname)}`);
+        return;
+      }
+      
+      if (pathname.startsWith("/account") && !pathname.includes("/account/login") && !pathname.includes("/account/register") && !pathname.includes("/account/forgot-password")) {
+        router.push(`/account/login?redirect=${encodeURIComponent(pathname)}`);
+      }
     }
-  }, [isAuthenticated, pathname, router]);
+  }, [isAuthenticated, pathname, router, isAdmin]);
 
   if (!mounted) {
     return (
@@ -24,6 +32,10 @@ export function AuthGuard({ children, isAdmin }: { children: React.ReactNode; is
         <Loader2 className="w-8 h-8 animate-spin text-[var(--spice)]" />
       </div>
     );
+  }
+
+  if (!isAuthenticated && isAdmin && !pathname.includes("/admin/login")) {
+    return null;
   }
 
   if (!isAuthenticated && pathname.startsWith("/account")) {

@@ -31,6 +31,28 @@ export const initialBanners: Banner[] = [
 // ─── Categories ──────────────────────────────────────────────────────────────
 
 export const categories: Category[] = [
+  // --- ROOT CATEGORIES ---
+  {
+    id: "root_1",
+    name: "Spices & Herbs",
+    slug: "spices-herbs",
+    description: "All pure culinary spices, botanical herbs, and native flavorings.",
+    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=80",
+    color: "#8B4513",
+    level: "main",
+    parentId: null,
+  },
+  {
+    id: "root_2",
+    name: "Pantry & Additives",
+    slug: "pantry-additives",
+    description: "Sauces, natural sweeteners, brewing components, and artisan food additives.",
+    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80",
+    color: "#4A6741",
+    level: "main",
+    parentId: null,
+  },
+  // --- SUB CATEGORIES ---
   {
     id: "cat_1",
     name: "Whole Spices",
@@ -39,6 +61,8 @@ export const categories: Category[] = [
     image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=80",
     color: "#C15B2A",
     productCount: 12,
+    level: "sub",
+    parentId: "root_1",
   },
   {
     id: "cat_2",
@@ -48,6 +72,8 @@ export const categories: Category[] = [
     image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80",
     color: "#8B4513",
     productCount: 10,
+    level: "sub",
+    parentId: "root_1",
   },
   {
     id: "cat_3",
@@ -57,6 +83,8 @@ export const categories: Category[] = [
     image: "https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=600&q=80",
     color: "#2D5016",
     productCount: 9,
+    level: "sub",
+    parentId: "root_1",
   },
   {
     id: "cat_4",
@@ -66,6 +94,8 @@ export const categories: Category[] = [
     image: "https://images.unsplash.com/photo-1588619491790-25e98586eaad?w=600&q=80",
     color: "#7B3F00",
     productCount: 7,
+    level: "sub",
+    parentId: "root_1",
   },
   {
     id: "cat_5",
@@ -75,6 +105,8 @@ export const categories: Category[] = [
     image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80",
     color: "#4A6741",
     productCount: 6,
+    level: "sub",
+    parentId: "root_2",
   },
   {
     id: "cat_6",

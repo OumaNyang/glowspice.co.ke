@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Plus, Edit, Star } from "lucide-react";
+import { Plus, Edit, Star, Eye } from "lucide-react";
 import { products } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
@@ -85,23 +85,27 @@ const columns: ColumnDef<Product>[] = [
   {
     header: "Action",
     cell: (product) => (
-      <Link
-        href={`/admin/products/${product.id}/edit`}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[var(--cream)] border border-[var(--border)] text-xs font-bold text-[var(--spice)] hover:bg-white hover:border-[var(--spice)] hover:shadow-sm transition-all"
-      >
-        <Edit size={12} />
-        Edit
-      </Link>
+      <div className="flex items-center gap-2 shrink-0">
+        <Link
+          href={`/admin/products/${product.id}/edit`}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-[var(--spice)] bg-white border border-[var(--border)] hover:border-[var(--spice)] hover:bg-[var(--spice)]/5 rounded transition-colors shadow-sm"
+        >
+          <Edit size={12} /> Edit
+        </Link>
+        <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-[var(--gray-600)] bg-white border border-[var(--border)] hover:bg-[var(--gray-50)] rounded transition-colors shadow-sm">
+          <Eye size={12} /> View
+        </button>
+      </div>
     ),
   },
 ];
 
 export default function AdminProductsPage() {
   return (
-    <div className="p-4 sm:p-8 max-w-[1600px] mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <div className="p-4 sm:p-6 max-w-[1600px] mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h1 className="font-display font-bold text-3xl text-[var(--bark)] leading-tight">Products Catalogue</h1>
+          <h1 className="font-display font-bold text-2xl text-[var(--bark)] leading-tight">Products Catalogue</h1>
           <p className="text-sm font-medium text-[var(--gray-500)] mt-1">{products.length} active products</p>
         </div>
         <Link
