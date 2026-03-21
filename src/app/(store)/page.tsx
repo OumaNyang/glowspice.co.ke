@@ -103,7 +103,7 @@ export default function HomePage() {
             {categories.map((cat) => (
               <Link
                 key={cat.id}
-                href={`/products?category=${cat.slug}`}
+                href={`/products/category/${cat.slug}`}
                 className="group block"
               >
                 <div className="relative h-36 rounded-md overflow-hidden mb-3 shadow-md group-hover:shadow-lg transition-all duration-300">
