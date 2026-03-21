@@ -2,9 +2,11 @@
 
 export interface ProductVariation {
   id: string;
-  name: string; // e.g. "50g", "100g", "200g"
+  name: string; // e.g. "Size", "Color"
+  value: string; // e.g. "50g", "100g", "200g"
   price: number;
   stock: number;
+  sku: string;
 }
 
 export interface Product {
@@ -21,6 +23,8 @@ export interface Product {
   images: ProductImage[];
   stock: number;
   unit: string; // fallback if no variations (e.g. "100g", "250g", "1kg")
+  sku: string;
+  barcode?: string;
   variations?: ProductVariation[];
   origin?: string;
   rating: number;
@@ -28,6 +32,7 @@ export interface Product {
   isFeatured: boolean;
   isNew: boolean;
   isBestSeller: boolean;
+  isPublished: boolean;
   createdAt: string;
 }
 
