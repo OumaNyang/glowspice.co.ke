@@ -154,6 +154,7 @@ export interface ProductFilters {
   search: string;
   categoryId: string;
   minPrice: number;
+  maxPrice: number;
   inStock: boolean;
   sortBy: "newest" | "price_asc" | "price_desc" | "popular" | "rating";
 }
