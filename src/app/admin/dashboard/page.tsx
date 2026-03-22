@@ -105,7 +105,7 @@ export default function AdminDashboardPage() {
                       {order.orderNumber}
                     </Link>
                   </td>
-                  <td className="px-5 py-4 text-[var(--bark)]">{order.customer.name}</td>
+                  <td className="px-5 py-4 text-[var(--bark)]">{order.customer?.name || "Unknown Customer"}</td>
                   <td className="px-5 py-4 text-[var(--gray-500)]">{order.items.length}</td>
                   <td className="px-5 py-4 font-bold text-[var(--bark)]">{formatPrice(order.total)}</td>
                   <td className="px-5 py-4 text-[var(--gray-500)]">{order.paymentMethod}</td>

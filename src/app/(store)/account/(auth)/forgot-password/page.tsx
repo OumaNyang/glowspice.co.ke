@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Loader2, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 
+import { forgotPassword } from "@/app/actions/auth";
+
 export default function AccountForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,10 +17,19 @@ export default function AccountForgotPasswordPage() {
     if (!email) return;
     
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setLoading(false);
-    setSubmitted(true);
-    toast.success("Reset link sent!");
+    try {
+      const response = await forgotPassword(email);
+      if (response.error) {
+        toast.error(response.error);
+      } else {
+        setSubmitted(true);
+        toast.success("Reset link sent!");
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

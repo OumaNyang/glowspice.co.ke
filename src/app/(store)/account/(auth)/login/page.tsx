@@ -1,12 +1,12 @@
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
-import { useState, Suspense } from "react";
+import { useState, Suspense, useTransition } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { loginUser } from "@/app/actions/auth";
+import { loginCustomer } from "@/app/actions/auth";
 
 function LoginForm() {
   const router = useRouter();
@@ -16,33 +16,31 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) return;
     
-    setLoading(true);
-    
-    try {
-      const response = await loginUser(email);
-      
-      if (response.error || !response.user) {
-        toast.error(response.error || "Login failed");
-        setLoading(false);
-        return;
+    startTransition(async () => {
+      try {
+        const response = await loginCustomer(email, password);
+        
+        if (response.error) {
+          toast.error(response.error);
+          return;
+        }
+
+        const { user } = response;
+        if (user) {
+          login(user as any);
+          toast.success("Welcome back to GlowSpice!");
+          const redirectTo = searchParams.get("redirect") || "/account";
+          router.push(redirectTo);
+        }
+      } catch (err) {
+        toast.error("An error occurred during login");
       }
-      
-      const { user } = response;
-      login(user.email, user.name, user.role);
-      toast.success("Welcome back to GlowSpice!");
-      
-      const redirectTo = searchParams.get("redirect") || "/account";
-      router.push(redirectTo);
-    } catch (err) {
-      toast.error("An error occurred during login");
-      setLoading(false);
-    }
+    });
   };
 
   return (
@@ -54,7 +52,7 @@ function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 rounded-md border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--spice)] focus:border-transparent transition-all bg-white"
+          className="w-full px-4 py-3 rounded-md border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--spice)] transition-all bg-white"
           placeholder="you@example.com"
         />
       </div>
@@ -62,7 +60,7 @@ function LoginForm() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="block text-sm font-semibold text-[var(--bark)]">Password</label>
-          <Link href="/account/forgot-password" rural-link="true" className="text-sm font-medium text-[var(--spice)] hover:underline">
+          <Link href="/account/forgot-password" global-link="true" className="text-sm font-medium text-[var(--spice)] hover:underline">
             Forgot password?
           </Link>
         </div>
@@ -72,7 +70,7 @@ function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-md border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--spice)] focus:border-transparent transition-all bg-white pr-12"
+            className="w-full px-4 py-3 rounded-md border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--spice)] transition-all bg-white pr-12"
             placeholder="••••••••"
           />
           <button
@@ -87,10 +85,10 @@ function LoginForm() {
 
       <button 
         type="submit" 
-        disabled={loading}
+        disabled={isPending}
         className="w-full bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-bold py-3.5 rounded-md flex items-center justify-center gap-2 transition-colors disabled:opacity-70"
       >
-        {loading ? <Loader2 size={20} className="animate-spin" /> : (
+        {isPending ? <Loader2 size={20} className="animate-spin" /> : (
           <>Sign In <ArrowRight size={18} /></>
         )}
       </button>

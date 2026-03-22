@@ -1,26 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { AuthUser } from "@/lib/types";
 
-type User = {
-  name: string;
-  email: string;
-  role?: string;
-};
-
-type AuthState = {
+interface AuthState {
+  user: AuthUser | null;
   isAuthenticated: boolean;
-  user: User | null;
-  login: (email: string, name: string, role?: string) => void;
+  login: (user: AuthUser) => void;
   logout: () => void;
-};
+  updateUser: (user: Partial<AuthUser>) => void;
+}
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       isAuthenticated: false,
       user: null,
-      login: (email, name, role) => set({ isAuthenticated: true, user: { email, name, role } }),
+      login: (user) => set({ isAuthenticated: true, user }),
       logout: () => set({ isAuthenticated: false, user: null }),
+      updateUser: (user) => set((state) => ({
+        user: state.user ? { ...state.user, ...user } as AuthUser : null
+      })),
     }),
     {
       name: 'glowspice-auth-storage', // localStorage key

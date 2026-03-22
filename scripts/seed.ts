@@ -1,18 +1,23 @@
+import "dotenv/config";
 import { prisma } from "../src/lib/db";
+import bcrypt from "bcryptjs";
 
 async function main() {
-  console.log('Clearing existing users...');
+  console.log('Clearing existing users and admins...');
   await prisma.user.deleteMany();
+  await prisma.admin.deleteMany();
 
   console.log('Seeding real users...');
   
+  const hashedPassword = await bcrypt.hash("password123", 10);
+
   // Real Admin User
-  const admin = await prisma.user.create({
+  const admin = await prisma.admin.create({
     data: {
       name: 'GlowSpice Admin',
       email: 'admin@glowspice.shop',
-      role: 'ADMIN',
-      phone: '+254700000000',
+      password: hashedPassword,
+      createdAt: new Date(),
     },
   });
 
@@ -21,14 +26,16 @@ async function main() {
     data: {
       name: 'Jane Customer',
       email: 'customer@glowspice.shop',
-      role: 'CUSTOMER',
+      password: hashedPassword,
       phone: '+254711111111',
+      emailVerified: new Date(),
     },
   });
 
   console.log('Users seeded:');
   console.log('Admin:', admin.email);
   console.log('Customer:', customer.email);
+  console.log('Default Password:', 'password123');
 }
 
 main()

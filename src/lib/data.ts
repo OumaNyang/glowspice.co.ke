@@ -3,7 +3,8 @@ import type {
   Product,
   Review,
   Order,
-  User,
+  CustomerUser,
+  AdminUser,
   DashboardStats,
   Banner,
 } from "./types";
@@ -1173,7 +1174,7 @@ export const reviews: Review[] = [
 
 // ─── Users ───────────────────────────────────────────────────────────────────
 
-export const users: User[] = [
+export const users: CustomerUser[] = [
   {
     id: "user_1",
     name: "Amina Ochieng",
@@ -1204,13 +1205,7 @@ export const users: User[] = [
     orderCount: 3,
     totalSpent: 6700,
   },
-  {
-    id: "user_4",
-    name: "Admin User",
-    email: "admin@glowspice.co.ke",
-    role: "admin",
-    createdAt: "2024-10-01",
-  },
+
   {
     id: "user_5",
     name: "Grace Wanjiku",
@@ -1323,7 +1318,7 @@ export const orders: Order[] = [
     id: "ord_4",
     orderNumber: "GS-2025-0004",
     customerId: "user_5",
-    customer: users[4],
+    customer: users[3],
     items: [
       { product: products[1], quantity: 2, unitPrice: 380, subtotal: 760 },
       { product: products[9], quantity: 1, unitPrice: 210, subtotal: 210 },
@@ -1352,7 +1347,7 @@ export const orders: Order[] = [
     id: "ord_5",
     orderNumber: "GS-2025-0005",
     customerId: "user_6",
-    customer: users[5],
+    customer: users[4],
     items: [
       { product: products[3], quantity: 3, unitPrice: 320, subtotal: 960 },
       { product: products[4], quantity: 2, unitPrice: 180, subtotal: 360 },

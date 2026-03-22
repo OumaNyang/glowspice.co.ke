@@ -4,9 +4,9 @@ import { Users, TrendingUp, ShoppingBag } from "lucide-react";
 import { users } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 import { AdminDataTable, ColumnDef } from "@/components/admin/AdminDataTable";
-import { User } from "@/lib/types";
+import { CustomerUser } from "@/lib/types";
 
-const columns: ColumnDef<User>[] = [
+const columns: ColumnDef<CustomerUser>[] = [
   {
     header: "Customer",
     accessorKey: "name",

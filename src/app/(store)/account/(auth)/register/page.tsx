@@ -1,32 +1,42 @@
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
+import { registerCustomer } from "@/app/actions/auth";
+
 export default function AccountRegisterPage() {
   const router = useRouter();
-  const login = useAuthStore((s) => s.login);
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password || !name) return;
     
-    setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    login(email, name);
-    toast.success("Account created successfully!");
-    router.push("/account");
+    startTransition(async () => {
+      try {
+        const response = await registerCustomer({ email, password, name });
+        
+        if (response.error) {
+          toast.error(response.error);
+          return;
+        }
+        
+        toast.success(response.success || "Account created! Please verify your email.");
+        router.push("/account/login");
+      } catch (err) {
+        toast.error("An error occurred during registration");
+      }
+    });
   };
 
   return (
@@ -86,10 +96,10 @@ export default function AccountRegisterPage() {
 
           <button 
             type="submit" 
-            disabled={loading}
+            disabled={isPending}
             className="w-full bg-[var(--bark)] hover:bg-black text-white font-bold py-3.5 rounded-md flex items-center justify-center gap-2 transition-colors disabled:opacity-70 mt-4"
           >
-            {loading ? <Loader2 size={20} className="animate-spin" /> : (
+            {isPending ? <Loader2 size={20} className="animate-spin" /> : (
               <>Register <ArrowRight size={18} /></>
             )}
           </button>

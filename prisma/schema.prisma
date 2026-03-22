@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -7,78 +8,117 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  phone     String?
-  avatar    String?
-  role      String   @default("CUSTOMER") // CUSTOMER, ADMIN
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  avatar        String?
+  emailVerified DateTime?
+  password      String?
+  phone         String?
+  orders        Order[]
+  reviews       Review[]
+}
 
-  orders  Order[]
-  recipes Recipe[]
-  reviews Review[]
+model Admin {
+  id                    String                 @id @default(cuid())
+  name                  String
+  email                 String                 @unique
+  emailVerified         DateTime?
+  password              String?
+  avatar                String?
+  twoFactorEnabled      Boolean                @default(false)
+  twoFactorSecret       String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  recipes               Recipe[]
+  twoFactorConfirmation TwoFactorConfirmation?
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id      String @id @default(cuid())
+  adminId String @unique
+  admin   Admin  @relation(fields: [adminId], references: [id], onDelete: Cascade)
 }
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  image       String?
-  color       String?
-  level       String   @default("main") // main, sub
-  parentId    String?
-  tags        String[]
-  isPublished Boolean  @default(true)
-
-  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
-  children Category[] @relation("CategoryHierarchy")
-
-  productsMain Product[] @relation("MainCategoryProducts")
-  productsSub  Product[] @relation("SubCategoryProducts")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String     @id @default(cuid())
+  slug         String     @unique
+  name         String
+  color        String?
+  createdAt    DateTime   @default(now())
+  description  String?
+  image        String?
+  isPublished  Boolean    @default(true)
+  level        String     @default("main")
+  parentId     String?
+  tags         String[]
+  updatedAt    DateTime   @updatedAt
+  parent       Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children     Category[] @relation("CategoryHierarchy")
+  productsMain Product[]  @relation("MainCategoryProducts")
+  productsSub  Product[]  @relation("SubCategoryProducts")
 }
 
 model Product {
-  id               String  @id @default(cuid())
+  id               String             @id @default(cuid())
+  slug             String             @unique
   name             String
-  slug             String  @unique
   description      String?
-  shortDescription String?
   price            Float
-  compareAtPrice   Float?
-  stock            Int     @default(0)
-  unit             String  @default("piece")
-  sku              String? @unique
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   barcode          String?
+  compareAtPrice   Float?
+  isBestSeller     Boolean            @default(false)
+  isFeatured       Boolean            @default(false)
+  isNew            Boolean            @default(false)
+  isPublished      Boolean            @default(true)
+  mainCategoryId   String?
   origin           String?
-  rating           Float   @default(0)
-  reviewCount      Int     @default(0)
-
-  isFeatured   Boolean  @default(false)
-  isNew        Boolean  @default(false)
-  isBestSeller Boolean  @default(false)
-  isPublished  Boolean  @default(true)
-  tags         String[]
-
-  mainCategoryId String?
-  subCategoryId  String?
-
-  mainCategory Category? @relation("MainCategoryProducts", fields: [mainCategoryId], references: [id])
-  subCategory  Category? @relation("SubCategoryProducts", fields: [subCategoryId], references: [id])
-
-  images      ProductImage[]
-  variations  ProductVariation[]
-  reviews     Review[]
-  orderItems  OrderItem[]
-  recipeLinks RecipeProduct[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  rating           Float              @default(0)
+  reviewCount      Int                @default(0)
+  shortDescription String?
+  sku              String?            @unique
+  stock            Int                @default(0)
+  subCategoryId    String?
+  tags             String[]
+  unit             String             @default("piece")
+  orderItems       OrderItem[]
+  mainCategory     Category?          @relation("MainCategoryProducts", fields: [mainCategoryId], references: [id])
+  subCategory      Category?          @relation("SubCategoryProducts", fields: [subCategoryId], references: [id])
+  images           ProductImage[]
+  variations       ProductVariation[]
+  recipeLinks      RecipeProduct[]
+  reviews          Review[]
 }
 
 model ProductImage {
@@ -90,20 +130,19 @@ model ProductImage {
 }
 
 model ProductVariation {
-  id        String  @id @default(cuid())
-  productId String
-  name      String // e.g. "Size"
-  value     String? // e.g. "100g"
-  price     Float
-  stock     Int     @default(0)
-  sku       String? @unique
-
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id         String      @id @default(cuid())
+  productId  String
+  name       String
+  value      String?
+  price      Float
+  stock      Int         @default(0)
+  sku        String?     @unique
   orderItems OrderItem[]
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   productId String
   userId    String?
   author    String
@@ -111,46 +150,41 @@ model Review {
   rating    Int
   title     String?
   body      String?
-  verified  Boolean @default(false)
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
-
+  verified  Boolean  @default(false)
   createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 model Order {
-  id            String  @id @default(cuid())
-  orderNumber   String  @unique
-  customerId    String
-  status        String  @default("pending") // pending, processing, shipped, delivered, cancelled
-  subtotal      Float
-  shippingCost  Float   @default(0)
-  tax           Float   @default(0)
-  total         Float
-  paymentMethod String
-  notes         String?
-
+  id              String           @id @default(cuid())
+  status          String           @default("pending")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  customerId      String
+  notes           String?
+  orderNumber     String           @unique
+  paymentMethod   String
+  shippingCost    Float            @default(0)
+  subtotal        Float
+  tax             Float            @default(0)
+  total           Float
   customer        User             @relation(fields: [customerId], references: [id])
-  shippingAddress ShippingAddress?
   items           OrderItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  shippingAddress ShippingAddress?
 }
 
 model OrderItem {
-  id          String  @id @default(cuid())
+  id          String            @id @default(cuid())
   orderId     String
   productId   String
-  variationId String?
   quantity    Int
-  unitPrice   Float
   subtotal    Float
-
-  order     Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product           @relation(fields: [productId], references: [id])
-  variation ProductVariation? @relation(fields: [variationId], references: [id])
+  unitPrice   Float
+  variationId String?
+  order       Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product           @relation(fields: [productId], references: [id])
+  variation   ProductVariation? @relation(fields: [variationId], references: [id])
 }
 
 model ShippingAddress {
@@ -164,45 +198,41 @@ model ShippingAddress {
   county     String
   postalCode String
   country    String
-
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order      Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model Recipe {
-  id           String  @id @default(cuid())
+  id           String          @id @default(cuid())
   title        String
-  slug         String  @unique
+  slug         String          @unique
   description  String?
-  prepTime     Int? // minutes
-  cookTime     Int? // minutes
+  prepTime     Int?
+  cookTime     Int?
   servings     Int?
-  difficulty   String? // easy, medium, hard
+  difficulty   String?
   image        String?
-  ingredients  String // JSON string or array
-  instructions String // JSON string or array
+  ingredients  String
+  instructions String
   authorId     String?
-  isPublished  Boolean @default(true)
-
-  author   User?           @relation(fields: [authorId], references: [id])
-  products RecipeProduct[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isPublished  Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  author       Admin?          @relation(fields: [authorId], references: [id])
+  products     RecipeProduct[]
 }
 
 model RecipeProduct {
   recipeId  String
   productId String
-
-  recipe  Recipe  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  recipe    Recipe  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   @@id([recipeId, productId])
 }
 
 model Setting {
   key       String   @id
-  value     String // Should store JSON string payload
+  value     String
   group     String   @default("GENERAL")
   updatedAt DateTime @updatedAt
 }

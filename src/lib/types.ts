@@ -116,7 +116,7 @@ export interface Order {
   id: string;
   orderNumber: string;
   customerId: string;
-  customer: User;
+  customer: CustomerUser;
   items: OrderItem[];
   status: OrderStatus;
   shippingAddress: ShippingAddress;
@@ -134,17 +134,31 @@ export interface Order {
 
 export type UserRole = "customer" | "admin";
 
-export interface User {
+export interface CustomerUser {
   id: string;
   name: string;
   email: string;
+  emailVerified?: string;
   phone?: string;
   avatar?: string;
-  role: UserRole;
+  role: "customer";
   createdAt: string;
   orderCount?: number;
   totalSpent?: number;
 }
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified?: string;
+  avatar?: string;
+  role: "admin";
+  twoFactorEnabled: boolean;
+  createdAt: string;
+}
+
+export type AuthUser = CustomerUser | AdminUser;
 
 // ─── Admin Stats ─────────────────────────────────────────────────────────────
 

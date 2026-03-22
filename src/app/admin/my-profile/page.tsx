@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function AdminProfilePage() {
   const router = useRouter();
-  const { user, login, logout } = useAuthStore();
+  const { user, login, logout, updateUser } = useAuthStore();
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -36,7 +36,10 @@ export default function AdminProfilePage() {
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
-    login(formData.email, formData.name, formData.role);
+    updateUser({
+      name: formData.name,
+      email: formData.email,
+    });
     alert("Profile saved successfully to Local Storage Session!");
   };
 
