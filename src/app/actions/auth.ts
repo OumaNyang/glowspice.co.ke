@@ -29,13 +29,29 @@ export async function loginCustomer(email: string, password?: string) {
       return { error: "Invalid credentials." };
     }
 
+    if (user.isBlocked) {
+      return { error: "Your account has been blocked. Please contact support." };
+    }
+
     if (!user.emailVerified) {
       const verificationToken = await generateVerificationToken(user.email);
       await sendVerificationEmail(verificationToken.email, verificationToken.token);
       return { error: "Email not verified. Confirmation email sent." };
     }
 
-    return { user: { ...user, role: "customer" as const } };
+    return { 
+      user: { 
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: "customer" as const,
+        isBlocked: user.isBlocked,
+        createdAt: user.createdAt.toISOString(),
+        emailVerified: user.emailVerified?.toISOString() || undefined,
+        avatar: user.avatar || undefined,
+        phone: user.phone || undefined,
+      } 
+    };
   } catch (error) {
     console.error("Login Error:", error);
     return { error: "An error occurred during login." };
@@ -58,7 +74,12 @@ export async function loginAdmin(email: string, password?: string, code?: string
       return { error: "Invalid credentials." };
     }
 
+    if (admin.isBlocked) {
+      return { error: "This admin account has been blocked. Please contact a Super Admin." };
+    }
+
     if (admin.twoFactorEnabled && admin.email) {
+      // ... (2FA logic)
       if (code) {
         const twoFactorToken = await prisma.twoFactorToken.findFirst({
           where: { email: admin.email }
@@ -98,7 +119,19 @@ export async function loginAdmin(email: string, password?: string, code?: string
       }
     }
 
-    return { user: { ...admin, role: "admin" as const } };
+    return { 
+      user: { 
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role as "SUPER_ADMIN" | "ADMIN",
+        isBlocked: admin.isBlocked,
+        createdAt: admin.createdAt.toISOString(),
+        emailVerified: admin.emailVerified?.toISOString() || undefined,
+        avatar: admin.avatar || undefined,
+        twoFactorEnabled: admin.twoFactorEnabled,
+      } 
+    };
   } catch (error) {
     console.error("Admin Login Error:", error);
     return { error: "An error occurred during login." };
@@ -226,5 +259,33 @@ export async function verifyEmail(token: string) {
     return { success: "Email verified!" };
   } catch (error) {
     return { error: "Something went wrong." };
+  }
+}
+export async function updateAdminProfile(id: string, values: { name: string; email: string }) {
+  try {
+    const updatedAdmin = await prisma.admin.update({
+      where: { id },
+      data: {
+        name: values.name,
+        email: values.email,
+      },
+    });
+
+    return { 
+      user: { 
+        id: updatedAdmin.id,
+        name: updatedAdmin.name,
+        email: updatedAdmin.email,
+        role: updatedAdmin.role as "SUPER_ADMIN" | "ADMIN",
+        isBlocked: updatedAdmin.isBlocked,
+        createdAt: updatedAdmin.createdAt.toISOString(),
+        emailVerified: updatedAdmin.emailVerified?.toISOString() || undefined,
+        avatar: updatedAdmin.avatar || undefined,
+        twoFactorEnabled: updatedAdmin.twoFactorEnabled,
+      } 
+    };
+  } catch (error) {
+    console.error("Update Admin Error:", error);
+    return { error: "Failed to update profile in database." };
   }
 }

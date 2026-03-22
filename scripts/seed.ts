@@ -3,10 +3,6 @@ import { prisma } from "../src/lib/db";
 import bcrypt from "bcryptjs";
 
 async function main() {
-  console.log('Clearing existing users and admins...');
-  await prisma.user.deleteMany();
-  await prisma.admin.deleteMany();
-
   console.log('Seeding real users...');
   
   const hashedPassword = await bcrypt.hash("password123", 10);
@@ -14,9 +10,11 @@ async function main() {
   // Real Admin User
   const admin = await prisma.admin.create({
     data: {
-      name: 'GlowSpice Admin',
-      email: 'admin@glowspice.shop',
+      name: 'Super Admin',
+      email: 'admin@glowspice.co.ke',
       password: hashedPassword,
+      role: 'SUPER_ADMIN',
+      emailVerified: new Date(),
       createdAt: new Date(),
     },
   });

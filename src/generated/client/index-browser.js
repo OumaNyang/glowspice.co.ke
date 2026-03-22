@@ -129,7 +129,8 @@ exports.Prisma.UserScalarFieldEnum = {
   avatar: 'avatar',
   emailVerified: 'emailVerified',
   password: 'password',
-  phone: 'phone'
+  phone: 'phone',
+  isBlocked: 'isBlocked'
 };
 
 exports.Prisma.AdminScalarFieldEnum = {
@@ -142,7 +143,9 @@ exports.Prisma.AdminScalarFieldEnum = {
   twoFactorEnabled: 'twoFactorEnabled',
   twoFactorSecret: 'twoFactorSecret',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  role: 'role',
+  isBlocked: 'isBlocked'
 };
 
 exports.Prisma.VerificationTokenScalarFieldEnum = {

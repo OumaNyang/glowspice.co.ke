@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { TrendingUp, ShoppingBag, Users, Package, ArrowUpRight } from "lucide-react";
-import { dashboardStats, orders } from "@/lib/data";
+import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 
@@ -13,34 +13,58 @@ const statusVariant: Record<string, "success" | "warning" | "herb" | "error" | "
   cancelled: "error",
 };
 
-export default function AdminDashboardPage() {
-  const stats = dashboardStats;
+export default async function AdminDashboardPage() {
+  const [
+    totalOrders,
+    totalCustomers,
+    totalProducts,
+    revenueResult,
+    recentOrders
+  ] = await Promise.all([
+    prisma.order.count(),
+    prisma.user.count(),
+    prisma.product.count(),
+    prisma.order.aggregate({
+      _sum: { total: true },
+      where: { NOT: { status: "cancelled" } }
+    }),
+    prisma.order.findMany({
+      take: 10,
+      orderBy: { createdAt: "desc" },
+      include: { 
+        customer: true,
+        items: true
+      }
+    })
+  ]);
+
+  const totalRevenue = revenueResult._sum.total || 0;
 
   const statCards = [
     {
       label: "Total Revenue",
-      value: formatPrice(stats.totalRevenue),
-      change: `+${stats.revenueChange}%`,
+      value: formatPrice(totalRevenue),
+      change: `Live`,
       icon: TrendingUp,
       color: "var(--spice)",
     },
     {
       label: "Total Orders",
-      value: stats.totalOrders,
-      change: `+${stats.ordersChange}%`,
+      value: totalOrders,
+      change: `Live`,
       icon: ShoppingBag,
       color: "var(--herb)",
     },
     {
       label: "Customers",
-      value: stats.totalCustomers,
-      change: `+${stats.customersChange}%`,
+      value: totalCustomers,
+      change: `Live`,
       icon: Users,
       color: "#6366f1",
     },
     {
       label: "Products",
-      value: stats.totalProducts,
+      value: totalProducts,
       change: "Active",
       icon: Package,
       color: "var(--bark-light)",
@@ -98,25 +122,31 @@ export default function AdminDashboardPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-[var(--gray-50)] transition-colors">
-                  <td className="px-5 py-4">
-                    <Link href={`/admin/orders/${order.id}`} className="font-medium text-[var(--spice)] hover:underline">
-                      {order.orderNumber}
-                    </Link>
-                  </td>
-                  <td className="px-5 py-4 text-[var(--bark)]">{order.customer?.name || "Unknown Customer"}</td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{order.items.length}</td>
-                  <td className="px-5 py-4 font-bold text-[var(--bark)]">{formatPrice(order.total)}</td>
-                  <td className="px-5 py-4 text-[var(--gray-500)]">{order.paymentMethod}</td>
-                  <td className="px-5 py-4">
-                    <Badge variant={statusVariant[order.status] ?? "default"} className="capitalize">
-                      {order.status}
-                    </Badge>
-                  </td>
-                  <td className="px-5 py-4 text-[var(--gray-400)]">{order.createdAt}</td>
+              {recentOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-5 py-8 text-center text-[var(--gray-500)]">No recent orders.</td>
                 </tr>
-              ))}
+              ) : (
+                recentOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-[var(--gray-50)] transition-colors">
+                    <td className="px-5 py-4">
+                      <Link href={`/admin/orders/${order.id}`} className="font-medium text-[var(--spice)] hover:underline">
+                        {order.orderNumber}
+                      </Link>
+                    </td>
+                    <td className="px-5 py-4 text-[var(--bark)]">{order.customer?.name || "Unknown"}</td>
+                    <td className="px-5 py-4 text-[var(--gray-500)]">{order.items.length}</td>
+                    <td className="px-5 py-4 font-bold text-[var(--bark)]">{formatPrice(order.total)}</td>
+                    <td className="px-5 py-4 text-[var(--gray-500)]">{order.paymentMethod}</td>
+                    <td className="px-5 py-4">
+                      <Badge variant={statusVariant[order.status] ?? "default"} className="capitalize">
+                        {order.status}
+                      </Badge>
+                    </td>
+                    <td className="px-5 py-4 text-[var(--gray-400)]">{new Date(order.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

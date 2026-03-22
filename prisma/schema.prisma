@@ -17,6 +17,7 @@ model User {
   emailVerified DateTime?
   password      String?
   phone         String?
+  isBlocked     Boolean   @default(false)
   orders        Order[]
   reviews       Review[]
 }
@@ -32,6 +33,8 @@ model Admin {
   twoFactorSecret       String?
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+  role                  String                 @default("ADMIN")
+  isBlocked             Boolean                @default(false)
   recipes               Recipe[]
   twoFactorConfirmation TwoFactorConfirmation?
 }

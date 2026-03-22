@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { User, Mail, Shield, Save, Key, UserCircle, LogOut } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
+import { updateAdminProfile } from "@/app/actions/auth";
+import { toast } from "sonner";
 
 export default function AdminProfilePage() {
   const router = useRouter();
@@ -34,13 +36,28 @@ export default function AdminProfilePage() {
 
   if (!isMounted) return <div className="p-8 text-center text-sm font-bold text-[var(--gray-500)]">Loading Core State...</div>;
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateUser({
-      name: formData.name,
-      email: formData.email,
-    });
-    alert("Profile saved successfully to Local Storage Session!");
+    if (!user?.id) return;
+
+    try {
+      const response = await updateAdminProfile(user.id, {
+        name: formData.name,
+        email: formData.email,
+      });
+
+      if (response.error) {
+        toast.error(response.error);
+        return;
+      }
+
+      if (response.user) {
+        updateUser(response.user);
+        toast.success("Profile updated in database!");
+      }
+    } catch (err) {
+      toast.error("An error occurred while saving profile.");
+    }
   };
 
   const handleSavePassword = (e: React.FormEvent) => {

@@ -2712,6 +2712,7 @@ export namespace Prisma {
     emailVerified: Date | null
     password: string | null
     phone: string | null
+    isBlocked: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2724,6 +2725,7 @@ export namespace Prisma {
     emailVerified: Date | null
     password: string | null
     phone: string | null
+    isBlocked: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2736,6 +2738,7 @@ export namespace Prisma {
     emailVerified: number
     password: number
     phone: number
+    isBlocked: number
     _all: number
   }
 
@@ -2750,6 +2753,7 @@ export namespace Prisma {
     emailVerified?: true
     password?: true
     phone?: true
+    isBlocked?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2762,6 +2766,7 @@ export namespace Prisma {
     emailVerified?: true
     password?: true
     phone?: true
+    isBlocked?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2774,6 +2779,7 @@ export namespace Prisma {
     emailVerified?: true
     password?: true
     phone?: true
+    isBlocked?: true
     _all?: true
   }
 
@@ -2859,6 +2865,7 @@ export namespace Prisma {
     emailVerified: Date | null
     password: string | null
     phone: string | null
+    isBlocked: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2888,6 +2895,7 @@ export namespace Prisma {
     emailVerified?: boolean
     password?: boolean
     phone?: boolean
+    isBlocked?: boolean
     orders?: boolean | User$ordersArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2903,6 +2911,7 @@ export namespace Prisma {
     emailVerified?: boolean
     password?: boolean
     phone?: boolean
+    isBlocked?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2915,6 +2924,7 @@ export namespace Prisma {
     emailVerified?: boolean
     password?: boolean
     phone?: boolean
+    isBlocked?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2927,9 +2937,10 @@ export namespace Prisma {
     emailVerified?: boolean
     password?: boolean
     phone?: boolean
+    isBlocked?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "avatar" | "emailVerified" | "password" | "phone", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "avatar" | "emailVerified" | "password" | "phone" | "isBlocked", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | User$ordersArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
@@ -2954,6 +2965,7 @@ export namespace Prisma {
       emailVerified: Date | null
       password: string | null
       phone: string | null
+      isBlocked: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3388,6 +3400,7 @@ export namespace Prisma {
     readonly emailVerified: FieldRef<"User", 'DateTime'>
     readonly password: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
+    readonly isBlocked: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -3868,6 +3881,8 @@ export namespace Prisma {
     twoFactorSecret: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    role: string | null
+    isBlocked: boolean | null
   }
 
   export type AdminMaxAggregateOutputType = {
@@ -3881,6 +3896,8 @@ export namespace Prisma {
     twoFactorSecret: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    role: string | null
+    isBlocked: boolean | null
   }
 
   export type AdminCountAggregateOutputType = {
@@ -3894,6 +3911,8 @@ export namespace Prisma {
     twoFactorSecret: number
     createdAt: number
     updatedAt: number
+    role: number
+    isBlocked: number
     _all: number
   }
 
@@ -3909,6 +3928,8 @@ export namespace Prisma {
     twoFactorSecret?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
+    isBlocked?: true
   }
 
   export type AdminMaxAggregateInputType = {
@@ -3922,6 +3943,8 @@ export namespace Prisma {
     twoFactorSecret?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
+    isBlocked?: true
   }
 
   export type AdminCountAggregateInputType = {
@@ -3935,6 +3958,8 @@ export namespace Prisma {
     twoFactorSecret?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
+    isBlocked?: true
     _all?: true
   }
 
@@ -4021,6 +4046,8 @@ export namespace Prisma {
     twoFactorSecret: string | null
     createdAt: Date
     updatedAt: Date
+    role: string
+    isBlocked: boolean
     _count: AdminCountAggregateOutputType | null
     _min: AdminMinAggregateOutputType | null
     _max: AdminMaxAggregateOutputType | null
@@ -4051,6 +4078,8 @@ export namespace Prisma {
     twoFactorSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
+    isBlocked?: boolean
     recipes?: boolean | Admin$recipesArgs<ExtArgs>
     twoFactorConfirmation?: boolean | Admin$twoFactorConfirmationArgs<ExtArgs>
     _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -4067,6 +4096,8 @@ export namespace Prisma {
     twoFactorSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
+    isBlocked?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4080,6 +4111,8 @@ export namespace Prisma {
     twoFactorSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
+    isBlocked?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectScalar = {
@@ -4093,9 +4126,11 @@ export namespace Prisma {
     twoFactorSecret?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
+    isBlocked?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "avatar" | "twoFactorEnabled" | "twoFactorSecret" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "avatar" | "twoFactorEnabled" | "twoFactorSecret" | "createdAt" | "updatedAt" | "role" | "isBlocked", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipes?: boolean | Admin$recipesArgs<ExtArgs>
     twoFactorConfirmation?: boolean | Admin$twoFactorConfirmationArgs<ExtArgs>
@@ -4121,6 +4156,8 @@ export namespace Prisma {
       twoFactorSecret: string | null
       createdAt: Date
       updatedAt: Date
+      role: string
+      isBlocked: boolean
     }, ExtArgs["result"]["admin"]>
     composites: {}
   }
@@ -4556,6 +4593,8 @@ export namespace Prisma {
     readonly twoFactorSecret: FieldRef<"Admin", 'String'>
     readonly createdAt: FieldRef<"Admin", 'DateTime'>
     readonly updatedAt: FieldRef<"Admin", 'DateTime'>
+    readonly role: FieldRef<"Admin", 'String'>
+    readonly isBlocked: FieldRef<"Admin", 'Boolean'>
   }
     
 
@@ -23089,7 +23128,8 @@ export namespace Prisma {
     avatar: 'avatar',
     emailVerified: 'emailVerified',
     password: 'password',
-    phone: 'phone'
+    phone: 'phone',
+    isBlocked: 'isBlocked'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -23105,7 +23145,9 @@ export namespace Prisma {
     twoFactorEnabled: 'twoFactorEnabled',
     twoFactorSecret: 'twoFactorSecret',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    role: 'role',
+    isBlocked: 'isBlocked'
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
@@ -23443,6 +23485,7 @@ export namespace Prisma {
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     password?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
+    isBlocked?: BoolFilter<"User"> | boolean
     orders?: OrderListRelationFilter
     reviews?: ReviewListRelationFilter
   }
@@ -23457,6 +23500,7 @@ export namespace Prisma {
     emailVerified?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    isBlocked?: SortOrder
     orders?: OrderOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
   }
@@ -23474,6 +23518,7 @@ export namespace Prisma {
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     password?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
+    isBlocked?: BoolFilter<"User"> | boolean
     orders?: OrderListRelationFilter
     reviews?: ReviewListRelationFilter
   }, "id" | "email">
@@ -23488,6 +23533,7 @@ export namespace Prisma {
     emailVerified?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    isBlocked?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -23506,6 +23552,7 @@ export namespace Prisma {
     emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isBlocked?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type AdminWhereInput = {
@@ -23522,6 +23569,8 @@ export namespace Prisma {
     twoFactorSecret?: StringNullableFilter<"Admin"> | string | null
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    role?: StringFilter<"Admin"> | string
+    isBlocked?: BoolFilter<"Admin"> | boolean
     recipes?: RecipeListRelationFilter
     twoFactorConfirmation?: XOR<TwoFactorConfirmationNullableScalarRelationFilter, TwoFactorConfirmationWhereInput> | null
   }
@@ -23537,6 +23586,8 @@ export namespace Prisma {
     twoFactorSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
+    isBlocked?: SortOrder
     recipes?: RecipeOrderByRelationAggregateInput
     twoFactorConfirmation?: TwoFactorConfirmationOrderByWithRelationInput
   }
@@ -23555,6 +23606,8 @@ export namespace Prisma {
     twoFactorSecret?: StringNullableFilter<"Admin"> | string | null
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    role?: StringFilter<"Admin"> | string
+    isBlocked?: BoolFilter<"Admin"> | boolean
     recipes?: RecipeListRelationFilter
     twoFactorConfirmation?: XOR<TwoFactorConfirmationNullableScalarRelationFilter, TwoFactorConfirmationWhereInput> | null
   }, "id" | "email">
@@ -23570,6 +23623,8 @@ export namespace Prisma {
     twoFactorSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
+    isBlocked?: SortOrder
     _count?: AdminCountOrderByAggregateInput
     _max?: AdminMaxOrderByAggregateInput
     _min?: AdminMinOrderByAggregateInput
@@ -23589,6 +23644,8 @@ export namespace Prisma {
     twoFactorSecret?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+    role?: StringWithAggregatesFilter<"Admin"> | string
+    isBlocked?: BoolWithAggregatesFilter<"Admin"> | boolean
   }
 
   export type VerificationTokenWhereInput = {
@@ -24773,6 +24830,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     orders?: OrderCreateNestedManyWithoutCustomerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
   }
@@ -24787,6 +24845,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     orders?: OrderUncheckedCreateNestedManyWithoutCustomerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
   }
@@ -24801,6 +24860,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     orders?: OrderUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
   }
@@ -24815,6 +24875,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     orders?: OrderUncheckedUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -24829,6 +24890,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -24841,6 +24903,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -24853,6 +24916,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdminCreateInput = {
@@ -24866,6 +24930,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     recipes?: RecipeCreateNestedManyWithoutAuthorInput
     twoFactorConfirmation?: TwoFactorConfirmationCreateNestedOneWithoutAdminInput
   }
@@ -24881,6 +24947,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     recipes?: RecipeUncheckedCreateNestedManyWithoutAuthorInput
     twoFactorConfirmation?: TwoFactorConfirmationUncheckedCreateNestedOneWithoutAdminInput
   }
@@ -24896,6 +24964,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     recipes?: RecipeUpdateManyWithoutAuthorNestedInput
     twoFactorConfirmation?: TwoFactorConfirmationUpdateOneWithoutAdminNestedInput
   }
@@ -24911,6 +24981,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     recipes?: RecipeUncheckedUpdateManyWithoutAuthorNestedInput
     twoFactorConfirmation?: TwoFactorConfirmationUncheckedUpdateOneWithoutAdminNestedInput
   }
@@ -24926,6 +24998,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
   }
 
   export type AdminUpdateManyMutationInput = {
@@ -24939,6 +25013,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdminUncheckedUpdateManyInput = {
@@ -24952,6 +25028,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type VerificationTokenCreateInput = {
@@ -26271,6 +26349,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type OrderListRelationFilter = {
     every?: OrderWhereInput
     some?: OrderWhereInput
@@ -26306,6 +26389,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -26318,6 +26402,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -26330,6 +26415,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -26396,9 +26482,12 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type RecipeListRelationFilter = {
@@ -26427,6 +26516,8 @@ export namespace Prisma {
     twoFactorSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type AdminMaxOrderByAggregateInput = {
@@ -26440,6 +26531,8 @@ export namespace Prisma {
     twoFactorSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type AdminMinOrderByAggregateInput = {
@@ -26453,14 +26546,8 @@ export namespace Prisma {
     twoFactorSecret?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    role?: SortOrder
+    isBlocked?: SortOrder
   }
 
   export type VerificationTokenEmailTokenCompoundUniqueInput = {
@@ -27349,6 +27436,10 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type OrderUpdateManyWithoutCustomerNestedInput = {
     create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
@@ -27429,10 +27520,6 @@ export namespace Prisma {
     create?: XOR<TwoFactorConfirmationCreateWithoutAdminInput, TwoFactorConfirmationUncheckedCreateWithoutAdminInput>
     connectOrCreate?: TwoFactorConfirmationCreateOrConnectWithoutAdminInput
     connect?: TwoFactorConfirmationWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type RecipeUpdateManyWithoutAuthorNestedInput = {
@@ -28313,6 +28400,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -28395,11 +28487,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -28764,6 +28851,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     recipes?: RecipeCreateNestedManyWithoutAuthorInput
   }
 
@@ -28778,6 +28867,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     recipes?: RecipeUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -28808,6 +28899,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     recipes?: RecipeUpdateManyWithoutAuthorNestedInput
   }
 
@@ -28822,6 +28915,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     recipes?: RecipeUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -30003,6 +30098,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     orders?: OrderCreateNestedManyWithoutCustomerInput
   }
 
@@ -30016,6 +30112,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     orders?: OrderUncheckedCreateNestedManyWithoutCustomerInput
   }
 
@@ -30116,6 +30213,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     orders?: OrderUpdateManyWithoutCustomerNestedInput
   }
 
@@ -30129,6 +30227,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     orders?: OrderUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
@@ -30142,6 +30241,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     reviews?: ReviewCreateNestedManyWithoutUserInput
   }
 
@@ -30155,6 +30255,7 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     password?: string | null
     phone?: string | null
+    isBlocked?: boolean
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -30241,6 +30342,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     reviews?: ReviewUpdateManyWithoutUserNestedInput
   }
 
@@ -30254,6 +30356,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -30671,6 +30774,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     twoFactorConfirmation?: TwoFactorConfirmationCreateNestedOneWithoutAdminInput
   }
 
@@ -30685,6 +30790,8 @@ export namespace Prisma {
     twoFactorSecret?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: string
+    isBlocked?: boolean
     twoFactorConfirmation?: TwoFactorConfirmationUncheckedCreateNestedOneWithoutAdminInput
   }
 
@@ -30733,6 +30840,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     twoFactorConfirmation?: TwoFactorConfirmationUpdateOneWithoutAdminNestedInput
   }
 
@@ -30747,6 +30856,8 @@ export namespace Prisma {
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: StringFieldUpdateOperationsInput | string
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
     twoFactorConfirmation?: TwoFactorConfirmationUncheckedUpdateOneWithoutAdminNestedInput
   }
 

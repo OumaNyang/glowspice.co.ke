@@ -142,6 +142,7 @@ export interface CustomerUser {
   phone?: string;
   avatar?: string;
   role: "customer";
+  isBlocked: boolean;
   createdAt: string;
   orderCount?: number;
   totalSpent?: number;
@@ -153,7 +154,8 @@ export interface AdminUser {
   email: string;
   emailVerified?: string;
   avatar?: string;
-  role: "admin";
+  role: "SUPER_ADMIN" | "ADMIN";
+  isBlocked: boolean;
   twoFactorEnabled: boolean;
   createdAt: string;
 }
