@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { loginUser } from "@/app/actions/auth";
 
 function LoginForm() {
   const router = useRouter();
@@ -22,13 +23,26 @@ function LoginForm() {
     if (!email || !password) return;
     
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
     
-    login(email, "GlowSpice Member");
-    toast.success("Welcome back to GlowSpice!");
-    
-    const redirectTo = searchParams.get("redirect") || "/account";
-    router.push(redirectTo);
+    try {
+      const response = await loginUser(email);
+      
+      if (response.error || !response.user) {
+        toast.error(response.error || "Login failed");
+        setLoading(false);
+        return;
+      }
+      
+      const { user } = response;
+      login(user.email, user.name, user.role);
+      toast.success("Welcome back to GlowSpice!");
+      
+      const redirectTo = searchParams.get("redirect") || "/account";
+      router.push(redirectTo);
+    } catch (err) {
+      toast.error("An error occurred during login");
+      setLoading(false);
+    }
   };
 
   return (

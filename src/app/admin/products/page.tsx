@@ -35,7 +35,7 @@ const columns: ColumnDef<Product>[] = [
     header: "Category",
     accessorKey: "categoryId",
     sortable: true,
-    cell: (product) => <span className="font-medium text-[var(--gray-500)]">{product.category.name}</span>,
+    cell: (product) => <span className="font-medium text-[var(--gray-500)]">{product.category?.name || "Uncategorized"}</span>,
   },
   {
     header: "Price",

@@ -1,60 +1,219 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 model User {
   id        String   @id @default(cuid())
+  name      String
   email     String   @unique
-  name      String?
-  role      String   @default("USER")
+  phone     String?
+  avatar    String?
+  role      String   @default("CUSTOMER") // CUSTOMER, ADMIN
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  orders    Order[]
+
+  orders  Order[]
+  recipes Recipe[]
+  reviews Review[]
 }
 
 model Category {
-  id        String    @id @default(cuid())
-  slug      String    @unique
-  name      String
-  products  Product[]
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  image       String?
+  color       String?
+  level       String   @default("main") // main, sub
+  parentId    String?
+  tags        String[]
+  isPublished Boolean  @default(true)
+
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+
+  productsMain Product[] @relation("MainCategoryProducts")
+  productsSub  Product[] @relation("SubCategoryProducts")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id             String      @id @default(cuid())
-  slug           String      @unique
-  name           String
-  description    String?
-  price          Float
-  inventoryCount Int         @default(0)
-  categoryId     String
-  category       Category    @relation(fields: [categoryId], references: [id])
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  orderItems     OrderItem[]
+  id               String  @id @default(cuid())
+  name             String
+  slug             String  @unique
+  description      String?
+  shortDescription String?
+  price            Float
+  compareAtPrice   Float?
+  stock            Int     @default(0)
+  unit             String  @default("piece")
+  sku              String? @unique
+  barcode          String?
+  origin           String?
+  rating           Float   @default(0)
+  reviewCount      Int     @default(0)
+
+  isFeatured   Boolean  @default(false)
+  isNew        Boolean  @default(false)
+  isBestSeller Boolean  @default(false)
+  isPublished  Boolean  @default(true)
+  tags         String[]
+
+  mainCategoryId String?
+  subCategoryId  String?
+
+  mainCategory Category? @relation("MainCategoryProducts", fields: [mainCategoryId], references: [id])
+  subCategory  Category? @relation("SubCategoryProducts", fields: [subCategoryId], references: [id])
+
+  images      ProductImage[]
+  variations  ProductVariation[]
+  reviews     Review[]
+  orderItems  OrderItem[]
+  recipeLinks RecipeProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  url       String
+  alt       String?
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariation {
+  id        String  @id @default(cuid())
+  productId String
+  name      String // e.g. "Size"
+  value     String? // e.g. "100g"
+  price     Float
+  stock     Int     @default(0)
+  sku       String? @unique
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model Review {
+  id        String  @id @default(cuid())
+  productId String
+  userId    String?
+  author    String
+  avatar    String?
+  rating    Int
+  title     String?
+  body      String?
+  verified  Boolean @default(false)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
 }
 
 model Order {
-  id          String      @id @default(cuid())
-  userId      String
-  status      String      @default("PENDING")
-  totalAmount Float
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  user        User        @relation(fields: [userId], references: [id])
-  items       OrderItem[]
+  id            String  @id @default(cuid())
+  orderNumber   String  @unique
+  customerId    String
+  status        String  @default("pending") // pending, processing, shipped, delivered, cancelled
+  subtotal      Float
+  shippingCost  Float   @default(0)
+  tax           Float   @default(0)
+  total         Float
+  paymentMethod String
+  notes         String?
+
+  customer        User             @relation(fields: [customerId], references: [id])
+  shippingAddress ShippingAddress?
+  items           OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
-  orderId   String
+  id          String  @id @default(cuid())
+  orderId     String
+  productId   String
+  variationId String?
+  quantity    Int
+  unitPrice   Float
+  subtotal    Float
+
+  order     Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product           @relation(fields: [productId], references: [id])
+  variation ProductVariation? @relation(fields: [variationId], references: [id])
+}
+
+model ShippingAddress {
+  id         String @id @default(cuid())
+  orderId    String @unique
+  fullName   String
+  email      String
+  phone      String
+  address    String
+  city       String
+  county     String
+  postalCode String
+  country    String
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Recipe {
+  id           String  @id @default(cuid())
+  title        String
+  slug         String  @unique
+  description  String?
+  prepTime     Int? // minutes
+  cookTime     Int? // minutes
+  servings     Int?
+  difficulty   String? // easy, medium, hard
+  image        String?
+  ingredients  String // JSON string or array
+  instructions String // JSON string or array
+  authorId     String?
+  isPublished  Boolean @default(true)
+
+  author   User?           @relation(fields: [authorId], references: [id])
+  products RecipeProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RecipeProduct {
+  recipeId  String
   productId String
-  quantity  Int
-  price     Float
-  order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+
+  recipe  Recipe  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, productId])
+}
+
+model Setting {
+  key       String   @id
+  value     String // Should store JSON string payload
+  group     String   @default("GENERAL")
+  updatedAt DateTime @updatedAt
+}
+
+model Banner {
+  id        String   @id @default(cuid())
+  image     String
+  title     String?
+  subtitle  String?
+  link      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
