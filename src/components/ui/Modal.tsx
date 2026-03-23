@@ -39,7 +39,7 @@ export function Modal({ isOpen, onClose, title, children, footer, size = "md" }:
         className="fixed inset-0" 
         onClick={onClose}
       />
-      <div className={`w-full ${sizeClasses[size]} bg-white rounded-2xl shadow-2xl relative z-10 animate-in zoom-in-95 duration-300 flex flex-col overflow-hidden max-h-[90vh]`}>
+      <div className={`w-full ${sizeClasses[size]} bg-white rounded-md shadow-2xl relative z-10 animate-in zoom-in-95 duration-300 flex flex-col overflow-hidden max-h-[90vh]`}>
         {/* Header */}
         <div className="px-5 py-3 border-b border-[var(--gray-100)] flex items-center justify-between bg-white shrink-0">
           <h3 className="text-xl font-black text-[var(--bark)] tracking-tight">{title}</h3>
