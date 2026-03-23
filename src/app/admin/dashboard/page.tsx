@@ -72,22 +72,22 @@ export default async function AdminDashboardPage() {
   ];
 
   return (
-    <div className="px-6 py-0">
-      <div className="mb-8">
-        <h1 className="font-display font-bold text-3xl text-[var(--bark)]">Dashboard</h1>
+    <div className="px-2 py-0">
+      <div className="mb-4">
+        <h1 className="font-display font-bold text-lg text-[var(--bark)]">Dashboard</h1>
         <p className="text-[var(--gray-500)] mt-1">Welcome back, Admin. Here&apos;s what&apos;s happening today.</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
         {statCards.map(({ label, value, change, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-md p-5 border border-[var(--border)] shadow-sm">
-            <div className="flex items-start justify-between mb-4">
+          <div key={label} className="bg-white rounded-md py-2 px-4 border border-[var(--border)] shadow-sm">
+            <div className="flex items-start justify-between mb-2">
               <div
                 className="w-11 h-11 rounded-md flex items-center justify-center"
                 style={{ background: `${color}20` }}
               >
-                <Icon size={22} style={{ color }} />
+                <Icon size={28} style={{ color }} />
               </div>
               <span className="text-xs font-semibold text-[var(--herb)] bg-[var(--herb)]/10 px-2 py-0.5 rounded-full">
                 {change}

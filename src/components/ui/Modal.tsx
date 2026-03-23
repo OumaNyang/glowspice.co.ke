@@ -8,10 +8,11 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
 }
 
-export function Modal({ isOpen, onClose, title, children, size = "md" }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, footer, size = "md" }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -38,9 +39,9 @@ export function Modal({ isOpen, onClose, title, children, size = "md" }: ModalPr
         className="fixed inset-0" 
         onClick={onClose}
       />
-      <div className={`w-full ${sizeClasses[size]} bg-white rounded-2xl shadow-2xl relative z-10 animate-in zoom-in-95 duration-300 flex flex-col overflow-hidden`}>
+      <div className={`w-full ${sizeClasses[size]} bg-white rounded-2xl shadow-2xl relative z-10 animate-in zoom-in-95 duration-300 flex flex-col overflow-hidden max-h-[90vh]`}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[var(--gray-100)] flex items-center justify-between bg-white sticky top-0">
+        <div className="px-5 py-3 border-b border-[var(--gray-100)] flex items-center justify-between bg-white shrink-0">
           <h3 className="text-xl font-black text-[var(--bark)] tracking-tight">{title}</h3>
           <button 
             onClick={onClose}
@@ -50,10 +51,17 @@ export function Modal({ isOpen, onClose, title, children, size = "md" }: ModalPr
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[85vh]">
+        {/* Content Body */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
           {children}
         </div>
+
+        {/* Footer */}
+        {footer && (
+          <div className="px-5 py-4 border-t border-[var(--gray-100)] bg-[var(--gray-50)] shrink-0">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

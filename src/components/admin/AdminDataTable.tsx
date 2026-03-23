@@ -219,7 +219,7 @@ export function AdminDataTable<T>({
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-4 border-t border-[var(--border)] flex items-center justify-between bg-[var(--gray-50)]">
+      <div className="px-4 py-2 border-t border-[var(--border)] flex items-center justify-between bg-[var(--gray-50)]">
         <div className="text-xs text-[var(--gray-500)]">
           Showing <span className="font-semibold text-[var(--bark)]">{paginatedData.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> to <span className="font-semibold text-[var(--bark)]">{Math.min(currentPage * itemsPerPage, sortedData.length)}</span> of <span className="font-semibold text-[var(--bark)]">{sortedData.length}</span>
         </div>

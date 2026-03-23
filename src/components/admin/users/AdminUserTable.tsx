@@ -204,8 +204,8 @@ export default function AdminUserTable({ admins: initialAdmins, currentAdminId, 
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl border border-[var(--gray-100)] shadow-sm overflow-hidden min-h-[400px]">
-        <div className="px-8 py-6 border-b border-[var(--gray-100)] flex items-center justify-between bg-[var(--gray-50)]/50">
+      <div className="bg-white rounded-md   border-none shadow-sm overflow-hidden min-h-[400px]">
+        <div className="px-4 py-2 border-b border-[var(--gray-100)] flex items-center justify-between bg-[var(--gray-50)]/50">
           <h2 className="text-xl font-black text-[var(--bark)] tracking-tight">Team Members</h2>
           {isSuperAdmin && (
             <button 

@@ -1,18 +1,29 @@
 import { CategoryForm } from "@/components/admin/CategoryForm";
-import { categories } from "@/lib/data";
+import { getRootCategories } from "@/app/actions/category";
+import { prisma } from "@/lib/db";
+import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return categories.map((cat) => ({
-    id: cat.id,
-  }));
-}
+export default async function EditCategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const [category, rootCategories] = await Promise.all([
+    prisma.category.findUnique({ where: { id } }),
+    getRootCategories(),
+  ]);
 
-export default function EditCategoryPage({ params }: { params: { id: string } }) {
-  const category = categories.find((c) => c.id === params.id);
-  
   if (!category) {
-    return <div className="p-8 text-center font-bold text-[var(--bark)]">Category not found.</div>;
+    notFound();
   }
 
-  return <CategoryForm initialData={category} />;
+  return (
+    <div className="bg-[var(--gray-50)] min-h-screen">
+      <CategoryForm 
+        initialData={{
+          ...category,
+          createdAt: category.createdAt.toISOString(),
+          updatedAt: category.updatedAt.toISOString(),
+        } as any} 
+        rootCategories={rootCategories as any} 
+      />
+    </div>
+  );
 }

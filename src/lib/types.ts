@@ -19,8 +19,10 @@ export interface Product {
   compareAtPrice?: number;
   category?: Category;
   categoryId?: string; // Legacy tie
-  mainCategoryId?: string; // New 2-tier tracking
-  subCategoryId?: string;  // New 2-tier tracking
+  mainCategory?: Category;
+  subCategory?: Category;
+  mainCategoryId?: string;
+  subCategoryId?: string;
   tags: string[];
   images: ProductImage[];
   stock: number;
@@ -58,6 +60,8 @@ export interface Category {
   level?: "main" | "sub";
   tags?: string[];
   isPublished?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // ─── Cart ───────────────────────────────────────────────────────────────────

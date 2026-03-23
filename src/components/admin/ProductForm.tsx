@@ -7,9 +7,11 @@ import {
   ImagePlus, X, Plus, Trash2, Save, 
   ArrowLeft, Eye, Star, Tag, Layers 
 } from "lucide-react";
-import { Product, Category } from "@/lib/types";
+import { Product, Category, ProductImage } from "@/lib/types";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
-import { categories } from "@/lib/data";
+import { uploadImage } from "@/app/actions/upload";
+import { createProduct, updateProduct } from "@/app/actions/product";
+import { toast } from "sonner";
 
 // Defining a default empty product shell for creation
 const DEFAULT_PRODUCT: Partial<Product> = {
@@ -36,14 +38,17 @@ const DEFAULT_PRODUCT: Partial<Product> = {
 
 interface ProductFormProps {
   initialData?: Product;
+  categories: Category[];
 }
 
-export function ProductForm({ initialData }: ProductFormProps) {
+export function ProductForm({ initialData, categories }: ProductFormProps) {
   const router = useRouter();
   const draftKey = initialData?.id ? `draft_product_${initialData.id}` : "draft_product_new";
   
   const [formData, setFormData] = useState<Partial<Product>>(initialData || DEFAULT_PRODUCT);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -108,17 +113,33 @@ export function ProductForm({ initialData }: ProductFormProps) {
   };
 
   // Media Handling (Mocking uploads with local URL blob previews)
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      const localUrl = URL.createObjectURL(file);
-      const newImg = { id: Date.now().toString(), url: localUrl, alt: file.name };
       
-      setFormData(prev => {
-        const currentImgs = prev.images || [];
-        if (currentImgs.length >= 4) return prev; // Max 4 images
-        return { ...prev, images: [...currentImgs, newImg] };
-      });
+      const currentImgs = formData.images || [];
+      if (currentImgs.length >= 4) {
+        toast.error("Maximum 4 images allowed.");
+        return;
+      }
+
+      setIsUploading(true);
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        
+        const res = await uploadImage(data, "products");
+        if (res.error) throw new Error(res.error);
+        if (res.url) {
+          const newImg = { id: `temp_${Date.now()}`, url: res.url, alt: file.name };
+          setFormData(prev => ({ ...prev, images: [...(prev.images || []), newImg] }));
+          toast.success("Image uploaded!");
+        }
+      } catch (err: any) {
+        toast.error(err.message || "Upload failed.");
+      } finally {
+        setIsUploading(false);
+      }
     }
   };
 
@@ -148,8 +169,35 @@ export function ProductForm({ initialData }: ProductFormProps) {
           <button onClick={() => { localStorage.removeItem(draftKey); router.back(); }} className="px-4 py-2 rounded-md text-sm font-semibold text-[var(--bark)] bg-white border border-[var(--border)] hover:bg-[var(--gray-50)] shadow-sm">
             Discard
           </button>
-          <button onClick={() => { localStorage.removeItem(draftKey); alert("Product data saved successfully!"); router.back(); }} className="flex items-center gap-2 px-5 py-2 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-bold rounded-md shadow-sm transition-all hover:-translate-y-0.5 transform text-sm">
-            <Save size={16} /> Save Product
+          <button 
+            onClick={async () => {
+              if (!formData.name || !formData.price) {
+                toast.error("Name and Price are required.");
+                return;
+              }
+              setIsLoading(true);
+              try {
+                let res;
+                if (initialData?.id) {
+                  res = await updateProduct(initialData.id, formData);
+                } else {
+                  res = await createProduct(formData);
+                }
+                if (res.error) throw new Error(res.error);
+                toast.success(initialData?.id ? "Product updated!" : "Product created!");
+                localStorage.removeItem(draftKey);
+                router.push("/admin/products");
+                router.refresh();
+              } catch (err: any) {
+                toast.error(err.message || "Failed to save product.");
+              } finally {
+                setIsLoading(false);
+              }
+            }} 
+            disabled={isLoading || isUploading}
+            className="flex items-center gap-2 px-5 py-2 bg-[var(--spice)] hover:bg-[var(--spice-dark)] text-white font-bold rounded-md shadow-sm transition-all hover:-translate-y-0.5 transform text-sm disabled:opacity-50"
+          >
+            <Save size={16} /> {isLoading ? "Saving..." : "Save Product"}
           </button>
         </div>
       </div>

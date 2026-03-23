@@ -1,15 +1,17 @@
-import { Plus } from "lucide-react";
+import { Plus, Tag } from "lucide-react";
 import Link from "next/link";
-import { categories } from "@/lib/data";
 import { CategoryTreeTable } from "@/components/admin/CategoryTreeTable";
+import { getAllCategories } from "@/app/actions/category";
 
-export default function AdminCategoriesPage() {
+export default async function AdminCategoriesPage() {
+  const categories = await getAllCategories();
+
   return (
     <div className="p-4 sm:p-6 max-w-[1600px] mx-auto space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display font-bold text-2xl text-[var(--bark)] leading-tight">Categories</h1>
-          <p className="text-sm font-medium text-[var(--gray-500)] mt-1">{categories.length} active categories</p>
+          <h1 className="font-display font-bold text-xl text-[var(--bark)] leading-tight">Categories</h1>
+           
         </div>
         <Link
           href="/admin/categories/new"
@@ -19,7 +21,7 @@ export default function AdminCategoriesPage() {
         </Link>
       </div>
 
-      <CategoryTreeTable data={categories} />
+      <CategoryTreeTable data={categories as any} />
     </div>
   );
 }

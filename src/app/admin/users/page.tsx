@@ -23,20 +23,24 @@ export default async function AdminUsersPage() {
   }));
 
   return (
-    <div className="p-6 sm:p-10 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-8 bg-[var(--spice)] rounded-full" />
-            <h1 className="font-display font-black text-4xl text-[var(--bark)] tracking-tight">Administrative Team</h1>
-          </div>
-          <p className="text-sm font-bold text-[var(--gray-400)] uppercase tracking-[0.2em] ml-4">
-            Platform Governance & Access Control
-          </p>
-        </div>
+    // <div className="p-6 sm:p-10 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+    //   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+    //     <div className="space-y-1">
+    //       <div className="flex items-center gap-2">
+    //         <div className="w-2 h-8 bg-[var(--spice)] rounded-full" />
+    //         <h1 className="font-display font-black text-4xl text-[var(--bark)] tracking-tight">Administrative Team</h1>
+    //       </div>
+    //       <p className="text-sm font-bold text-[var(--gray-400)] uppercase tracking-[0.2em] ml-4">
+    //         Platform Governance & Access Control
+    //       </p>
+    //     </div>
         
-        {/* The Add Admin button is now inside the AdminUserTable header for better state management */}
-      </div>
+    //    </div>
+     <div className="px-2 py-0">
+      <div className="mb-2">
+        <h1 className="font-display font-bold text-lg text-[var(--bark)]">Administrative Team</h1>
+       </div>
+
 
       <div className="relative group">
         <div className="absolute -inset-1 bg-gradient-to-r from-[var(--spice)]/20 to-[var(--bark)]/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
