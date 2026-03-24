@@ -26,7 +26,7 @@ export function AuthGuard({ children, isAdmin }: { children: React.ReactNode; is
         }
       } else if (user) {
         // Double check roles
-        if (isAdmin && user.role !== "admin") {
+        if (isAdmin && user.role !== "ADMIN" && user.role !== "SUPER_ADMIN") {
           router.push(`/admin/login?error=Unauthorized&redirect=${encodeURIComponent(pathname)}`);
         } else if (!isAdmin && pathname.startsWith("/account") && user.role !== "customer") {
           // If trying to access customer account with an admin session (unlikely but possible)

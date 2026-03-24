@@ -136,7 +136,7 @@ export interface Order {
 
 // ─── User ────────────────────────────────────────────────────────────────────
 
-export type UserRole = "customer" | "admin";
+export type UserRole = "customer" | "ADMIN" | "SUPER_ADMIN";
 
 export interface CustomerUser {
   id: string;

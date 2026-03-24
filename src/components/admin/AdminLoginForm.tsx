@@ -40,7 +40,7 @@ export default function AdminLoginForm() {
 
         const { user } = response;
         if (user) {
-          if (user.role !== "ADMIN") {
+          if (user.role !== "ADMIN" && user.role !== "SUPER_ADMIN") {
             toast.error("Unauthorized access. Admin privileges required.");
             return;
           }
