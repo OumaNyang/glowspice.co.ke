@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Search, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface ColumnDef<T> {
@@ -16,6 +16,7 @@ interface AdminDataTableProps<T> {
   searchAccessor?: keyof T;
   searchPlaceholder?: string;
   itemsPerPage?: number;
+  renderExpansion?: (item: T) => React.ReactNode;
 }
 
 export function AdminDataTable<T>({
@@ -24,6 +25,7 @@ export function AdminDataTable<T>({
   searchAccessor,
   searchPlaceholder = "Search...",
   itemsPerPage = 10,
+  renderExpansion,
 }: AdminDataTableProps<T>) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,6 +113,7 @@ export function AdminDataTable<T>({
         <table className="w-full text-sm text-left">
           <thead className="bg-[var(--gray-50)] border-b border-[var(--border)]">
             <tr>
+              {renderExpansion && <th className="px-3 py-3 w-10"></th>}
               {columns.map((col, i) => (
                 <th
                   key={col.header + i}
@@ -139,13 +142,41 @@ export function AdminDataTable<T>({
               </tr>
             ) : (
               paginatedData.map((item, rowIndex) => (
-                <tr key={rowIndex} className="hover:bg-[var(--gray-50)] transition-colors group">
-                  {columns.map((col, colIndex) => (
-                    <td key={colIndex} className="px-5 py-4 whitespace-nowrap">
-                      {col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}
-                    </td>
-                  ))}
-                </tr>
+                <React.Fragment key={rowIndex}>
+                  <tr className={`hover:bg-[var(--gray-50)] transition-colors group ${expandedRows.has(rowIndex) ? "bg-[var(--gray-50)]" : ""}`}>
+                    {renderExpansion && (
+                      <td className="px-3 py-4 text-center">
+                        <button 
+                          onClick={() => {
+                            setExpandedRows(prev => {
+                              const next = new Set(prev);
+                              if (next.has(rowIndex)) next.delete(rowIndex);
+                              else next.add(rowIndex);
+                              return next;
+                            });
+                          }}
+                          className="p-1 rounded-full hover:bg-[var(--cream-dark)] text-[var(--gray-400)] hover:text-[var(--spice)] transition-all"
+                        >
+                          <ChevronDown size={16} className={`transition-transform duration-200 ${expandedRows.has(rowIndex) ? "rotate-180" : ""}`} />
+                        </button>
+                      </td>
+                    )}
+                    {columns.map((col, colIndex) => (
+                      <td key={colIndex} className="px-5 py-4 whitespace-nowrap">
+                        {col.cell ? col.cell(item) : col.accessorKey ? String(item[col.accessorKey]) : null}
+                      </td>
+                    ))}
+                  </tr>
+                  {renderExpansion && expandedRows.has(rowIndex) && (
+                    <tr className="bg-[var(--gray-50)]/30">
+                      <td colSpan={columns.length + 1} className="px-5 py-4">
+                        <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                          {renderExpansion(item)}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))
             )}
           </tbody>
@@ -200,6 +231,11 @@ export function AdminDataTable<T>({
                         ))}
                       </div>
                     )}
+                    {renderExpansion && isExpanded && (
+                      <div className="mt-4 pt-4 border-t border-[var(--border)] animate-in fade-in slide-in-from-top-2 duration-300">
+                        {renderExpansion(item)}
+                      </div>
+                    )}
                     <button 
                       onClick={toggleRow}
                       className="mt-4 w-full flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-[var(--spice)] bg-[var(--cream)] hover:bg-[var(--cream-dark)] rounded-md border border-[var(--border)] transition-colors"
@@ -207,7 +243,7 @@ export function AdminDataTable<T>({
                       {isExpanded ? (
                         <>Show Less <ChevronUp size={14}/></>
                       ) : (
-                        <>Show More <ChevronDown size={14}/></>
+                        <>Show Variations & Details <ChevronDown size={14}/></>
                       )}
                     </button>
                   </>

@@ -101,6 +101,9 @@ model Product {
   updatedAt        DateTime           @updatedAt
   barcode          String?
   compareAtPrice   Float?
+  discountPrice    Float?
+  discountStartDate DateTime?
+  discountEndDate   DateTime?
   isBestSeller     Boolean            @default(false)
   isFeatured       Boolean            @default(false)
   isNew            Boolean            @default(false)
@@ -133,15 +136,20 @@ model ProductImage {
 }
 
 model ProductVariation {
-  id         String      @id @default(cuid())
-  productId  String
-  name       String
-  value      String?
-  price      Float
-  stock      Int         @default(0)
-  sku        String?     @unique
-  orderItems OrderItem[]
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id                String      @id @default(cuid())
+  productId         String
+  type              String      @default("General")
+  name              String
+  value             String?
+  price             Float
+  discountPrice     Float?
+  discountStartDate DateTime?
+  discountEndDate   DateTime?
+  stock             Int         @default(0)
+  sku               String?     @unique
+  barcode           String?
+  orderItems        OrderItem[]
+  product           Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Review {

@@ -8,9 +8,17 @@ export async function createProduct(values: any) {
   try {
     const { images, variations, ...productData } = values;
 
+    const firstVar = variations?.[0];
     const product = await prisma.product.create({
       data: {
         ...productData,
+        price: firstVar?.price ?? productData.price,
+        discountPrice: firstVar?.discountPrice ?? productData.discountPrice,
+        discountStartDate: firstVar?.discountStartDate ? new Date(firstVar.discountStartDate) : (productData.discountStartDate ? new Date(productData.discountStartDate) : null),
+        discountEndDate: firstVar?.discountEndDate ? new Date(firstVar.discountEndDate) : (productData.discountEndDate ? new Date(productData.discountEndDate) : null),
+        stock: firstVar?.stock ?? productData.stock,
+        sku: firstVar?.sku ?? productData.sku,
+        barcode: firstVar?.barcode ?? productData.barcode,
         slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, ""),
         images: {
           create: images?.map((img: any) => ({
@@ -20,11 +28,16 @@ export async function createProduct(values: any) {
         },
         variations: {
           create: variations?.map((v: any) => ({
+            type: v.type,
             name: v.name,
             value: v.value,
-            price: v.price,
+            price: v.price || productData.price,
+            discountPrice: v.discountPrice || 0,
+            discountStartDate: v.discountStartDate ? new Date(v.discountStartDate) : null,
+            discountEndDate: v.discountEndDate ? new Date(v.discountEndDate) : null,
             stock: v.stock,
             sku: v.sku,
+            barcode: v.barcode,
           })),
         },
       },
@@ -58,6 +71,7 @@ export async function updateProduct(id: string, values: any) {
 
     // Delete old images and variations first for simplicity in this update
     // Alternatively, perform a more complex sync (upsert/delete)
+    const firstVar = variations?.[0];
     await prisma.$transaction([
       prisma.productImage.deleteMany({ where: { productId: id } }),
       prisma.productVariation.deleteMany({ where: { productId: id } }),
@@ -65,6 +79,13 @@ export async function updateProduct(id: string, values: any) {
         where: { id },
         data: {
           ...productData,
+          price: firstVar?.price ?? productData.price,
+          discountPrice: firstVar?.discountPrice ?? productData.discountPrice,
+          discountStartDate: firstVar?.discountStartDate ? new Date(firstVar.discountStartDate) : (productData.discountStartDate ? new Date(productData.discountStartDate) : null),
+          discountEndDate: firstVar?.discountEndDate ? new Date(firstVar.discountEndDate) : (productData.discountEndDate ? new Date(productData.discountEndDate) : null),
+          stock: firstVar?.stock ?? productData.stock,
+          sku: firstVar?.sku ?? productData.sku,
+          barcode: firstVar?.barcode ?? productData.barcode,
           images: {
             create: images?.map((img: any) => ({
               url: img.url,
@@ -73,11 +94,16 @@ export async function updateProduct(id: string, values: any) {
           },
           variations: {
             create: variations?.map((v: any) => ({
+              type: v.type,
               name: v.name,
               value: v.value,
-              price: v.price,
+              price: v.price || productData.price,
+              discountPrice: v.discountPrice || 0,
+              discountStartDate: v.discountStartDate ? new Date(v.discountStartDate) : null,
+              discountEndDate: v.discountEndDate ? new Date(v.discountEndDate) : null,
               stock: v.stock,
               sku: v.sku,
+              barcode: v.barcode,
             })),
           },
         },
@@ -137,6 +163,7 @@ export async function getAdminProducts() {
     const products = await prisma.product.findMany({
       include: {
         images: true,
+        variations: true,
         mainCategory: true,
         subCategory: true,
       },

@@ -2,11 +2,16 @@
 
 export interface ProductVariation {
   id: string;
+  type: string; // e.g. "Size", "Color", "Weight"
   name: string; // e.g. "Size", "Color"
   value?: string; // e.g. "50g", "100g", "200g"
   price: number;
+  discountPrice?: number;
+  discountStartDate?: string;
+  discountEndDate?: string;
   stock: number;
   sku?: string;
+  barcode?: string;
 }
 
 export interface Product {
@@ -15,8 +20,11 @@ export interface Product {
   slug: string;
   description: string;
   shortDescription: string;
-  price: number;
+  price: number; // Selling Price
   compareAtPrice?: number;
+  discountPrice?: number;
+  discountStartDate?: string;
+  discountEndDate?: string;
   category?: Category;
   categoryId?: string; // Legacy tie
   mainCategory?: Category;

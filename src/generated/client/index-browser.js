@@ -199,6 +199,9 @@ exports.Prisma.ProductScalarFieldEnum = {
   updatedAt: 'updatedAt',
   barcode: 'barcode',
   compareAtPrice: 'compareAtPrice',
+  discountPrice: 'discountPrice',
+  discountStartDate: 'discountStartDate',
+  discountEndDate: 'discountEndDate',
   isBestSeller: 'isBestSeller',
   isFeatured: 'isFeatured',
   isNew: 'isNew',
@@ -225,11 +228,16 @@ exports.Prisma.ProductImageScalarFieldEnum = {
 exports.Prisma.ProductVariationScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
+  type: 'type',
   name: 'name',
   value: 'value',
   price: 'price',
+  discountPrice: 'discountPrice',
+  discountStartDate: 'discountStartDate',
+  discountEndDate: 'discountEndDate',
   stock: 'stock',
-  sku: 'sku'
+  sku: 'sku',
+  barcode: 'barcode'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {

@@ -92,36 +92,39 @@ model Category {
 }
 
 model Product {
-  id               String             @id @default(cuid())
-  slug             String             @unique
-  name             String
-  description      String?
-  price            Float
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  barcode          String?
-  compareAtPrice   Float?
-  isBestSeller     Boolean            @default(false)
-  isFeatured       Boolean            @default(false)
-  isNew            Boolean            @default(false)
-  isPublished      Boolean            @default(true)
-  mainCategoryId   String?
-  origin           String?
-  rating           Float              @default(0)
-  reviewCount      Int                @default(0)
-  shortDescription String?
-  sku              String?            @unique
-  stock            Int                @default(0)
-  subCategoryId    String?
-  tags             String[]
-  unit             String             @default("piece")
-  orderItems       OrderItem[]
-  mainCategory     Category?          @relation("MainCategoryProducts", fields: [mainCategoryId], references: [id])
-  subCategory      Category?          @relation("SubCategoryProducts", fields: [subCategoryId], references: [id])
-  images           ProductImage[]
-  variations       ProductVariation[]
-  recipeLinks      RecipeProduct[]
-  reviews          Review[]
+  id                String             @id @default(cuid())
+  slug              String             @unique
+  name              String
+  description       String?
+  price             Float
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  barcode           String?
+  compareAtPrice    Float?
+  discountPrice     Float?
+  discountStartDate DateTime?
+  discountEndDate   DateTime?
+  isBestSeller      Boolean            @default(false)
+  isFeatured        Boolean            @default(false)
+  isNew             Boolean            @default(false)
+  isPublished       Boolean            @default(true)
+  mainCategoryId    String?
+  origin            String?
+  rating            Float              @default(0)
+  reviewCount       Int                @default(0)
+  shortDescription  String?
+  sku               String?            @unique
+  stock             Int                @default(0)
+  subCategoryId     String?
+  tags              String[]
+  unit              String             @default("piece")
+  orderItems        OrderItem[]
+  mainCategory      Category?          @relation("MainCategoryProducts", fields: [mainCategoryId], references: [id])
+  subCategory       Category?          @relation("SubCategoryProducts", fields: [subCategoryId], references: [id])
+  images            ProductImage[]
+  variations        ProductVariation[]
+  recipeLinks       RecipeProduct[]
+  reviews           Review[]
 }
 
 model ProductImage {
@@ -133,15 +136,20 @@ model ProductImage {
 }
 
 model ProductVariation {
-  id         String      @id @default(cuid())
-  productId  String
-  name       String
-  value      String?
-  price      Float
-  stock      Int         @default(0)
-  sku        String?     @unique
-  orderItems OrderItem[]
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id                String      @id @default(cuid())
+  productId         String
+  type              String      @default("General")
+  name              String
+  value             String?
+  price             Float
+  discountPrice     Float?
+  discountStartDate DateTime?
+  discountEndDate   DateTime?
+  stock             Int         @default(0)
+  sku               String?     @unique
+  barcode           String?
+  orderItems        OrderItem[]
+  product           Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Review {

@@ -8,7 +8,24 @@ export async function uploadImage(formData: FormData, type: "category" | "produc
   try {
     const file = formData.get("file") as File;
     if (!file) {
-      return { error: "No file uploaded." };
+      return { error: "No file selected for upload." };
+    }
+
+    // 1. Validate File Type
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/avif"];
+    if (!validTypes.includes(file.type)) {
+      return { error: `Invalid file format (${file.type}). Please upload a JPEG, PNG, or WebP image.` };
+    }
+
+    // 2. Validate File Size (5MB limit)
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      return { error: `File is too large (${(file.size / (1024 * 1024)).toFixed(2)} MB). Maximum allowed size is 5MB.` };
+    }
+
+    // 3. Validate "Too Small" (e.g., less than 1KB - likely corrupted or wrong file)
+    if (file.size < 1024) {
+      return { error: "The selected image is too small or appears to be empty." };
     }
 
     const bytes = await file.arrayBuffer();
@@ -16,7 +33,7 @@ export async function uploadImage(formData: FormData, type: "category" | "produc
 
     // Create unique filename with prefix based on type
     const prefix = type === "category" ? "cat_" : "prod_";
-    const fileExtension = path.extname(file.name);
+    const fileExtension = path.extname(file.name) || ".jpg";
     const fileName = `${prefix}${crypto.randomBytes(12).toString("hex")}${fileExtension}`;
     
     // Ensure both classification directory and main uploads directory exist

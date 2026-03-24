@@ -10304,6 +10304,7 @@ export namespace Prisma {
   export type ProductAvgAggregateOutputType = {
     price: number | null
     compareAtPrice: number | null
+    discountPrice: number | null
     rating: number | null
     reviewCount: number | null
     stock: number | null
@@ -10312,6 +10313,7 @@ export namespace Prisma {
   export type ProductSumAggregateOutputType = {
     price: number | null
     compareAtPrice: number | null
+    discountPrice: number | null
     rating: number | null
     reviewCount: number | null
     stock: number | null
@@ -10327,6 +10329,9 @@ export namespace Prisma {
     updatedAt: Date | null
     barcode: string | null
     compareAtPrice: number | null
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     isBestSeller: boolean | null
     isFeatured: boolean | null
     isNew: boolean | null
@@ -10352,6 +10357,9 @@ export namespace Prisma {
     updatedAt: Date | null
     barcode: string | null
     compareAtPrice: number | null
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     isBestSeller: boolean | null
     isFeatured: boolean | null
     isNew: boolean | null
@@ -10377,6 +10385,9 @@ export namespace Prisma {
     updatedAt: number
     barcode: number
     compareAtPrice: number
+    discountPrice: number
+    discountStartDate: number
+    discountEndDate: number
     isBestSeller: number
     isFeatured: number
     isNew: number
@@ -10398,6 +10409,7 @@ export namespace Prisma {
   export type ProductAvgAggregateInputType = {
     price?: true
     compareAtPrice?: true
+    discountPrice?: true
     rating?: true
     reviewCount?: true
     stock?: true
@@ -10406,6 +10418,7 @@ export namespace Prisma {
   export type ProductSumAggregateInputType = {
     price?: true
     compareAtPrice?: true
+    discountPrice?: true
     rating?: true
     reviewCount?: true
     stock?: true
@@ -10421,6 +10434,9 @@ export namespace Prisma {
     updatedAt?: true
     barcode?: true
     compareAtPrice?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     isBestSeller?: true
     isFeatured?: true
     isNew?: true
@@ -10446,6 +10462,9 @@ export namespace Prisma {
     updatedAt?: true
     barcode?: true
     compareAtPrice?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     isBestSeller?: true
     isFeatured?: true
     isNew?: true
@@ -10471,6 +10490,9 @@ export namespace Prisma {
     updatedAt?: true
     barcode?: true
     compareAtPrice?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     isBestSeller?: true
     isFeatured?: true
     isNew?: true
@@ -10584,6 +10606,9 @@ export namespace Prisma {
     updatedAt: Date
     barcode: string | null
     compareAtPrice: number | null
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     isBestSeller: boolean
     isFeatured: boolean
     isNew: boolean
@@ -10629,6 +10654,9 @@ export namespace Prisma {
     updatedAt?: boolean
     barcode?: boolean
     compareAtPrice?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -10663,6 +10691,9 @@ export namespace Prisma {
     updatedAt?: boolean
     barcode?: boolean
     compareAtPrice?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -10691,6 +10722,9 @@ export namespace Prisma {
     updatedAt?: boolean
     barcode?: boolean
     compareAtPrice?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -10719,6 +10753,9 @@ export namespace Prisma {
     updatedAt?: boolean
     barcode?: boolean
     compareAtPrice?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -10735,7 +10772,7 @@ export namespace Prisma {
     unit?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "price" | "createdAt" | "updatedAt" | "barcode" | "compareAtPrice" | "isBestSeller" | "isFeatured" | "isNew" | "isPublished" | "mainCategoryId" | "origin" | "rating" | "reviewCount" | "shortDescription" | "sku" | "stock" | "subCategoryId" | "tags" | "unit", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "price" | "createdAt" | "updatedAt" | "barcode" | "compareAtPrice" | "discountPrice" | "discountStartDate" | "discountEndDate" | "isBestSeller" | "isFeatured" | "isNew" | "isPublished" | "mainCategoryId" | "origin" | "rating" | "reviewCount" | "shortDescription" | "sku" | "stock" | "subCategoryId" | "tags" | "unit", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
     mainCategory?: boolean | Product$mainCategoryArgs<ExtArgs>
@@ -10776,6 +10813,9 @@ export namespace Prisma {
       updatedAt: Date
       barcode: string | null
       compareAtPrice: number | null
+      discountPrice: number | null
+      discountStartDate: Date | null
+      discountEndDate: Date | null
       isBestSeller: boolean
       isFeatured: boolean
       isNew: boolean
@@ -11229,6 +11269,9 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
     readonly barcode: FieldRef<"Product", 'String'>
     readonly compareAtPrice: FieldRef<"Product", 'Float'>
+    readonly discountPrice: FieldRef<"Product", 'Float'>
+    readonly discountStartDate: FieldRef<"Product", 'DateTime'>
+    readonly discountEndDate: FieldRef<"Product", 'DateTime'>
     readonly isBestSeller: FieldRef<"Product", 'Boolean'>
     readonly isFeatured: FieldRef<"Product", 'Boolean'>
     readonly isNew: FieldRef<"Product", 'Boolean'>
@@ -12884,84 +12927,118 @@ export namespace Prisma {
 
   export type ProductVariationAvgAggregateOutputType = {
     price: number | null
+    discountPrice: number | null
     stock: number | null
   }
 
   export type ProductVariationSumAggregateOutputType = {
     price: number | null
+    discountPrice: number | null
     stock: number | null
   }
 
   export type ProductVariationMinAggregateOutputType = {
     id: string | null
     productId: string | null
+    type: string | null
     name: string | null
     value: string | null
     price: number | null
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     stock: number | null
     sku: string | null
+    barcode: string | null
   }
 
   export type ProductVariationMaxAggregateOutputType = {
     id: string | null
     productId: string | null
+    type: string | null
     name: string | null
     value: string | null
     price: number | null
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     stock: number | null
     sku: string | null
+    barcode: string | null
   }
 
   export type ProductVariationCountAggregateOutputType = {
     id: number
     productId: number
+    type: number
     name: number
     value: number
     price: number
+    discountPrice: number
+    discountStartDate: number
+    discountEndDate: number
     stock: number
     sku: number
+    barcode: number
     _all: number
   }
 
 
   export type ProductVariationAvgAggregateInputType = {
     price?: true
+    discountPrice?: true
     stock?: true
   }
 
   export type ProductVariationSumAggregateInputType = {
     price?: true
+    discountPrice?: true
     stock?: true
   }
 
   export type ProductVariationMinAggregateInputType = {
     id?: true
     productId?: true
+    type?: true
     name?: true
     value?: true
     price?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     stock?: true
     sku?: true
+    barcode?: true
   }
 
   export type ProductVariationMaxAggregateInputType = {
     id?: true
     productId?: true
+    type?: true
     name?: true
     value?: true
     price?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     stock?: true
     sku?: true
+    barcode?: true
   }
 
   export type ProductVariationCountAggregateInputType = {
     id?: true
     productId?: true
+    type?: true
     name?: true
     value?: true
     price?: true
+    discountPrice?: true
+    discountStartDate?: true
+    discountEndDate?: true
     stock?: true
     sku?: true
+    barcode?: true
     _all?: true
   }
 
@@ -13054,11 +13131,16 @@ export namespace Prisma {
   export type ProductVariationGroupByOutputType = {
     id: string
     productId: string
+    type: string
     name: string
     value: string | null
     price: number
+    discountPrice: number | null
+    discountStartDate: Date | null
+    discountEndDate: Date | null
     stock: number
     sku: string | null
+    barcode: string | null
     _count: ProductVariationCountAggregateOutputType | null
     _avg: ProductVariationAvgAggregateOutputType | null
     _sum: ProductVariationSumAggregateOutputType | null
@@ -13083,11 +13165,16 @@ export namespace Prisma {
   export type ProductVariationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
+    type?: boolean
     name?: boolean
     value?: boolean
     price?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     stock?: boolean
     sku?: boolean
+    barcode?: boolean
     orderItems?: boolean | ProductVariation$orderItemsArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     _count?: boolean | ProductVariationCountOutputTypeDefaultArgs<ExtArgs>
@@ -13096,36 +13183,51 @@ export namespace Prisma {
   export type ProductVariationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
+    type?: boolean
     name?: boolean
     value?: boolean
     price?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     stock?: boolean
     sku?: boolean
+    barcode?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productVariation"]>
 
   export type ProductVariationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     productId?: boolean
+    type?: boolean
     name?: boolean
     value?: boolean
     price?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     stock?: boolean
     sku?: boolean
+    barcode?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productVariation"]>
 
   export type ProductVariationSelectScalar = {
     id?: boolean
     productId?: boolean
+    type?: boolean
     name?: boolean
     value?: boolean
     price?: boolean
+    discountPrice?: boolean
+    discountStartDate?: boolean
+    discountEndDate?: boolean
     stock?: boolean
     sku?: boolean
+    barcode?: boolean
   }
 
-  export type ProductVariationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "name" | "value" | "price" | "stock" | "sku", ExtArgs["result"]["productVariation"]>
+  export type ProductVariationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "type" | "name" | "value" | "price" | "discountPrice" | "discountStartDate" | "discountEndDate" | "stock" | "sku" | "barcode", ExtArgs["result"]["productVariation"]>
   export type ProductVariationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | ProductVariation$orderItemsArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -13147,11 +13249,16 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       productId: string
+      type: string
       name: string
       value: string | null
       price: number
+      discountPrice: number | null
+      discountStartDate: Date | null
+      discountEndDate: Date | null
       stock: number
       sku: string | null
+      barcode: string | null
     }, ExtArgs["result"]["productVariation"]>
     composites: {}
   }
@@ -13579,11 +13686,16 @@ export namespace Prisma {
   interface ProductVariationFieldRefs {
     readonly id: FieldRef<"ProductVariation", 'String'>
     readonly productId: FieldRef<"ProductVariation", 'String'>
+    readonly type: FieldRef<"ProductVariation", 'String'>
     readonly name: FieldRef<"ProductVariation", 'String'>
     readonly value: FieldRef<"ProductVariation", 'String'>
     readonly price: FieldRef<"ProductVariation", 'Float'>
+    readonly discountPrice: FieldRef<"ProductVariation", 'Float'>
+    readonly discountStartDate: FieldRef<"ProductVariation", 'DateTime'>
+    readonly discountEndDate: FieldRef<"ProductVariation", 'DateTime'>
     readonly stock: FieldRef<"ProductVariation", 'Int'>
     readonly sku: FieldRef<"ProductVariation", 'String'>
+    readonly barcode: FieldRef<"ProductVariation", 'String'>
   }
     
 
@@ -23219,6 +23331,9 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     barcode: 'barcode',
     compareAtPrice: 'compareAtPrice',
+    discountPrice: 'discountPrice',
+    discountStartDate: 'discountStartDate',
+    discountEndDate: 'discountEndDate',
     isBestSeller: 'isBestSeller',
     isFeatured: 'isFeatured',
     isNew: 'isNew',
@@ -23251,11 +23366,16 @@ export namespace Prisma {
   export const ProductVariationScalarFieldEnum: {
     id: 'id',
     productId: 'productId',
+    type: 'type',
     name: 'name',
     value: 'value',
     price: 'price',
+    discountPrice: 'discountPrice',
+    discountStartDate: 'discountStartDate',
+    discountEndDate: 'discountEndDate',
     stock: 'stock',
-    sku: 'sku'
+    sku: 'sku',
+    barcode: 'barcode'
   };
 
   export type ProductVariationScalarFieldEnum = (typeof ProductVariationScalarFieldEnum)[keyof typeof ProductVariationScalarFieldEnum]
@@ -23944,6 +24064,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     barcode?: StringNullableFilter<"Product"> | string | null
     compareAtPrice?: FloatNullableFilter<"Product"> | number | null
+    discountPrice?: FloatNullableFilter<"Product"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"Product"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"Product"> | Date | string | null
     isBestSeller?: BoolFilter<"Product"> | boolean
     isFeatured?: BoolFilter<"Product"> | boolean
     isNew?: BoolFilter<"Product"> | boolean
@@ -23977,6 +24100,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     barcode?: SortOrderInput | SortOrder
     compareAtPrice?: SortOrderInput | SortOrder
+    discountPrice?: SortOrderInput | SortOrder
+    discountStartDate?: SortOrderInput | SortOrder
+    discountEndDate?: SortOrderInput | SortOrder
     isBestSeller?: SortOrder
     isFeatured?: SortOrder
     isNew?: SortOrder
@@ -24014,6 +24140,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     barcode?: StringNullableFilter<"Product"> | string | null
     compareAtPrice?: FloatNullableFilter<"Product"> | number | null
+    discountPrice?: FloatNullableFilter<"Product"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"Product"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"Product"> | Date | string | null
     isBestSeller?: BoolFilter<"Product"> | boolean
     isFeatured?: BoolFilter<"Product"> | boolean
     isNew?: BoolFilter<"Product"> | boolean
@@ -24046,6 +24175,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     barcode?: SortOrderInput | SortOrder
     compareAtPrice?: SortOrderInput | SortOrder
+    discountPrice?: SortOrderInput | SortOrder
+    discountStartDate?: SortOrderInput | SortOrder
+    discountEndDate?: SortOrderInput | SortOrder
     isBestSeller?: SortOrder
     isFeatured?: SortOrder
     isNew?: SortOrder
@@ -24080,6 +24212,9 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     barcode?: StringNullableWithAggregatesFilter<"Product"> | string | null
     compareAtPrice?: FloatNullableWithAggregatesFilter<"Product"> | number | null
+    discountPrice?: FloatNullableWithAggregatesFilter<"Product"> | number | null
+    discountStartDate?: DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
+    discountEndDate?: DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
     isBestSeller?: BoolWithAggregatesFilter<"Product"> | boolean
     isFeatured?: BoolWithAggregatesFilter<"Product"> | boolean
     isNew?: BoolWithAggregatesFilter<"Product"> | boolean
@@ -24152,11 +24287,16 @@ export namespace Prisma {
     NOT?: ProductVariationWhereInput | ProductVariationWhereInput[]
     id?: StringFilter<"ProductVariation"> | string
     productId?: StringFilter<"ProductVariation"> | string
+    type?: StringFilter<"ProductVariation"> | string
     name?: StringFilter<"ProductVariation"> | string
     value?: StringNullableFilter<"ProductVariation"> | string | null
     price?: FloatFilter<"ProductVariation"> | number
+    discountPrice?: FloatNullableFilter<"ProductVariation"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
     stock?: IntFilter<"ProductVariation"> | number
     sku?: StringNullableFilter<"ProductVariation"> | string | null
+    barcode?: StringNullableFilter<"ProductVariation"> | string | null
     orderItems?: OrderItemListRelationFilter
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
@@ -24164,11 +24304,16 @@ export namespace Prisma {
   export type ProductVariationOrderByWithRelationInput = {
     id?: SortOrder
     productId?: SortOrder
+    type?: SortOrder
     name?: SortOrder
     value?: SortOrderInput | SortOrder
     price?: SortOrder
+    discountPrice?: SortOrderInput | SortOrder
+    discountStartDate?: SortOrderInput | SortOrder
+    discountEndDate?: SortOrderInput | SortOrder
     stock?: SortOrder
     sku?: SortOrderInput | SortOrder
+    barcode?: SortOrderInput | SortOrder
     orderItems?: OrderItemOrderByRelationAggregateInput
     product?: ProductOrderByWithRelationInput
   }
@@ -24180,10 +24325,15 @@ export namespace Prisma {
     OR?: ProductVariationWhereInput[]
     NOT?: ProductVariationWhereInput | ProductVariationWhereInput[]
     productId?: StringFilter<"ProductVariation"> | string
+    type?: StringFilter<"ProductVariation"> | string
     name?: StringFilter<"ProductVariation"> | string
     value?: StringNullableFilter<"ProductVariation"> | string | null
     price?: FloatFilter<"ProductVariation"> | number
+    discountPrice?: FloatNullableFilter<"ProductVariation"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
     stock?: IntFilter<"ProductVariation"> | number
+    barcode?: StringNullableFilter<"ProductVariation"> | string | null
     orderItems?: OrderItemListRelationFilter
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "id" | "sku">
@@ -24191,11 +24341,16 @@ export namespace Prisma {
   export type ProductVariationOrderByWithAggregationInput = {
     id?: SortOrder
     productId?: SortOrder
+    type?: SortOrder
     name?: SortOrder
     value?: SortOrderInput | SortOrder
     price?: SortOrder
+    discountPrice?: SortOrderInput | SortOrder
+    discountStartDate?: SortOrderInput | SortOrder
+    discountEndDate?: SortOrderInput | SortOrder
     stock?: SortOrder
     sku?: SortOrderInput | SortOrder
+    barcode?: SortOrderInput | SortOrder
     _count?: ProductVariationCountOrderByAggregateInput
     _avg?: ProductVariationAvgOrderByAggregateInput
     _max?: ProductVariationMaxOrderByAggregateInput
@@ -24209,11 +24364,16 @@ export namespace Prisma {
     NOT?: ProductVariationScalarWhereWithAggregatesInput | ProductVariationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ProductVariation"> | string
     productId?: StringWithAggregatesFilter<"ProductVariation"> | string
+    type?: StringWithAggregatesFilter<"ProductVariation"> | string
     name?: StringWithAggregatesFilter<"ProductVariation"> | string
     value?: StringNullableWithAggregatesFilter<"ProductVariation"> | string | null
     price?: FloatWithAggregatesFilter<"ProductVariation"> | number
+    discountPrice?: FloatNullableWithAggregatesFilter<"ProductVariation"> | number | null
+    discountStartDate?: DateTimeNullableWithAggregatesFilter<"ProductVariation"> | Date | string | null
+    discountEndDate?: DateTimeNullableWithAggregatesFilter<"ProductVariation"> | Date | string | null
     stock?: IntWithAggregatesFilter<"ProductVariation"> | number
     sku?: StringNullableWithAggregatesFilter<"ProductVariation"> | string | null
+    barcode?: StringNullableWithAggregatesFilter<"ProductVariation"> | string | null
   }
 
   export type ReviewWhereInput = {
@@ -25339,6 +25499,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -25370,6 +25533,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -25401,6 +25567,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -25432,6 +25601,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -25463,6 +25635,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -25489,6 +25664,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -25513,6 +25691,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -25579,11 +25760,16 @@ export namespace Prisma {
 
   export type ProductVariationCreateInput = {
     id?: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutVariationInput
     product: ProductCreateNestedOneWithoutVariationsInput
   }
@@ -25591,21 +25777,31 @@ export namespace Prisma {
   export type ProductVariationUncheckedCreateInput = {
     id?: string
     productId: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVariationInput
   }
 
   export type ProductVariationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutVariationNestedInput
     product?: ProductUpdateOneRequiredWithoutVariationsNestedInput
   }
@@ -25613,41 +25809,61 @@ export namespace Prisma {
   export type ProductVariationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutVariationNestedInput
   }
 
   export type ProductVariationCreateManyInput = {
     id?: string
     productId: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
   }
 
   export type ProductVariationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProductVariationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewCreateInput = {
@@ -26807,6 +27023,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     barcode?: SortOrder
     compareAtPrice?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     isBestSeller?: SortOrder
     isFeatured?: SortOrder
     isNew?: SortOrder
@@ -26826,6 +27045,7 @@ export namespace Prisma {
   export type ProductAvgOrderByAggregateInput = {
     price?: SortOrder
     compareAtPrice?: SortOrder
+    discountPrice?: SortOrder
     rating?: SortOrder
     reviewCount?: SortOrder
     stock?: SortOrder
@@ -26841,6 +27061,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     barcode?: SortOrder
     compareAtPrice?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     isBestSeller?: SortOrder
     isFeatured?: SortOrder
     isNew?: SortOrder
@@ -26866,6 +27089,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     barcode?: SortOrder
     compareAtPrice?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     isBestSeller?: SortOrder
     isFeatured?: SortOrder
     isNew?: SortOrder
@@ -26884,6 +27110,7 @@ export namespace Prisma {
   export type ProductSumOrderByAggregateInput = {
     price?: SortOrder
     compareAtPrice?: SortOrder
+    discountPrice?: SortOrder
     rating?: SortOrder
     reviewCount?: SortOrder
     stock?: SortOrder
@@ -26966,40 +27193,57 @@ export namespace Prisma {
   export type ProductVariationCountOrderByAggregateInput = {
     id?: SortOrder
     productId?: SortOrder
+    type?: SortOrder
     name?: SortOrder
     value?: SortOrder
     price?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     stock?: SortOrder
     sku?: SortOrder
+    barcode?: SortOrder
   }
 
   export type ProductVariationAvgOrderByAggregateInput = {
     price?: SortOrder
+    discountPrice?: SortOrder
     stock?: SortOrder
   }
 
   export type ProductVariationMaxOrderByAggregateInput = {
     id?: SortOrder
     productId?: SortOrder
+    type?: SortOrder
     name?: SortOrder
     value?: SortOrder
     price?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     stock?: SortOrder
     sku?: SortOrder
+    barcode?: SortOrder
   }
 
   export type ProductVariationMinOrderByAggregateInput = {
     id?: SortOrder
     productId?: SortOrder
+    type?: SortOrder
     name?: SortOrder
     value?: SortOrder
     price?: SortOrder
+    discountPrice?: SortOrder
+    discountStartDate?: SortOrder
+    discountEndDate?: SortOrder
     stock?: SortOrder
     sku?: SortOrder
+    barcode?: SortOrder
   }
 
   export type ProductVariationSumOrderByAggregateInput = {
     price?: SortOrder
+    discountPrice?: SortOrder
     stock?: SortOrder
   }
 
@@ -29013,6 +29257,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29043,6 +29290,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29083,6 +29333,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29113,6 +29366,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29251,6 +29507,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     barcode?: StringNullableFilter<"Product"> | string | null
     compareAtPrice?: FloatNullableFilter<"Product"> | number | null
+    discountPrice?: FloatNullableFilter<"Product"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"Product"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"Product"> | Date | string | null
     isBestSeller?: BoolFilter<"Product"> | boolean
     isFeatured?: BoolFilter<"Product"> | boolean
     isNew?: BoolFilter<"Product"> | boolean
@@ -29413,21 +29672,31 @@ export namespace Prisma {
 
   export type ProductVariationCreateWithoutProductInput = {
     id?: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutVariationInput
   }
 
   export type ProductVariationUncheckedCreateWithoutProductInput = {
     id?: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVariationInput
   }
 
@@ -29660,11 +29929,16 @@ export namespace Prisma {
     NOT?: ProductVariationScalarWhereInput | ProductVariationScalarWhereInput[]
     id?: StringFilter<"ProductVariation"> | string
     productId?: StringFilter<"ProductVariation"> | string
+    type?: StringFilter<"ProductVariation"> | string
     name?: StringFilter<"ProductVariation"> | string
     value?: StringNullableFilter<"ProductVariation"> | string | null
     price?: FloatFilter<"ProductVariation"> | number
+    discountPrice?: FloatNullableFilter<"ProductVariation"> | number | null
+    discountStartDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
+    discountEndDate?: DateTimeNullableFilter<"ProductVariation"> | Date | string | null
     stock?: IntFilter<"ProductVariation"> | number
     sku?: StringNullableFilter<"ProductVariation"> | string | null
+    barcode?: StringNullableFilter<"ProductVariation"> | string | null
   }
 
   export type RecipeProductUpsertWithWhereUniqueWithoutProductInput = {
@@ -29717,6 +29991,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29747,6 +30024,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29793,6 +30073,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -29823,6 +30106,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -29881,6 +30167,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29911,6 +30200,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -29973,6 +30265,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30003,6 +30298,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30033,6 +30331,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -30063,6 +30364,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -30142,6 +30446,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30172,6 +30479,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30458,6 +30768,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -30488,6 +30801,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -30515,22 +30831,32 @@ export namespace Prisma {
 
   export type ProductVariationCreateWithoutOrderItemsInput = {
     id?: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
     product: ProductCreateNestedOneWithoutVariationsInput
   }
 
   export type ProductVariationUncheckedCreateWithoutOrderItemsInput = {
     id?: string
     productId: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
   }
 
   export type ProductVariationCreateOrConnectWithoutOrderItemsInput = {
@@ -30602,6 +30928,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30632,6 +30961,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -30665,22 +30997,32 @@ export namespace Prisma {
 
   export type ProductVariationUpdateWithoutOrderItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     product?: ProductUpdateOneRequiredWithoutVariationsNestedInput
   }
 
   export type ProductVariationUncheckedUpdateWithoutOrderItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderCreateWithoutShippingAddressInput = {
@@ -30887,6 +31229,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -30917,6 +31262,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -31004,6 +31352,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31034,6 +31385,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31303,6 +31657,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -31328,6 +31685,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     barcode?: string | null
     compareAtPrice?: number | null
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     isBestSeller?: boolean
     isFeatured?: boolean
     isNew?: boolean
@@ -31401,6 +31761,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31431,6 +31794,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31461,6 +31827,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31486,6 +31855,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31516,6 +31888,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31546,6 +31921,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     compareAtPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isBestSeller?: BoolFieldUpdateOperationsInput | boolean
     isFeatured?: BoolFieldUpdateOperationsInput | boolean
     isNew?: BoolFieldUpdateOperationsInput | boolean
@@ -31578,11 +31956,16 @@ export namespace Prisma {
 
   export type ProductVariationCreateManyProductInput = {
     id?: string
+    type?: string
     name: string
     value?: string | null
     price: number
+    discountPrice?: number | null
+    discountStartDate?: Date | string | null
+    discountEndDate?: Date | string | null
     stock?: number
     sku?: string | null
+    barcode?: string | null
   }
 
   export type RecipeProductCreateManyProductInput = {
@@ -31648,31 +32031,46 @@ export namespace Prisma {
 
   export type ProductVariationUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutVariationNestedInput
   }
 
   export type ProductVariationUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutVariationNestedInput
   }
 
   export type ProductVariationUncheckedUpdateManyWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     value?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    discountStartDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    discountEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     stock?: IntFieldUpdateOperationsInput | number
     sku?: NullableStringFieldUpdateOperationsInput | string | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RecipeProductUpdateWithoutProductInput = {

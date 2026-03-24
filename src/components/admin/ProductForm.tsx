@@ -22,6 +22,9 @@ const DEFAULT_PRODUCT: Partial<Product> = {
   origin: "Nairobi, Kenya",
   unit: "g",
   price: 0,
+  discountPrice: 0,
+  discountStartDate: new Date().toISOString().split('T')[0],
+  discountEndDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   stock: 0,
   sku: "",
   barcode: "",
@@ -31,9 +34,21 @@ const DEFAULT_PRODUCT: Partial<Product> = {
   isPublished: true,
   images: [],
   tags: [],
-  variations: [],
-  rating: 0, // Mock for preview
-  reviewCount: 0, // Mock for preview
+  variations: [{
+    id: "default",
+    type: "General",
+    name: "Default",
+    value: "Standard",
+    price: 0,
+    discountPrice: 0,
+    discountStartDate: new Date().toISOString().split('T')[0],
+    discountEndDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    stock: 0,
+    sku: "",
+    barcode: "",
+  }],
+  rating: 0,
+  reviewCount: 0,
 };
 
 interface ProductFormProps {
@@ -45,7 +60,32 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
   const router = useRouter();
   const draftKey = initialData?.id ? `draft_product_${initialData.id}` : "draft_product_new";
   
-  const [formData, setFormData] = useState<Partial<Product>>(initialData || DEFAULT_PRODUCT);
+  const [formData, setFormData] = useState<Partial<Product>>(() => {
+    if (initialData) {
+      const vars = initialData.variations || [];
+      if (vars.length === 0) {
+        // Create default variation from legacy base fields
+        return {
+          ...initialData,
+          variations: [{
+            id: "default",
+            type: "General",
+            name: "Default",
+            value: "Standard",
+            price: initialData.price || 0,
+            discountPrice: initialData.discountPrice || 0,
+            discountStartDate: initialData.discountStartDate || new Date().toISOString().split('T')[0],
+            discountEndDate: initialData.discountEndDate || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            stock: initialData.stock || 0,
+            sku: initialData.sku || "",
+            barcode: initialData.barcode || "",
+          }]
+        };
+      }
+      return initialData;
+    }
+    return DEFAULT_PRODUCT;
+  });
   const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -98,15 +138,40 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
 
   // Variations Handling
   const addVariation = () => {
-    const newVar = { id: Date.now().toString(), name: "Size", value: "e.g., 50g", price: 0, stock: 10, sku: `${formData.sku || 'SKU'}-VAR1` };
+    const newVar = { 
+      id: Date.now().toString(), 
+      type: "Weight",
+      name: "...", 
+      value: "e.g., 50g", 
+      price: formData.price || 0, 
+      discountPrice: formData.discountPrice || 0,
+      discountStartDate: formData.discountStartDate || new Date().toISOString().split('T')[0],
+      discountEndDate: formData.discountEndDate || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      stock: 10, 
+      sku: `${formData.sku || 'SKU'}-VAR${(formData.variations?.length || 0) + 1}`,
+      barcode: ""
+    };
     setFormData(prev => ({ ...prev, variations: [...(prev.variations || []), newVar] }));
   };
   
   const updateVariation = (id: string, field: string, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      variations: prev.variations?.map(v => v.id === id ? { ...v, [field]: value } : v),
-    }));
+    setFormData(prev => {
+      const updatedVariations = prev.variations?.map(v => v.id === id ? { ...v, [field]: value } : v);
+      
+      // Sync first variation with base product for catalogue compatibility
+      const baseUpdate: any = {};
+      if (updatedVariations && updatedVariations.length > 0 && updatedVariations[0].id === id) {
+        if (["price", "discountPrice", "discountStartDate", "discountEndDate", "stock", "sku", "barcode"].includes(field)) {
+          baseUpdate[field] = value;
+        }
+      }
+
+      return {
+        ...prev,
+        ...baseUpdate,
+        variations: updatedVariations,
+      };
+    });
   };
   const removeVariation = (id: string) => {
     setFormData(prev => ({ ...prev, variations: prev.variations?.filter(v => v.id !== id) }));
@@ -117,6 +182,23 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       
+      // 1. Client-Side Validation
+      const validTypes = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
+      if (!validTypes.includes(file.type)) {
+        toast.error(`Invalid format: ${file.type}. Please use JPG, PNG, or WebP.`);
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image too large! Maximum allowed is 5MB.");
+        return;
+      }
+
+      if (file.size < 1024) {
+        toast.error("Image file appears to be empty or too small.");
+        return;
+      }
+
       const currentImgs = formData.images || [];
       if (currentImgs.length >= 4) {
         toast.error("Maximum 4 images allowed.");
@@ -171,10 +253,31 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
           </button>
           <button 
             onClick={async () => {
-              if (!formData.name || !formData.price) {
-                toast.error("Name and Price are required.");
+              if (!formData.name || formData.price === undefined || formData.discountPrice === undefined) {
+                toast.error("Name, Selling Price, and Discounted Price are required.");
                 return;
               }
+
+              if (!formData.discountStartDate || !formData.discountEndDate) {
+                toast.error("Discount Start and End dates are mandatory.");
+                return;
+              }
+
+              const start = new Date(formData.discountStartDate);
+              const end = new Date(formData.discountEndDate);
+              const now = new Date();
+              now.setHours(0,0,0,0);
+
+              if (start < now) {
+                toast.error("Start date cannot be in the past.");
+                return;
+              }
+
+              if (end <= start) {
+                toast.error("End date must be after start date.");
+                return;
+              }
+
               setIsLoading(true);
               try {
                 let res;
@@ -216,7 +319,7 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Product Name <span className="text-red-500">*</span></label>
-                <input name="name" value={formData.name} onChange={handleChange} type="text" placeholder="e.g. Authentic Garam Masala" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white transition-colors" />
+                <input name="name" value={formData.name || ""} onChange={handleChange} type="text" placeholder="e.g. Authentic Garam Masala" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] focus:bg-white transition-colors" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Description</label>
@@ -226,7 +329,7 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Main Category</label>
-                  <select name="mainCategoryId" value={formData.mainCategoryId || ""} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white">
+                  <select name="mainCategoryId" value={formData.mainCategoryId || ""} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-sm focus:outline-none focus:border-[var(--spice)] focus:bg-white">
                     <option value="" disabled>Select Root...</option>
                     {categories.filter(c => c.level === "main").map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -235,7 +338,7 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Sub Category</label>
-                  <select name="subCategoryId" value={formData.subCategoryId || ""} onChange={handleChange} disabled={!formData.mainCategoryId} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white disabled:opacity-50">
+                  <select name="subCategoryId" value={formData.subCategoryId || ""} onChange={handleChange} disabled={!formData.mainCategoryId} className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-sm focus:outline-none focus:border-[var(--spice)] focus:bg-white disabled:opacity-50">
                     <option value="" disabled>Select Sub...</option>
                     {categories.filter(c => c.parentId === formData.mainCategoryId).map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -244,11 +347,11 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Origin</label>
-                  <input name="origin" value={formData.origin} onChange={handleChange} type="text" placeholder="e.g. Zanzibar" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white" />
+                  <input name="origin" value={formData.origin || ""} onChange={handleChange} type="text" placeholder="e.g. Zanzibar" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-sm focus:outline-none focus:border-[var(--spice)] focus:bg-white" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Unit</label>
-                  <input name="unit" value={formData.unit} onChange={handleChange} type="text" placeholder="e.g. g, ml, packets" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] focus:bg-white" />
+                  <input name="unit" value={formData.unit || ""} onChange={handleChange} type="text" placeholder="e.g. g, ml, packets" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-sm focus:outline-none focus:border-[var(--spice)] focus:bg-white" />
                 </div>
               </div>
 
@@ -262,7 +365,7 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
                     onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
                     type="text" 
                     placeholder="Type a tag & press enter" 
-                    className="flex-1 px-3 py-2 bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] text-sm" 
+                    className="flex-1 px-3 py-2 bg-[var(--gray-50)] border border-[var(--border)] rounded-sm focus:outline-none focus:border-[var(--spice)] text-sm" 
                   />
                   <button type="button" onClick={addTag} className="px-3 py-2 bg-[var(--cream-dark)] hover:bg-[var(--bark)] hover:text-white border border-[var(--border)] font-semibold text-[var(--bark)] rounded-md text-sm transition-colors cursor-pointer">Add</button>
                 </div>
@@ -353,30 +456,18 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
             </div>
             
             <div className="p-4 sm:p-5 border-b border-[var(--border)] bg-[var(--gray-50)]/50">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Base Price (KES) <span className="text-red-500">*</span></label>
-                  <input name="price" value={formData.price} onChange={handleChange} type="number" min="0" placeholder="0.00" className="w-full px-3 py-2 bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] font-bold text-sm text-[var(--spice-dark)]" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Base Stock <span className="text-red-500">*</span></label>
-                  <input name="stock" value={formData.stock} onChange={handleChange} type="number" min="0" placeholder="0" className="w-full px-3 py-2 bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] font-bold text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">SKU <span className="text-red-500">*</span></label>
-                  <input name="sku" value={formData.sku} onChange={handleChange} type="text" placeholder="e.g. SP-GARAM-01" className="w-full px-3 py-2 bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] text-sm font-medium uppercase" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Barcode / GTIN</label>
-                  <input name="barcode" value={formData.barcode} onChange={handleChange} type="text" placeholder="e.g. 0123456789012" className="w-full px-3 py-2 bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] text-sm" />
-                </div>
+              <div className="flex items-center gap-2 mb-4 p-3 bg-blue-50 border border-blue-100 rounded-md">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">
+                  Every product is treated as a variation. The first entry below is the primary "Default" variant.
+                </p>
               </div>
             </div>
 
             {/* Dynamic Variations Builder */}
             <div className="p-4 sm:p-5">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-sm font-bold text-[var(--bark)]">Product Variations (Optional)</p>
+                <p className="text-sm font-bold text-[var(--bark)] uppercase tracking-tight">Active Variations</p>
                 <button type="button" onClick={addVariation} className="text-xs font-bold text-[var(--spice)] hover:bg-[var(--cream-dark)] px-2.5 py-1 rounded-md border border-transparent hover:border-[var(--spice)] transition-all flex items-center gap-1">
                   <Plus size={12}/> Add Option
                 </button>
@@ -387,32 +478,76 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
                   Standard product without multiple options. <br/> Clicking "Add Option" will override Base Stock and assign variations.
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {formData.variations?.map((v) => (
-                    <div key={v.id} className="grid grid-cols-[1fr_1fr_1.5fr_1fr_1fr_auto] gap-2 items-end p-3 rounded-md bg-[var(--gray-50)] border border-[var(--border)] group animate-in slide-in-from-left-2 duration-300">
-                      <div>
-                        <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Type</label>
-                        <input value={v.name} onChange={(e) => updateVariation(v.id, "name", e.target.value)} type="text" placeholder="Size" className="w-full px-2 py-1.5 text-xs bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)]" />
+                    <div key={v.id} className="p-3 rounded-md bg-[var(--gray-50)] border border-[var(--border)] group animate-in slide-in-from-left-2 duration-300">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-bold text-[var(--gray-400)] uppercase tracking-widest">Variation Entry</span>
+                        <button type="button" onClick={() => removeVariation(v.id)} className="text-[var(--gray-400)] hover:text-red-500 transition-colors">
+                          <Trash2 size={14}/>
+                        </button>
                       </div>
-                      <div>
-                        <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Value</label>
-                        <input value={v.value} onChange={(e) => updateVariation(v.id, "value", e.target.value)} type="text" placeholder="500g" className="w-full px-2 py-1.5 text-xs bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)] font-semibold text-[var(--bark)]" />
+                      
+                      {/* Row 1: Primary Meta */}
+                      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-3">
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Type</label>
+                          <select 
+                            value={v.type} 
+                            onChange={(e) => updateVariation(v.id, "type", e.target.value)} 
+                            className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors"
+                          >
+                            <option value="General">General</option>
+                            <option value="Size">Size</option>
+                            <option value="Weight">Weight</option>
+                            <option value="Color">Color</option>
+                            <option value="Height">Height</option>
+                            <option value="Material">Material</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Name</label>
+                          <input value={v.name || ""} onChange={(e) => updateVariation(v.id, "name", e.target.value)} type="text" placeholder="..." className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Value</label>
+                          <input value={v.value || ""} onChange={(e) => updateVariation(v.id, "value", e.target.value)} type="text" placeholder="e.g. 50g" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] font-semibold text-[var(--bark)] transition-colors" />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">SKU <span className="text-red-500">*</span></label>
+                          <input value={v.sku || ""} onChange={(e) => updateVariation(v.id, "sku", e.target.value)} type="text" placeholder="SKU-VAR" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] uppercase font-medium transition-colors" />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Stock</label>
+                          <input value={v.stock ?? 0} onChange={(e) => updateVariation(v.id, "stock", Number(e.target.value))} type="number" min="0" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Variation SKU <span className="text-red-500">*</span></label>
-                        <input value={v.sku} onChange={(e) => updateVariation(v.id, "sku", e.target.value)} type="text" placeholder="SKU-VAR" className="w-full px-2 py-1.5 text-xs bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)] uppercase font-medium" />
+
+                      {/* Row 2: Pricing & Promotion */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Selling Price</label>
+                          <input value={v.price ?? 0} onChange={(e) => updateVariation(v.id, "price", Number(e.target.value))} type="number" min="0" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] font-bold text-[var(--bark)] transition-colors" />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Discount Price</label>
+                          <input value={v.discountPrice ?? 0} onChange={(e) => updateVariation(v.id, "discountPrice", Number(e.target.value))} type="number" min="0" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] font-bold text-[var(--spice)] transition-colors" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 sm:col-span-2">
+                          <div>
+                            <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Starts</label>
+                            <input value={v.discountStartDate || ""} onChange={(e) => updateVariation(v.id, "discountStartDate", e.target.value)} type="date" className="w-full px-2 py-1.5 text-[10px] bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
+                          </div>
+                          <div>
+                            <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Ends</label>
+                            <input value={v.discountEndDate || ""} onChange={(e) => updateVariation(v.id, "discountEndDate", e.target.value)} type="date" className="w-full px-2 py-1.5 text-[10px] bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
+                          </div>
+                        </div>
+                        <div className="sm:col-span-2">
+                          <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Barcode / GTIN</label>
+                          <input value={v.barcode || ""} onChange={(e) => updateVariation(v.id, "barcode", e.target.value)} type="text" placeholder="GTIN/EAN" className="w-full px-2 py-1.5 text-xs bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Abs. Price</label>
-                        <input value={v.price} onChange={(e) => updateVariation(v.id, "price", Number(e.target.value))} type="number" min="0" className="w-full px-2 py-1.5 text-xs bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)] text-emerald-600 font-bold" />
-                      </div>
-                      <div>
-                        <label className="block text-[9px] uppercase tracking-wider font-bold text-[var(--gray-500)] mb-1">Stock</label>
-                        <input value={v.stock} onChange={(e) => updateVariation(v.id, "stock", Number(e.target.value))} type="number" min="0" className="w-full px-2 py-1.5 text-xs bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)]" />
-                      </div>
-                      <button type="button" onClick={() => removeVariation(v.id)} className="w-7 h-7 flex items-center justify-center rounded bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors border border-red-100">
-                        <Trash2 size={12}/>
-                      </button>
                     </div>
                   ))}
                 </div>
@@ -520,12 +655,19 @@ export function ProductForm({ initialData, categories }: ProductFormProps) {
                         ))}
                         <span className="text-[9px] font-bold text-[var(--gray-500)] ml-1">(0)</span>
                       </div>
-                      <div className="font-bold text-[var(--spice)] text-lg flex items-baseline">
-                        <span className="text-[10px] font-semibold mr-0.5">KES</span> 
-                        {formData.price?.toLocaleString() || "0"}
-                        <span className="text-[9px] text-[var(--gray-400)] font-medium ml-1">
-                          /{formData.unit || "unit"}
-                        </span>
+                      <div className="flex flex-col">
+                        {formData.discountPrice && formData.discountPrice < (formData.price || 0) && (
+                          <span className="text-[10px] font-bold text-[var(--gray-400)] line-through decoration-[var(--spice)]/40">
+                            KES {formData.price?.toLocaleString()}
+                          </span>
+                        )}
+                        <div className="font-bold text-[var(--spice)] text-lg flex items-baseline leading-none">
+                          <span className="text-[10px] font-semibold mr-0.5">KES</span> 
+                          {(formData.discountPrice || formData.price)?.toLocaleString() || "0"}
+                          <span className="text-[9px] text-[var(--gray-400)] font-medium ml-1">
+                            /{formData.unit || "unit"}
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-[var(--bark)] text-white flex items-center justify-center shadow-md">

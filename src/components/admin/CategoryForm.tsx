@@ -72,9 +72,20 @@ export function CategoryForm({ initialData, rootCategories }: CategoryFormProps)
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       
-      // Basic client-side check
+      // 1. Client-Side Validation
+      const validTypes = ["image/jpeg", "image/png", "image/webp", "image/avif"];
+      if (!validTypes.includes(file.type)) {
+        toast.error(`Invalid format: ${file.type}. Please use JPG, PNG, or WebP.`);
+        return;
+      }
+
       if (file.size > 5 * 1024 * 1024) {
-        toast.error("Image size must be less than 5MB.");
+        toast.error("Image too large! Maximum allowed is 5MB.");
+        return;
+      }
+      
+      if (file.size < 1024) {
+        toast.error("Image file appears to be empty or too small.");
         return;
       }
 
@@ -165,17 +176,17 @@ export function CategoryForm({ initialData, rootCategories }: CategoryFormProps)
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Category Name <span className="text-red-500">*</span></label>
-                  <input name="name" value={formData.name || ""} onChange={handleChange} type="text" placeholder="e.g. Rare Blends" className="w-full px-3 py-2 text-sm bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] font-bold text-[var(--bark)]" />
+                  <input name="name" value={formData.name || ""} onChange={handleChange} type="text" placeholder="e.g. Rare Blends" className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] font-bold text-[var(--bark)] transition-colors" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[var(--bark)] mb-1">URL Slug</label>
-                  <input name="slug" value={formData.slug || ""} onChange={handleChange} type="text" placeholder="rare-blends" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] font-mono text-[var(--gray-600)]" />
+                  <input name="slug" value={formData.slug || ""} onChange={handleChange} type="text" placeholder="rare-blends" className="w-full px-3 py-2 text-sm bg-[var(--gray-50)] border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] font-mono text-[var(--gray-600)] transition-colors" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-[var(--bark)] mb-1">Hierarchy Lineage (Optional)</label>
-                <select name="parentId" value={formData.parentId || ""} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] lg:w-1/2">
+                <select name="parentId" value={formData.parentId || ""} onChange={handleChange} className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] lg:w-1/2 transition-colors">
                   <option value="">-- None (Creates a Root/Main Category) --</option>
                   {rootCategories.filter(c => c.id !== initialData?.id).map(cat => (
                     <option key={cat.id} value={cat.id}>Attach to: {cat.name} (Root)</option>
@@ -198,7 +209,7 @@ export function CategoryForm({ initialData, rootCategories }: CategoryFormProps)
                     onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
                     type="text" 
                     placeholder="Type a tag & press enter" 
-                    className="w-full sm:w-1/2 px-3 py-2 bg-white border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--spice)] text-sm" 
+                    className="w-full sm:w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] text-sm transition-colors" 
                   />
                   <button type="button" onClick={addTag} className="px-3 py-2 bg-[var(--cream-dark)] hover:bg-[var(--bark)] hover:text-white border border-[var(--border)] font-semibold text-[var(--bark)] rounded-md text-sm transition-colors cursor-pointer">Add</button>
                 </div>
@@ -265,7 +276,7 @@ export function CategoryForm({ initialData, rootCategories }: CategoryFormProps)
             <h2 className="text-xs font-bold text-[var(--bark)] uppercase tracking-wider mb-2">Interface Color</h2>
             <div className="flex items-center gap-3">
               <input type="color" name="color" value={formData.color || "#8B4513"} onChange={handleChange} className="w-8 h-8 rounded shrink-0 cursor-pointer border-0 p-0" />
-              <input type="text" name="color" value={formData.color || "#8B4513"} onChange={handleChange} className="flex-1 px-3 py-1.5 text-xs font-mono uppercase bg-white border border-[var(--border)] rounded focus:outline-none focus:border-[var(--spice)]" />
+              <input type="text" name="color" value={formData.color || "#8B4513"} onChange={handleChange} className="flex-1 px-3 py-1.5 text-xs font-mono uppercase bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-[var(--spice)] transition-colors" />
             </div>
           </section>
         </div>

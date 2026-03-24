@@ -34,7 +34,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   };
 
   return (
-    <div className="w-full border border-[var(--border)] rounded-md overflow-hidden bg-white focus-within:border-[var(--spice)] transition-colors shadow-sm">
+    <div className="w-full border border-gray-200 rounded-sm overflow-hidden bg-white focus-within:border-[var(--spice)] transition-colors shadow-sm">
       <div className="flex items-center gap-1 p-2 border-b border-[var(--border)] bg-[var(--gray-50)] overflow-x-auto">
         <button type="button" onClick={() => execCommand("bold")} className="p-1.5 text-[var(--gray-600)] hover:text-[var(--bark)] hover:bg-[var(--cream-dark)] rounded transition-colors"><Bold size={14} /></button>
         <button type="button" onClick={() => execCommand("italic")} className="p-1.5 text-[var(--gray-600)] hover:text-[var(--bark)] hover:bg-[var(--cream-dark)] rounded transition-colors"><Italic size={14} /></button>
